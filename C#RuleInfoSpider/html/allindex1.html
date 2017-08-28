@@ -1,0 +1,3648 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="index, follow" />
+
+  
+
+  
+
+  
+
+  <title>SonarC# Rules | SonarSource</title>
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" href="/favicon-152.png">
+
+  <link type="text/css" rel="stylesheet" href="/assets/main-eda8719b33057e65a314800a3299458531a7d911590d2952d192dccfe79af34a.css">
+</head>
+
+  <body>
+    <div class="page-wrapper">
+  <div class="page-header">
+  <div class="page-container">
+
+    <div class="page-header-logo">
+      <a href="/">
+        <img src="/assets/sonarsource-black-logo-fb832141c115e926988e613027cc073b59018d1e6864af4c65a37fe4caa0c6ed.svg" width="191" height="35" alt="SonarSource">
+      </a>
+    </div>
+
+    <ul class="page-header-nav">
+      
+        <li tabindex="0" onclick="void(0)">
+          
+          <span class="page-header-nav-section ">
+            Why Us
+          </span>
+
+          <div class="page-sub-header">
+            <ul class="page-sub-header-nav">
+              
+                <li>
+                  <a href="/why-us/code-quality/" class=""
+                    >
+                    <span  class="page-sub-header-nav-text">
+                      Code Quality
+                    </span>
+                  </a>
+                </li>
+              
+                <li>
+                  <a href="/why-us/unique-approach/" class=""
+                    >
+                    <span  class="page-sub-header-nav-text">
+                      Unique Approach
+                    </span>
+                  </a>
+                </li>
+              
+                <li>
+                  <a href="/why-us/integration/" class=""
+                    >
+                    <span  class="page-sub-header-nav-text">
+                      Integration
+                    </span>
+                  </a>
+                </li>
+              
+                <li>
+                  <a href="/why-us/benefits/" class=""
+                    >
+                    <span  class="page-sub-header-nav-text">
+                      Benefits
+                    </span>
+                  </a>
+                </li>
+              
+                <li>
+                  <a href="/why-us/open-source/" class=""
+                    >
+                    <span  class="page-sub-header-nav-text">
+                      Open Source
+                    </span>
+                  </a>
+                </li>
+              
+                <li>
+                  <a href="/why-us/about/" class=""
+                    >
+                    <span  class="page-sub-header-nav-text">
+                      About
+                    </span>
+                  </a>
+                </li>
+              
+            </ul>
+          </div>
+          
+        </li>
+      
+        <li tabindex="0" onclick="void(0)">
+          
+          <span class="page-header-nav-section active">
+            Products
+          </span>
+
+          <div class="page-sub-header">
+            <ul class="page-sub-header-nav">
+              
+                <li>
+                  <a href="/products/sonarqube/" class=""
+                    >
+                    <span  class="page-sub-header-nav-text">
+                      SonarQube
+                    </span>
+                  </a>
+                </li>
+              
+                <li>
+                  <a href="/products/sonarlint/" class=""
+                    >
+                    <span  class="page-sub-header-nav-text">
+                      SonarLint
+                    </span>
+                  </a>
+                </li>
+              
+                <li>
+                  <a href="/products/codeanalyzers/" class=""
+                    >
+                    <span  class="page-sub-header-nav-text">
+                      Code Analyzers
+                    </span>
+                  </a>
+                </li>
+              
+                <li>
+                  <a href="/products/plugins/governance.html" class=""
+                    >
+                    <span  class="page-sub-header-nav-text">
+                      Governance
+                    </span>
+                  </a>
+                </li>
+              
+            </ul>
+          </div>
+          
+        </li>
+      
+        <li tabindex="0" onclick="void(0)">
+          
+          <span class="page-header-nav-section ">
+            Solutions
+          </span>
+
+          <div class="page-sub-header">
+            <ul class="page-sub-header-nav">
+              
+                <li>
+                  <a href="/solutions/full-experience/" class=""
+                    >
+                    <span  class="page-sub-header-nav-text">
+                      Full Experience
+                    </span>
+                  </a>
+                </li>
+              
+                <li>
+                  <a href="/solutions/deployments/" class=""
+                    >
+                    <span  class="page-sub-header-nav-text">
+                      Deployment Grades
+                    </span>
+                  </a>
+                </li>
+              
+            </ul>
+          </div>
+          
+        </li>
+      
+        <li tabindex="0" onclick="void(0)">
+          
+          <span class="page-header-nav-section ">
+            Customers
+          </span>
+
+          <div class="page-sub-header">
+            <ul class="page-sub-header-nav">
+              
+                <li>
+                  <a href="/customers/" class=""
+                    >
+                    <span  class="page-sub-header-nav-text">
+                      List of Customers
+                    </span>
+                  </a>
+                </li>
+              
+                <li>
+                  <a href="/customers/stories/" class=""
+                    >
+                    <span  class="page-sub-header-nav-text">
+                      Customer Stories
+                    </span>
+                  </a>
+                </li>
+              
+            </ul>
+          </div>
+          
+        </li>
+      
+        <li tabindex="0" onclick="void(0)">
+          
+          <span class="page-header-nav-section ">
+            Resources
+          </span>
+
+          <div class="page-sub-header">
+            <ul class="page-sub-header-nav">
+              
+                <li>
+                  <a href="/resources/white-papers/" class=""
+                    >
+                    <span  class="page-sub-header-nav-text">
+                      White Papers
+                    </span>
+                  </a>
+                </li>
+              
+                <li>
+                  <a href="/resources/product-news/" class=""
+                    >
+                    <span  class="page-sub-header-nav-text">
+                      Product News
+                    </span>
+                  </a>
+                </li>
+              
+                <li>
+                  <a href="/resources/newsletter/" class=""
+                    >
+                    <span  class="page-sub-header-nav-text">
+                      Newsletter
+                    </span>
+                  </a>
+                </li>
+              
+            </ul>
+          </div>
+          
+        </li>
+      
+        <li tabindex="0" onclick="void(0)">
+          
+          <span class="page-header-nav-section ">
+            Company
+          </span>
+
+          <div class="page-sub-header">
+            <ul class="page-sub-header-nav">
+              
+                <li>
+                  <a href="/company/coverage/" class=""
+                    >
+                    <span  class="page-sub-header-nav-text">
+                      Coverage
+                    </span>
+                  </a>
+                </li>
+              
+                <li>
+                  <a href="/company/events/" class=""
+                    >
+                    <span  class="page-sub-header-nav-text">
+                      Events
+                    </span>
+                  </a>
+                </li>
+              
+                <li>
+                  <a href="/company/team/" class=""
+                    >
+                    <span  class="page-sub-header-nav-text">
+                      Team
+                    </span>
+                  </a>
+                </li>
+              
+                <li>
+                  <a href="/company/history/" class=""
+                    >
+                    <span  class="page-sub-header-nav-text">
+                      History
+                    </span>
+                  </a>
+                </li>
+              
+                <li>
+                  <a href="/company/jobs/" class=""
+                    >
+                    <span  class="page-sub-header-nav-text">
+                      Jobs
+                    </span>
+                  </a>
+                </li>
+              
+                <li>
+                  <a href="/company/contact/" class=""
+                    >
+                    <span  class="page-sub-header-nav-text">
+                      Contact
+                    </span>
+                  </a>
+                </li>
+              
+            </ul>
+          </div>
+          
+        </li>
+      
+        <li tabindex="0" onclick="void(0)">
+          
+          <a href="https://blog.sonarsource.com" class="page-header-nav-section  external"
+            target="_blank">
+            Blog
+          </a>
+          
+        </li>
+      
+    </ul>
+
+  </div>
+</div>
+
+
+  <div class="article-header">
+  <div class="page-container">
+    <div class="article-header-group">
+      <div class="article-header-inner">
+        <h1 class="article-header-title">
+          SonarC# Rules
+        </h1>
+      </div>
+    </div>
+
+    <div class="article-header-contact">
+      
+    </div>
+  </div>
+</div>
+
+  <ul class="breadcrumb page-container">
+    
+    <li>
+        <a href="/"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 33 33" style="enable-background:new 0 0 33 33;" xml:space="preserve">
+<path d="M27.649,33h-7.216c-0.276,0-0.5-0.224-0.5-0.5V22.32h-6.867V32.5c0,0.276-0.224,0.5-0.5,0.5H5.348
+	c-0.276,0-0.5-0.224-0.5-0.5V15.893H0.73c-0.205,0-0.389-0.125-0.465-0.315c-0.075-0.19-0.027-0.407,0.121-0.548L16.154,0.137
+	c0.193-0.183,0.494-0.182,0.688,0l15.772,14.893c0.148,0.141,0.196,0.358,0.121,0.548c-0.076,0.19-0.26,0.315-0.465,0.315h-4.121
+	V32.5C28.149,32.776,27.925,33,27.649,33z M20.933,32h6.216V15.393c0-0.276,0.224-0.5,0.5-0.5h3.363L16.498,1.188L1.988,14.893h3.36
+	c0.276,0,0.5,0.224,0.5,0.5V32h6.218V21.82c0-0.276,0.224-0.5,0.5-0.5h7.867c0.276,0,0.5,0.224,0.5,0.5V32z"/>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+</a></li>
+        &nbsp;&nbsp;
+        
+    <li>
+        
+        Products
+    </li>
+    
+    <li>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+        <a href="..">Code Analyzers</a>
+    </li>
+    
+    <li>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+        <a href="../sonarcsharp.html">SonarC#</a>
+    </li>
+    
+  </ul>
+
+
+
+
+<div class="page-content page-content-stretch">
+
+  <div class="page-container styled rules">
+
+  
+
+  <noscript>
+    <p>
+      It seems that JavaScript code execution is disabled in your browser;
+      you will not be able to filter rules by type or code quality standard.
+    </p>
+  </noscript>
+
+  <div class="filter-container" id="filter-container">
+    <div>
+      <p class="text-excerpt">Type</p>
+      <ul class="filters" id="type-filters">
+        <li><input type="checkbox" id="Bug_Detection" value="Bug_Detection"/>
+          <label id="label_Bug_Detection" for="Bug_Detection">Bugs</label></li>
+        <li><input type="checkbox" id="Code_Smell_Detection" value="Code_Smell_Detection"/>
+          <label id="label_Code_Smell_Detection" for="Code_Smell_Detection">Code Smells</label></li>
+        <li><input type="checkbox" id="Vulnerability_Detection" value="Vulnerability_Detection"/>
+          <label id="label_Vulnerability_Detection" for="Vulnerability_Detection">Vulnerabilities</label></li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="text-excerpt">Standard</p>
+      <ul class="filters" id="standard-filters">
+        
+        <li><input type="checkbox" id="CWE" value="CWE"/>
+          <label id="label_CWE" for="CWE">CWE</label></li>
+        
+        <li><input type="checkbox" id="SANS Top 25" value="SANS Top 25"/>
+          <label id="label_SANS Top 25" for="SANS Top 25">SANS Top 25</label></li>
+        
+        <li><input type="checkbox" id="OWASP" value="OWASP"/>
+          <label id="label_OWASP" for="OWASP">OWASP</label></li>
+        
+        <li><input type="checkbox" id="MISRA" value="MISRA"/>
+          <label id="label_MISRA" for="MISRA">MISRA</label></li>
+        
+        <li><input type="checkbox" id="CERT" value="CERT"/>
+          <label id="label_CERT" for="CERT">CERT</label></li>
+        
+      </ul>
+    </div>
+  </div>
+
+  <ul class="rules-list">
+    
+    <li id="rule_RSPEC-3884" class="rule filter_Vulnerability_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-3884" class="rule-toggle" value="RSPEC-3884"></input>
+        <label for="toggle_RSPEC-3884" class="toggle" id="label_RSPEC-3884">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          &quot;CoSetProxyBlanket&quot; and &quot;CoInitializeSecurity&quot; should not be used
+          <a href="#RSPEC-3884"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p><tt>CoSetProxyBlanket</tt> and <tt>CoInitializeSecurity</tt> both work to set the permissions context in which the process invoked immediately after is executed. Calling them from within that process is useless because it's to late at that point; the permissions context has already been set.</p>
+
+<p>Specifically, these methods are meant to be called from a non-managed code such as a C++ wrapper that then invokes the managed, i.e. C# or VB.NET, code.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+[DllImport(<span class="code-quote">"ole32.dll"</span>)]
+<span class="code-keyword">static</span> extern <span class="code-object">int</span> CoSetProxyBlanket([MarshalAs(UnmanagedType.IUnknown)]object pProxy, uint dwAuthnSvc, uint dwAuthzSvc,
+	[MarshalAs(UnmanagedType.LPWStr)] string pServerPrincName, uint dwAuthnLevel, uint dwImpLevel, IntPtr pAuthInfo,
+	uint dwCapabilities);
+
+<span class="code-keyword">public</span> <span class="code-keyword">enum</span> RpcAuthnLevel
+{
+	Default = 0,
+	None = 1,
+	Connect = 2,
+	Call = 3,
+	Pkt = 4,
+	PktIntegrity = 5,
+	PktPrivacy = 6
+}
+
+<span class="code-keyword">public</span> <span class="code-keyword">enum</span> RpcImpLevel
+{
+	Default = 0,
+	Anonymous = 1,
+	Identify = 2,
+	Impersonate = 3,
+	Delegate = 4
+}
+
+<span class="code-keyword">public</span> <span class="code-keyword">enum</span> EoAuthnCap
+{
+	None = 0x00,
+	MutualAuth = 0x01,
+	StaticCloaking = 0x20,
+	DynamicCloaking = 0x40,
+	AnyAuthority = 0x80,
+	MakeFullSIC = 0x100,
+	Default = 0x800,
+	SecureRefs = 0x02,
+	AccessControl = 0x04,
+	AppID = 0x08,
+	Dynamic = 0x10,
+	RequireFullSIC = 0x200,
+	AutoImpersonate = 0x400,
+	NoCustomMarshal = 0x2000,
+	DisableAAA = 0x1000
+}
+
+[DllImport(<span class="code-quote">"ole32.dll"</span>)]
+<span class="code-keyword">public</span> <span class="code-keyword">static</span> extern <span class="code-object">int</span> CoInitializeSecurity(IntPtr pVoid, <span class="code-object">int</span> cAuthSvc, IntPtr asAuthSvc, IntPtr pReserved1,
+	RpcAuthnLevel level, RpcImpLevel impers, IntPtr pAuthList, EoAuthnCap dwCapabilities, IntPtr pReserved3);
+
+<span class="code-keyword">static</span> void Main(string[] args)
+{
+	<span class="code-keyword">var</span> hres1 = CoSetProxyBlanket(<span class="code-keyword">null</span>, 0, 0, <span class="code-keyword">null</span>, 0, 0, IntPtr.Zero, 0); <span class="code-comment">// Noncompliant
+</span>
+	<span class="code-keyword">var</span> hres2 = CoInitializeSecurity(IntPtr.Zero, -1, IntPtr.Zero, IntPtr.Zero, RpcAuthnLevel.None,
+		RpcImpLevel.Impersonate, IntPtr.Zero, EoAuthnCap.None, IntPtr.Zero); <span class="code-comment">// Noncompliant
+</span>}
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-2930" class="rule filter_Bug_Detection filter_CWE ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-2930" class="rule-toggle" value="RSPEC-2930"></input>
+        <label for="toggle_RSPEC-2930" class="toggle" id="label_RSPEC-2930">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          &quot;IDisposables&quot; should be disposed
+          <a href="#RSPEC-2930"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>When writing managed code, you don't need to worry about allocating or freeing memory: The garbage collector takes care of it. For efficiency reasons, some objects such as <tt>Bitmap</tt> use unmanaged memory, enabling for example the use of pointer arithmetic. Such objects have potentially huge unmanaged memory footprints, but will have tiny managed ones. Unfortunately, the garbage collector only sees the tiny managed footprint, and fails to reclaim the unmanaged memory (by calling <tt>Bitmap</tt>'s finalizer method) in a timely fashion. </p>
+
+<p>Moreover, memory is not the only system resource which needs to be managed in a timely fashion: The operating system can only handle having so many file descriptors (e.g. <tt>FileStream</tt>) or sockets (e.g. <tt>WebClient</tt>) open at any given time. Therefore, it is important to <tt>Dispose</tt> of them as soon as they are no longer needed, rather than relying on the garbage collector to call these objects' finalizers at some nondeterministic point in the future.</p>
+
+<p>This rule tracks <tt>private</tt> fields and local variables of the following <tt>IDisposable</tt> types, which are never disposed, closed, aliased, returned, or passed to other methods.</p>
+
+<ul>
+	<li><tt>System.IO</tt> namespace
+	<ul>
+		<li><tt>System.IO.FileStream</tt></li>
+		<li><tt>System.IO.StreamReader</tt></li>
+		<li><tt>System.IO.StreamWriter</tt></li>
+	</ul>
+	</li>
+</ul>
+
+
+<ul>
+	<li><tt>System.Net</tt> namespace
+	<ul>
+		<li><tt>System.Net.WebClient</tt></li>
+	</ul>
+	</li>
+</ul>
+
+
+<ul>
+	<li><tt>System.Net.Sockets</tt> namespace
+	<ul>
+		<li><tt>System.Net.Sockets.Socket</tt></li>
+		<li><tt>System.Net.Sockets.TcpClient</tt></li>
+		<li><tt>System.Net.Sockets.UdpClient</tt></li>
+	</ul>
+	</li>
+</ul>
+
+
+<ul>
+	<li><tt>System.Drawing</tt> namespace
+	<ul>
+		<li><tt>System.Drawing.Image</tt></li>
+		<li><tt>System.Drawing.Bitmap</tt></li>
+	</ul>
+	</li>
+</ul>
+
+
+<p>which are either instantiated directly using the <tt>new</tt> operator, or using one of the following factory methods:</p>
+
+<ul>
+	<li><tt>System.IO.File.Create()</tt></li>
+	<li><tt>System.IO.File.Open()</tt></li>
+	<li><tt>System.Drawing.Image.FromFile()</tt></li>
+	<li><tt>System.Drawing.Image.FromStream()</tt></li>
+</ul>
+
+
+<p>on both private fields and local variables.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> class ResourceHolder 
+{
+  <span class="code-keyword">private</span> FileStream fs; <span class="code-comment">// Noncompliant; Dispose or Close are never called
+</span>
+  <span class="code-keyword">public</span> void OpenResource(string path)
+  {
+    <span class="code-keyword">this</span>.fs = <span class="code-keyword">new</span> FileStream(path, FileMode.Open);
+  }
+
+  <span class="code-keyword">public</span> void WriteToFile(string path, string text)
+  {
+    <span class="code-keyword">var</span> fs = <span class="code-keyword">new</span> FileStream(path, FileMode.Open); <span class="code-comment">// Noncompliant
+</span>    <span class="code-keyword">var</span> bytes = Encoding.UTF8.GetBytes(text);
+    fs.Write(bytes, 0, bytes.Length);
+  }
+}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> class ResourceHolder : IDisposable
+{
+  <span class="code-keyword">private</span> FileStream fs;
+
+  <span class="code-keyword">public</span> void OpenResource(string path)
+  {
+    <span class="code-keyword">this</span>.fs = <span class="code-keyword">new</span> FileStream(path, FileMode.Open);
+  }
+
+  <span class="code-keyword">public</span> void Dispose() 
+  {
+    <span class="code-keyword">this</span>.fs.Dispose();
+  }
+
+  <span class="code-keyword">public</span> void WriteToFile(string path, string text)
+  {
+    using (<span class="code-keyword">var</span> fs = <span class="code-keyword">new</span> FileStream(path, FileMode.Open))
+    {
+      <span class="code-keyword">var</span> bytes = Encoding.UTF8.GetBytes(text);
+      fs.Write(bytes, 0, bytes.Length);
+    }
+  }
+}
+</pre>
+</div></div>
+
+<h2><a name="Exceptions"></a>Exceptions</h2>
+<p><tt>IDisposable</tt> variables returned from a method or passed to other methods are ignored, as are local {{IDisposable}}s that are initialized with other {{IDisposable}}s.</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> Stream WriteToFile(string path, string text)
+{
+  <span class="code-keyword">var</span> fs = <span class="code-keyword">new</span> FileStream(path, FileMode.Open); <span class="code-comment">// Compliant, because it is returned
+</span>  <span class="code-keyword">var</span> bytes = Encoding.UTF8.GetBytes(text);
+  fs.Write(bytes, 0, bytes.Length);
+  <span class="code-keyword">return</span> fs;
+}
+
+<span class="code-keyword">public</span> void ReadFromStream(Stream s)
+{
+  <span class="code-keyword">var</span> sr = <span class="code-keyword">new</span> StreamReader(s); <span class="code-comment">// Compliant as it would close the underlying stream.
+</span>  <span class="code-comment">// ...
+</span>}
+</pre>
+</div></div> 
+
+<h2><a name="See"></a>See</h2>
+<ul>
+	<li><a href="http://cwe.mitre.org/data/definitions/459.html" class="external-link" rel="nofollow">MITRE, CWE-459</a> - Incomplete Cleanup</li>
+</ul>
+
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-3869" class="rule filter_Bug_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-3869" class="rule-toggle" value="RSPEC-3869"></input>
+        <label for="toggle_RSPEC-3869" class="toggle" id="label_RSPEC-3869">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          &quot;SafeHandle.DangerousGetHandle&quot; should not be called
+          <a href="#RSPEC-3869"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>Not surprisingly, the <tt>SafeHandle.DangerousGetHandle</tt> method is dangerous. That's because it may not return a valid handle. Using it can lead to leaks and vulnerabilities. While it is possible to use the method successfully, it's extremely difficult to do correctly, so the method should simply be avoided altogether.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">static</span> void Main(string[] args)
+{
+    <span class="code-object">System</span>.Reflection.FieldInfo fieldInfo = ...;
+    SafeHandle handle = (SafeHandle)fieldInfo.GetValue(rKey);
+    IntPtr dangerousHandle = handle.DangerousGetHandle();  <span class="code-comment">// Noncompliant
+</span>}
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-2306" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-2306" class="rule-toggle" value="RSPEC-2306"></input>
+        <label for="toggle_RSPEC-2306" class="toggle" id="label_RSPEC-2306">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          &quot;async&quot; and &quot;await&quot; should not be used as identifiers
+          <a href="#RSPEC-2306"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>Since C# 5.0, <tt>async</tt> and <tt>await</tt> are contextual keywords. Contextual keywords do have a particular meaning in some contexts, but can still be used as variable names. Keywords, on the other hand, are always reserved, and therefore are not valid variable names. To avoid any confusion though, it is best to not use <tt>async</tt> and <tt>await</tt> as identifiers.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-object">int</span> await = 42; <span class="code-comment">// Noncompliant</span>
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-object">int</span> someOtherName = 42;
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-3875" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-3875" class="rule-toggle" value="RSPEC-3875"></input>
+        <label for="toggle_RSPEC-3875" class="toggle" id="label_RSPEC-3875">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          &quot;operator==&quot; should not be overloaded on reference types
+          <a href="#RSPEC-3875"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>The use of <tt>==</tt> to compare to objects is expected to do a reference comparison. That is, it is expected to return <tt>true</tt> if and only if they are the same object instance. Overloading the operator to do anything else will inevitably lead to the introduction of bugs by callers. On the other hand, overloading it to do exactly that is pointless; that's what <tt>==</tt> does by default.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> <span class="code-keyword">static</span> bool <span class="code-keyword">operator</span>== (MyType x, MyType y) <span class="code-comment">// Noncompliant
+</span>{
+</pre>
+</div></div>
+
+<h2><a name="Exceptions"></a>Exceptions</h2>
+<ul>
+	<li>Classes with overloaded <tt>operator +</tt> or <tt>operator -</tt> methods are ignored.</li>
+	<li>Classes that implement <tt>IComparable&lt;T&gt;</tt> or <tt>IEquatable&lt;T&gt;</tt> most probably behave as a value-type objects and so are ignored.</li>
+</ul>
+
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-3237" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-3237" class="rule-toggle" value="RSPEC-3237"></input>
+        <label for="toggle_RSPEC-3237" class="toggle" id="label_RSPEC-3237">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          &quot;value&quot; parameters should be used
+          <a href="#RSPEC-3237"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>In property and indexer <tt>set</tt> methods, and in event <tt>add</tt> and <tt>remove</tt> methods, the implicit <tt>value</tt> parameter holds the value the accessor was called with. Not using the <tt>value</tt> means that the accessor ignores the caller's intent which could cause unexpected results at runtime.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">private</span> <span class="code-object">int</span> count;
+<span class="code-keyword">public</span> <span class="code-object">int</span> Count
+{
+  get { <span class="code-keyword">return</span> count; }
+  set { count = 42; } <span class="code-comment">// Noncompliant 
+</span>}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">private</span> <span class="code-object">int</span> count;
+<span class="code-keyword">public</span> <span class="code-object">int</span> Count
+{
+  get { <span class="code-keyword">return</span> count; }
+  set { count = value; }
+}
+</pre>
+</div></div>
+
+<p>or</p>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> <span class="code-object">int</span> Count
+{
+  get { <span class="code-keyword">return</span> count; }
+  set { <span class="code-keyword">throw</span> <span class="code-keyword">new</span> InvalidOperationException(); }
+}
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-2368" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-2368" class="rule-toggle" value="RSPEC-2368"></input>
+        <label for="toggle_RSPEC-2368" class="toggle" id="label_RSPEC-2368">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Public methods should not have multidimensional array parameters
+          <a href="#RSPEC-2368"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> class Program
+{
+    <span class="code-keyword">public</span> void WriteMatrix(<span class="code-object">int</span>[][] matrix) <span class="code-comment">// Non-Compliant
+</span>    {
+    }
+}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> class Matrix
+{
+    <span class="code-comment">// ...
+</span>}
+
+<span class="code-keyword">public</span> class Program
+{
+    <span class="code-keyword">public</span> void WriteMatrix(Matrix matrix) <span class="code-comment">// Compliant
+</span>    {
+    }
+}
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-2278" class="rule filter_Vulnerability_Detection filter_CERT filter_CWE filter_OWASP filter_SANS Top 25 ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-2278" class="rule-toggle" value="RSPEC-2278"></input>
+        <label for="toggle_RSPEC-2278" class="toggle" id="label_RSPEC-2278">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Neither DES (Data Encryption Standard) nor DESede (3DES) should be used
+          <a href="#RSPEC-2278"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+using (<span class="code-keyword">var</span> tripleDES = <span class="code-keyword">new</span> TripleDESCryptoServiceProvider()) <span class="code-comment">//Noncompliant
+</span>{
+  <span class="code-comment">//...
+</span>}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+using (<span class="code-keyword">var</span> aes = <span class="code-keyword">new</span> AesCryptoServiceProvider())
+{
+  <span class="code-comment">//...
+</span>}
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-2190" class="rule filter_Bug_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-2190" class="rule-toggle" value="RSPEC-2190"></input>
+        <label for="toggle_RSPEC-2190" class="toggle" id="label_RSPEC-2190">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Recursion should not be infinite
+          <a href="#RSPEC-2190"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-object">int</span> Pow(<span class="code-object">int</span> num, <span class="code-object">int</span> exponent)   <span class="code-comment">// Noncompliant; no condition under which pow isn't re-called
+</span>{
+  num = num * Pow(num, exponent-1);
+  <span class="code-keyword">return</span> num;  <span class="code-comment">// <span class="code-keyword">this</span> is never reached
+</span>}
+
+void InternalRecursion(<span class="code-object">int</span> i)  
+{
+  start:
+    <span class="code-keyword">goto</span> end;
+  end:
+    <span class="code-keyword">goto</span> start; <span class="code-comment">// Noncompliant; there's no way to <span class="code-keyword">break</span> out of <span class="code-keyword">this</span> method
+</span>}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-object">int</span> Pow(<span class="code-object">int</span> num, <span class="code-object">int</span> exponent) 
+{
+  <span class="code-keyword">if</span> (exponent &gt; 1) <span class="code-comment">// recursion now conditional and stop-able
+</span>  {  
+    num = num * Pow(num, exponent-1);
+  }
+  <span class="code-keyword">return</span> num;
+}
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-2178" class="rule filter_Code_Smell_Detection filter_CERT ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-2178" class="rule-toggle" value="RSPEC-2178"></input>
+        <label for="toggle_RSPEC-2178" class="toggle" id="label_RSPEC-2178">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Short-circuit logic should be used in boolean contexts
+          <a href="#RSPEC-2178"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">if</span> (GetTrue() | GetFalse()) <span class="code-comment">// Noncompliant; both sides evaluated
+</span>{
+}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">if</span> (GetTrue() || GetFalse()) <span class="code-comment">// <span class="code-keyword">true</span> <span class="code-object">short</span>-circuit logic
+</span>{
+}
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-2275" class="rule filter_Bug_Detection filter_CERT ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-2275" class="rule-toggle" value="RSPEC-2275"></input>
+        <label for="toggle_RSPEC-2275" class="toggle" id="label_RSPEC-2275">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Composite format strings should not lead to unexpected behavior at runtime
+          <a href="#RSPEC-2275"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>Because composite format strings are interpreted at runtime, rather than validated by the compiler, they can contain errors that lead to unexpected behaviors or runtime errors. This rule statically validates the good behavior of composite formats when calling the methods of <tt>String.Format</tt>, <tt>StringBuilder.AppendFormat</tt>, <tt>Console.Write</tt>, <tt>Console.WriteLine</tt>, <tt>TextWriter.Write</tt>, <tt>TextWriter.WriteLine</tt>, <tt>Debug.WriteLine(String, Object[])</tt>, <tt>Trace.TraceError(String, Object[])</tt>, <tt>Trace.TraceInformation(String, Object[])</tt>, <tt>Trace.TraceWarning(String, Object[])</tt> and <tt>TraceSource.TraceInformation(String, Object[])</tt>. </p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+s = string.Format(<span class="code-quote">"[0}"</span>, arg0); 
+s = string.Format(<span class="code-quote">"{{0}"</span>, arg0);
+s = string.Format(<span class="code-quote">"{0}}"</span>, arg0);
+s = string.Format(<span class="code-quote">"{-1}"</span>, arg0);
+s = string.Format(<span class="code-quote">"{0} {1}"</span>, arg0);
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+s = string.Format(<span class="code-quote">"{0}"</span>, 42); <span class="code-comment">// Compliant
+</span>s = string.Format(<span class="code-quote">"{0,10}"</span>, 42); <span class="code-comment">// Compliant
+</span>s = string.Format(<span class="code-quote">"{0,-10}"</span>, 42); <span class="code-comment">// Compliant
+</span>s = string.Format(<span class="code-quote">"{0:0000}"</span>, 42); <span class="code-comment">// Compliant
+</span>s = string.Format(<span class="code-quote">"{2}-{0}-{1}"</span>, 1, 2, 3); <span class="code-comment">// Compliant
+</span>s = string.Format(<span class="code-quote">"no format"</span>); <span class="code-comment">// Compliant</span>
+</pre>
+</div></div>
+
+<h2><a name="Exceptions"></a>Exceptions</h2>
+<ul>
+	<li>No issue is raised if the format string is not a <tt>const</tt>.
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">var</span> pattern = <span class="code-quote">"{0} {1} {2}"</span>;
+<span class="code-keyword">var</span> res = string.Format(pattern, 1, 2); <span class="code-comment">// Compliant, not <span class="code-keyword">const</span> string are not recognized</span>
+</pre>
+</div></div></li>
+	<li>No issue is raised if the argument is not an inline creation array.
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">var</span> array = <span class="code-keyword">new</span> <span class="code-object">int</span>[] {};
+<span class="code-keyword">var</span> res = string.Format(<span class="code-quote">"{0} {1}"</span>, array); <span class="code-comment">// Compliant we don't know the size of the array</span>
+</pre>
+</div></div></li>
+	<li>This rule doesn't check whether the format specifier (defined after the <tt>:</tt>) is actually valid.</li>
+</ul>
+
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-3877" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-3877" class="rule-toggle" value="RSPEC-3877"></input>
+        <label for="toggle_RSPEC-3877" class="toggle" id="label_RSPEC-3877">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Exceptions should not be thrown from unexpected methods
+          <a href="#RSPEC-3877"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>It is expected that some methods should be called with caution, but others, such as <tt>ToString</tt>, are expected to "just work". Throwing an exception from such a method is likely to break callers' code unexpectedly.</p>
+
+<p>An issue is raised when an exception is thrown from any of the following: </p>
+<ul>
+	<li>Event accessors</li>
+	<li><tt>Object.Equals</tt></li>
+	<li><tt>IEquatable.Equals</tt></li>
+	<li><tt>GetHashCode</tt></li>
+	<li><tt>ToString</tt></li>
+	<li><tt>static</tt> constructors</li>
+	<li><tt>IDisposable.Dispose</tt></li>
+	<li><tt>operator ==, !=, &lt;, &gt;, &lt;=, &gt;=</tt></li>
+	<li><tt>implicit</tt> cast operators</li>
+</ul>
+
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> override string ToString()
+{
+  <span class="code-keyword">if</span> (string.IsNullOrEmpty(Name)) 
+  {
+    <span class="code-keyword">throw</span> <span class="code-keyword">new</span> ArgumentException(<span class="code-quote">"..."</span>);  <span class="code-comment">// Noncompliant
+</span>  }
+  <span class="code-comment">//...</span>
+</pre>
+</div></div>
+
+<h2><a name="Exceptions"></a>Exceptions</h2>
+<p><tt>System.NotImplementedException</tt> and its derivatives are ignored.<br/>
+<tt>System.InvalidOperationException</tt>, <tt>System.NotSupportedException</tt>, and <tt>System.ArgumentException</tt> and their derivatives are ignored in event accessors.</p>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-3427" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-3427" class="rule-toggle" value="RSPEC-3427"></input>
+        <label for="toggle_RSPEC-3427" class="toggle" id="label_RSPEC-3427">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Method overloads with default parameter values should not overlap 
+          <a href="#RSPEC-3427"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>The rules for method resolution are complex and perhaps not properly understood by all coders. Having overloads with optional parameter values makes the matter even harder to understand. </p>
+
+<p>This rule raises an issue when an overload with default parameter values is hidden by one without the optional parameters. </p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> class MyClass
+{
+  void Print(string[] messages) {...} 
+  void Print(string[] messages, string delimiter = <span class="code-quote">"\n"</span>) {...} <span class="code-comment">// Noncompliant; <span class="code-keyword">default</span> parameter value is hidden by overload
+</span>}
+
+<span class="code-comment">// ...
+</span>MyClass myClass = <span class="code-keyword">new</span> MyClass();
+
+myClass.Print(<span class="code-keyword">new</span> string[3] {<span class="code-quote">"yes"</span>, <span class="code-quote">"no"</span>, <span class="code-quote">"maybe"</span>});  <span class="code-comment">// which version of Print will be called?</span>
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-2953" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-2953" class="rule-toggle" value="RSPEC-2953"></input>
+        <label for="toggle_RSPEC-2953" class="toggle" id="label_RSPEC-2953">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Methods named &quot;Dispose&quot; should implement &quot;IDisposable.Dispose&quot;
+          <a href="#RSPEC-2953"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p><tt>Dispose</tt> as a method name should be used exclusively to implement <tt>IDisposable.Dispose</tt> to prevent any confusion.</p>
+
+<p>It may be tempting to create a <tt>Dispose</tt> method for other purposes, but doing so will result in confusion and likely lead to problems in production.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> class GarbageDisposal 
+{
+  <span class="code-keyword">private</span> <span class="code-object">int</span> Dispose()  <span class="code-comment">// Noncompliant
+</span>  {
+    <span class="code-comment">// ...
+</span>  }
+}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> class GarbageDisposal : IDisposable
+{
+  <span class="code-keyword">public</span> void Dispose() 
+  {
+    <span class="code-comment">// ...
+</span>  }
+}
+</pre>
+</div></div>
+<p>or</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> class GarbageDisposal 
+{
+  <span class="code-keyword">private</span> <span class="code-object">int</span> Grind()
+  {
+    <span class="code-comment">// ...
+</span>  }
+}
+</pre>
+</div></div>
+
+<h2><a name="Exceptions"></a>Exceptions</h2>
+<p>Methods named <tt>Dispose</tt> and invoked from the <tt>IDisposable.Dispose</tt> implementation are not reported.</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> class GarbageDisposal  :  IDisposable
+{
+  <span class="code-keyword">protected</span> virtual void Dispose(bool disposing)
+  {
+    <span class="code-comment">//...
+</span>  }
+  <span class="code-keyword">public</span> void Dispose() 
+  {
+    Dispose(<span class="code-keyword">true</span>);
+    GC.SuppressFinalize(<span class="code-keyword">this</span>);
+  }
+}
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-3889" class="rule filter_Bug_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-3889" class="rule-toggle" value="RSPEC-3889"></input>
+        <label for="toggle_RSPEC-3889" class="toggle" id="label_RSPEC-3889">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Neither &quot;Thread.Resume&quot; nor &quot;Thread.Suspend&quot; should be used
+          <a href="#RSPEC-3889"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p><tt>Thread.Suspend</tt> and <tt>Thread.Resume</tt> can give unpredictable results, and both methods have been deprecated. Indeed, if <tt>Thread.Suspend</tt> is not used very carefully, a thread can be suspended while holding a lock, thus leading to a deadlock. Other safer synchronization mechanisms should be used, such as <tt>Monitor</tt>, <tt>Mutex</tt>, and <tt>Semaphore</tt>.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">static</span> void Main(string[] args)
+{
+  <span class="code-comment">// ...
+</span>  <span class="code-object">Thread</span>.CurrentThread.Suspend(); <span class="code-comment">// Noncompliant
+</span>  <span class="code-object">Thread</span>.CurrentThread.Resume(); <span class="code-comment">// Noncompliant
+</span>}
+</pre>
+</div></div>
+
+<h2><a name="See"></a>See</h2>
+<ul>
+	<li><a href="https://msdn.microsoft.com/en-us/library/system.threading.thread.resume.aspx" class="external-link" rel="nofollow">Thread.Resume Method ()</a></li>
+	<li><a href="https://msdn.microsoft.com/en-us/library/system.threading.thread.suspend(v=vs.110).aspx" class="external-link" rel="nofollow">Thread.Suspend Method ()</a></li>
+</ul>
+
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-2437" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-2437" class="rule-toggle" value="RSPEC-2437"></input>
+        <label for="toggle_RSPEC-2437" class="toggle" id="label_RSPEC-2437">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Silly bit operations should not be performed
+          <a href="#RSPEC-2437"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>Certain bit operations are just silly and should not be performed because their results are predictable.</p>
+
+<p>Specifically, using <tt>&amp; -1</tt> with any value will always result in the original value, as will <tt>anyValue ^ 0</tt> and <tt>anyValue | 0</tt>.</p>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-3443" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-3443" class="rule-toggle" value="RSPEC-3443"></input>
+        <label for="toggle_RSPEC-3443" class="toggle" id="label_RSPEC-3443">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Type should not be examined on &quot;System.Type&quot; instances
+          <a href="#RSPEC-3443"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>If you call <tt>GetType()</tt> on a <tt>Type</tt> variable, the return value will always be <tt>typeof(System.Type)</tt>. So there's no real point in making that call. The same applies to passing a type argument to <tt>IsInstanceOfType</tt>. In both cases the results are entirely predictable.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">var</span> type = typeof(<span class="code-object">int</span>);
+<span class="code-keyword">var</span> ttype = type.GetType(); <span class="code-comment">//Noncompliant, always typeof(<span class="code-object">System</span>.Type)
+</span>
+<span class="code-keyword">var</span> s = <span class="code-quote">"abc"</span>;
+
+<span class="code-keyword">if</span> (s.GetType().IsInstanceOfType(typeof(string))) <span class="code-comment">//Noncompliant; <span class="code-keyword">false</span>
+</span>{ /* ... */ }
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">var</span> s = <span class="code-quote">"abc"</span>;
+
+<span class="code-keyword">if</span> (s.GetType().IsInstanceOfType(<span class="code-quote">"ssss"</span>))
+{ /* ... */ }
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-3217" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-3217" class="rule-toggle" value="RSPEC-3217"></input>
+        <label for="toggle_RSPEC-3217" class="toggle" id="label_RSPEC-3217">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          &quot;Explicit&quot; conversions of &quot;foreach&quot; loops should not be used
+          <a href="#RSPEC-3217"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>The <tt>foreach</tt> statement was introduced in the C# language prior to generics to make it easier to work with the non-generic collections available at that time such as <tt>ArrayList</tt>. The <tt>foreach</tt> statements allows you to downcast elements of a collection of <tt>Object}}s to any other type. The problem is that to achieve the cast, the {{foreach</tt> statements silently performs <tt>explicit</tt> type conversion, which at runtime can result in an <tt>InvalidCastException</tt>.</p>
+
+<p>C# code iterating on generic collections or arrays should not rely on <tt>foreach</tt> statement's silent <tt>explicit</tt> conversions.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> class Fruit { }
+<span class="code-keyword">public</span> class Orange : Fruit { }
+<span class="code-keyword">public</span> class Apple : Fruit { }
+
+class MyTest
+{
+  <span class="code-keyword">public</span> void Test()
+  {
+    <span class="code-keyword">var</span> fruitBasket = <span class="code-keyword">new</span> List&lt;Fruit&gt;();
+    fruitBasket.Add(<span class="code-keyword">new</span> Orange());
+    fruitBasket.Add(<span class="code-keyword">new</span> Orange());
+    <span class="code-comment">// fruitBasket.Add(<span class="code-keyword">new</span> Apple());  // uncommenting <span class="code-keyword">this</span> line will make both foreach below <span class="code-keyword">throw</span> an InvalidCastException
+</span>
+    foreach (Fruit fruit in fruitBasket) 
+    {
+      <span class="code-keyword">var</span> orange = (Orange)fruit; <span class="code-comment">// This <span class="code-quote">"explicit"</span> conversion is hidden within the foreach loop below
+</span>      ...
+    }
+
+    foreach (Orange orange in fruitBasket) <span class="code-comment">// Noncompliant
+</span>    {
+      ...
+    } 
+  }
+}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">var</span> fruitBasket = <span class="code-keyword">new</span> List&lt;Orange&gt;();
+fruitBasket.Add(<span class="code-keyword">new</span> Orange());
+fruitBasket.Add(<span class="code-keyword">new</span> Orange());
+<span class="code-comment">// fruitBasket.Add(<span class="code-keyword">new</span> Apple());  // uncommenting <span class="code-keyword">this</span> line won't compile
+</span>
+foreach (Orange orange in fruitBasket)
+{
+  ...
+} 
+</pre>
+</div></div>
+
+<p>or</p>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">var</span> fruitBasket = <span class="code-keyword">new</span> List&lt;Fruit&gt;();
+fruitBasket.Add(<span class="code-keyword">new</span> Orange());
+fruitBasket.Add(<span class="code-keyword">new</span> Orange());
+fruitBasket.Add(<span class="code-keyword">new</span> Apple());
+
+foreach (Orange orange in fruitBasket.OfType&lt;Orange&gt;())
+{
+  ...
+} 
+</pre>
+</div></div>
+
+<h2><a name="Exceptions"></a>Exceptions</h2>
+<p>The rule ignores iterations on collections of <tt>object}}s. This includes legacy code that uses {{ArrayList</tt>. Furthermore, the rule does not report on cases when user defined conversions are being called. </p>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-3925" class="rule filter_Bug_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-3925" class="rule-toggle" value="RSPEC-3925"></input>
+        <label for="toggle_RSPEC-3925" class="toggle" id="label_RSPEC-3925">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          &quot;ISerializable&quot; should be implemented correctly
+          <a href="#RSPEC-3925"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>The <tt>ISerializable</tt> interface is the mechanism to control the type serialization process. If not implemented correctly this could result in an invalid serialization and hard to detect bugs.</p>
+
+<p>This rules raises an issue on types that implement <tt>ISerializable</tt> without following the serialization pattern recommended by Microsoft.</p>
+
+<p>Specifically this rule checks for these problems:</p>
+<ul>
+	<li>The <tt>System.SerializableAttribute</tt> attribute is missing.</li>
+	<li>Non-serializable fields are not marked with the <tt>System.NonSerializedAttribute</tt> attribute.</li>
+	<li>There is no serialization constructor.</li>
+	<li>An unsealed type has a serialization constructor that is not <tt>protected</tt>.</li>
+	<li>A sealed type has a serialization constructor that is not <tt>private</tt>.</li>
+	<li>An unsealed type has a <tt>ISerializable.GetObjectData</tt> that is not both <tt>public</tt> and <tt>virtual</tt>.</li>
+	<li>A derived type has a serialization constructor that does not call the <tt>base</tt> constructor.</li>
+	<li>A derived type has a <tt>ISerializable.GetObjectData</tt> method that does not call the <tt>base</tt> method.</li>
+	<li>A derived type has serializable fields but the <tt>ISerializable.GetObjectData</tt> method is not overridden.</li>
+</ul>
+
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> class Foo : ISerializable <span class="code-comment">// Noncompliant the [Serializable] attribute is missing
+</span>{
+}
+</pre>
+</div></div>
+<p>or</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> class Bar
+{
+}
+
+[Serializable]
+<span class="code-keyword">public</span> class Foo : ISerializable <span class="code-comment">// Noncompliant the serialization constructor is missing
+</span>{
+    <span class="code-keyword">private</span> readonly Bar bar; <span class="code-comment">// Noncompliant the field is not marked with [NonSerialized]
+</span>}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> class Bar
+{
+}
+
+[Serializable]
+<span class="code-keyword">public</span> class Foo : ISerializable
+{
+    [NonSerialized]
+    <span class="code-keyword">private</span> readonly Bar bar;
+
+    <span class="code-keyword">public</span> Foo()
+    {
+        <span class="code-comment">// ...
+</span>    }
+
+    <span class="code-keyword">protected</span> Foo(SerializationInfo info, StreamingContext context)
+    {
+        <span class="code-comment">// ...
+</span>    }
+
+    <span class="code-keyword">public</span> virtual void GetObjectData(SerializationInfo info, StreamingContext context)
+    {
+        <span class="code-comment">// ...
+</span>    }
+}
+
+[Serializable]
+<span class="code-keyword">public</span> sealed class SubFoo : Foo
+{
+    <span class="code-keyword">private</span> <span class="code-object">int</span> val;
+
+    <span class="code-keyword">public</span> SubFoo()
+    {
+        <span class="code-comment">// ...
+</span>    }
+
+    <span class="code-keyword">private</span> SubFoo(SerializationInfo info, StreamingContext context)
+        : base(info, context)
+    {
+        <span class="code-comment">// ...
+</span>    }
+
+    <span class="code-keyword">public</span> override void GetObjectData(SerializationInfo info, StreamingContext context)
+    {
+        base.GetObjectData(info, context);
+        <span class="code-comment">// ...
+</span>    }
+}
+</pre>
+</div></div>
+
+
+<h2><a name="Exceptions"></a>Exceptions</h2>
+
+<ul>
+	<li>Classes in test projects are not checked.</li>
+</ul>
+
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-3451" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-3451" class="rule-toggle" value="RSPEC-3451"></input>
+        <label for="toggle_RSPEC-3451" class="toggle" id="label_RSPEC-3451">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          &quot;[DefaultValue]&quot; should not be used when &quot;[DefaultParameterValue]&quot; is meant
+          <a href="#RSPEC-3451"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>The use of <tt><span class="error">&#91;DefaultValue&#93;</span></tt> with <tt><span class="error">&#91;Optional&#93;</span></tt> has no more effect than <tt><span class="error">&#91;Optional&#93;</span></tt> alone. That's because <tt><span class="error">&#91;DefaultValue&#93;</span></tt> doesn't actually do anything; it merely indicates the intent for the value. More than likely, <tt><span class="error">&#91;DefaultValue&#93;</span></tt> was used in confusion instead of <tt><span class="error">&#91;DefaultParameterValue&#93;</span></tt>.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+class MyClass
+{
+    <span class="code-keyword">public</span> void DoStuff([Optional][DefaultValue(4)]<span class="code-object">int</span> i, <span class="code-object">int</span> j = 5)  <span class="code-comment">// Noncompliant
+</span>    {
+        Console.WriteLine(i);
+    }
+
+    <span class="code-keyword">public</span> <span class="code-keyword">static</span> void Main()
+    {
+        <span class="code-keyword">new</span> MyClass().DoStuff(); <span class="code-comment">// prints 0
+</span>    }
+}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+class MyClass
+{
+    <span class="code-keyword">public</span> void DoStuff([Optional][DefaultParameterValue(4)]<span class="code-object">int</span> i, <span class="code-object">int</span> j = 5) 
+    {
+        Console.WriteLine(i);
+    }
+
+    <span class="code-keyword">public</span> <span class="code-keyword">static</span> void Main()
+    {
+        <span class="code-keyword">new</span> MyClass().DoStuff(); <span class="code-comment">// prints 4
+</span>    }
+}
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-3447" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-3447" class="rule-toggle" value="RSPEC-3447"></input>
+        <label for="toggle_RSPEC-3447" class="toggle" id="label_RSPEC-3447">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          &quot;[Optional]&quot; should not be used on &quot;ref&quot; or &quot;out&quot; parameters
+          <a href="#RSPEC-3447"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>The use of <tt>ref</tt> or <tt>out</tt> in combination with <tt><span class="error">&#91;Optional&#93;</span></tt> is both confusing and contradictory. <tt><span class="error">&#91;Optional&#93;</span></tt> indicates that the parameter doesn't have to be provided, while <tt>out</tt> and <tt>ref</tt> mean that the parameter will be used to return data to the caller (<tt>ref</tt> additionally indicates that the parameter may also be used to pass data into the method).</p>
+
+<p>Thus, making it <tt><span class="error">&#91;Optional&#93;</span></tt> to provide the parameter in which you will be passing back the method results doesn't make sense. In fact, the compiler will raise an error on such code. Unfortunately, it raises the error on method calls where the <tt><span class="error">&#91;Optional&#93;</span></tt> parameter has been omitted, not the source of the problem, the method declaration. </p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+class MyClass
+{
+    <span class="code-keyword">public</span> void DoStuff([Optional] ref <span class="code-object">int</span> i) <span class="code-comment">// Noncompliant
+</span>    {
+        Console.WriteLine(i);
+    }
+
+    <span class="code-keyword">public</span> <span class="code-keyword">static</span> void Main()
+    {
+        <span class="code-keyword">new</span> MyClass().DoStuff(); <span class="code-comment">// This doesn't compile, CS7036 shows
+</span>    }
+}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+class MyClass
+{
+  <span class="code-keyword">public</span> void DoStuff(ref <span class="code-object">int</span> i)
+  {
+    Console.WriteLine(i);
+  }
+
+  <span class="code-keyword">public</span> <span class="code-keyword">static</span> void Main()
+  {
+    <span class="code-keyword">var</span> i = 42;
+    <span class="code-keyword">new</span> MyClass().DoStuff(ref i); 
+  }
+}
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-3600" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-3600" class="rule-toggle" value="RSPEC-3600"></input>
+        <label for="toggle_RSPEC-3600" class="toggle" id="label_RSPEC-3600">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          &quot;params&quot; should not be introduced on overrides
+          <a href="#RSPEC-3600"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>Adding <tt>params</tt> to a method override has no effect. The compiler accepts it, but the callers won't be able to benefit from the added modifier.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+class Base
+{
+  <span class="code-keyword">public</span> virtual void Method(<span class="code-object">int</span>[] numbers)
+  {
+    ...
+  }
+}
+class Derived : Base
+{
+  <span class="code-keyword">public</span> override void Method(params <span class="code-object">int</span>[] numbers) <span class="code-comment">// Noncompliant, method can't be called with params syntax.
+</span>  {
+    ...
+  }
+}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+class Base
+{
+  <span class="code-keyword">public</span> virtual void Method(<span class="code-object">int</span>[] numbers)
+  {
+    ...
+  }
+}
+class Derived : Base
+{
+  <span class="code-keyword">public</span> override void Method(<span class="code-object">int</span>[] numbers)
+  {
+    ...
+  }
+}
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-3904" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-3904" class="rule-toggle" value="RSPEC-3904"></input>
+        <label for="toggle_RSPEC-3904" class="toggle" id="label_RSPEC-3904">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Assemblies should have version information
+          <a href="#RSPEC-3904"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>If no <tt>AssemblyVersionAttribute</tt> is provided, the same default version will be used for every build. Since the version number is used by The .NET Framework to uniquely identify an assembly this can lead to broken dependencies.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+using <span class="code-object">System</span>;
+using <span class="code-object">System</span>.Reflection;
+
+[assembly: AssemblyTitle(<span class="code-quote">"MyAssembly"</span>)] <span class="code-comment">// Noncompliant
+</span>
+namespace MyLibrary
+{
+}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+using <span class="code-object">System</span>;
+using <span class="code-object">System</span>.Reflection;
+
+[assembly: AssemblyTitle(<span class="code-quote">"MyAssembly"</span>)] 
+[assembly: AssemblyVersionAttribute(<span class="code-quote">"1.2.125.0"</span>)]
+
+namespace MyLibrary
+{
+}
+</pre>
+</div></div>
+
+<h2><a name="See"></a>See</h2>
+<p><a href="https://msdn.microsoft.com/en-us/library/51ket42z.aspx" class="external-link" rel="nofollow">Assembly Versioning (MSDN)</a></p>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-2365" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-2365" class="rule-toggle" value="RSPEC-2365"></input>
+        <label for="toggle_RSPEC-2365" class="toggle" id="label_RSPEC-2365">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Properties should not make collection or array copies
+          <a href="#RSPEC-2365"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>Most developers expect property access to be as efficient as field access. However, if a property returns a copy of an array or collection, it will be much slower than a simple field access, contrary to the caller's likely expectations. Therefore, such properties should be refactored into methods so that callers are not surprised by unexpectedly poor performance.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">private</span> List&lt;string&gt; _foo = <span class="code-keyword">new</span> List&lt;string&gt; { <span class="code-quote">"a"</span>, <span class="code-quote">"b"</span>, <span class="code-quote">"c"</span> };
+<span class="code-keyword">public</span> IEnumerable&lt;string&gt; Foo  <span class="code-comment">// Noncompliant
+</span>{ 
+    get
+    {
+        <span class="code-keyword">return</span> _foo.ToList(); 
+    }
+}
+
+<span class="code-keyword">private</span> string[] _bar = <span class="code-keyword">new</span> string[] { <span class="code-quote">"a"</span>, <span class="code-quote">"b"</span>, <span class="code-quote">"c"</span> };
+<span class="code-keyword">public</span> IEnumerable&lt;string&gt; Bar <span class="code-comment">// Noncompliant
+</span>{ 
+    get
+    {
+        <span class="code-keyword">return</span> (string[])_bar.Clone(); 
+    } 
+}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">private</span> List&lt;string&gt; _foo = <span class="code-keyword">new</span> List&lt;string&gt; { <span class="code-quote">"a"</span>, <span class="code-quote">"b"</span>, <span class="code-quote">"c"</span> };
+<span class="code-keyword">private</span> string[] _bar = <span class="code-keyword">new</span> string[] { <span class="code-quote">"a"</span>, <span class="code-quote">"b"</span>, <span class="code-quote">"c"</span> };
+
+<span class="code-keyword">public</span> IEnumerable&lt;string&gt; GetFoo()
+{ 
+    <span class="code-keyword">return</span> _foo.ToList();
+}
+
+<span class="code-keyword">public</span> IEnumerable&lt;string&gt; GetBar()
+{
+    <span class="code-keyword">return</span> (string[])_bar.Clone();
+}
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-2346" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-2346" class="rule-toggle" value="RSPEC-2346"></input>
+        <label for="toggle_RSPEC-2346" class="toggle" id="label_RSPEC-2346">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Flags enumerations zero-value members should be named &quot;None&quot;
+          <a href="#RSPEC-2346"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+[Flags]
+<span class="code-keyword">enum</span> FruitType
+{
+    <span class="code-object">Void</span> = 0,        <span class="code-comment">// Non-Compliant
+</span>    Banana = 1,
+    Orange = 2,
+    Strawberry = 4
+}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+[Flags]
+<span class="code-keyword">enum</span> FruitType
+{
+    None = 0,        <span class="code-comment">// Compliant
+</span>    Banana = 1,
+    Orange = 2,
+    Strawberry = 4
+}
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-1944" class="rule filter_Bug_Detection filter_CERT filter_CWE filter_MISRA ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-1944" class="rule-toggle" value="RSPEC-1944"></input>
+        <label for="toggle_RSPEC-1944" class="toggle" id="label_RSPEC-1944">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Inappropriate casts should not be made
+          <a href="#RSPEC-1944"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>Inappropriate casts are issues that will lead to unexpected behavior or runtime errors, such as {{InvalidCastException}}s. The compiler will catch bad casts from one class to another, but not bad casts to interfaces. Nor will it catch nullable values that are known to be null but that are cast to their underlying value types anyway.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> <span class="code-keyword">interface</span> IMyInterface 
+{ /* ... */ }
+
+<span class="code-keyword">public</span> class Implementer : IMyInterface
+{ /* ... */ }
+
+<span class="code-keyword">public</span> class MyClass
+{ /* ... */ }
+
+<span class="code-keyword">public</span> <span class="code-keyword">static</span> class Program
+{
+  <span class="code-keyword">public</span> <span class="code-keyword">static</span> void Main()
+  {
+    <span class="code-keyword">var</span> myclass = <span class="code-keyword">new</span> MyClass();
+    <span class="code-keyword">var</span> x = (IMyInterface) myclass; <span class="code-comment">// Noncompliant, InvalidCastException is being thrown
+</span>    <span class="code-keyword">var</span> b = myclass is IMyInterface; <span class="code-comment">// Noncompliant, always <span class="code-keyword">false</span>
+</span>    
+    <span class="code-object">int</span>? i = <span class="code-keyword">null</span>;
+    <span class="code-keyword">var</span> ii = (<span class="code-object">int</span>)i; <span class="code-comment">// Noncompliant, InvalidOperationException is being thrown
+</span>  }
+}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> <span class="code-keyword">interface</span> IMyInterface 
+{ /* ... */ }
+
+<span class="code-keyword">public</span> class Implementer : IMyInterface
+{ /* ... */ }
+
+<span class="code-keyword">public</span> class MyClass
+{ /* ... */ }
+
+<span class="code-keyword">public</span> <span class="code-keyword">static</span> class Program
+{
+  <span class="code-keyword">public</span> <span class="code-keyword">static</span> void Main()
+  {
+    <span class="code-keyword">var</span> myclass = <span class="code-keyword">new</span> MyClass();
+    <span class="code-keyword">var</span> x = myclass as IMyInterface; <span class="code-comment">// Compliant, but will always be <span class="code-keyword">null</span>
+</span>    <span class="code-keyword">var</span> b = <span class="code-keyword">false</span>;
+    
+    <span class="code-object">int</span>? i = <span class="code-keyword">null</span>;
+    <span class="code-keyword">if</span> (i.HasValue)
+    {
+      <span class="code-keyword">var</span> ii = (<span class="code-object">int</span>)i;
+    }
+  }
+}
+</pre>
+</div></div>
+
+<h2><a name="Exceptions"></a>Exceptions</h2>
+<p>No issue is reported if the interface has no implementing class in the assembly.</p>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-1699" class="rule filter_Code_Smell_Detection filter_CERT ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-1699" class="rule-toggle" value="RSPEC-1699"></input>
+        <label for="toggle_RSPEC-1699" class="toggle" id="label_RSPEC-1699">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Constructors should only call non-overridable methods
+          <a href="#RSPEC-1699"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>Calling an overridable method from a constructor could result in failures or strange behaviors when instantiating a subclass which overrides the method.</p>
+
+<p>For example:</p>
+<ul>
+	<li>The subclass class constructor starts by calling the parent class constructor.</li>
+	<li>The parent class constructor calls the method, which has been overridden in the child class.</li>
+	<li>If the behavior of the child class method depends on fields that are initialized in the child class constructor, unexpected behavior (like a <tt>NullReferenceException</tt>) can result, because the fields aren't initialized yet.</li>
+</ul>
+
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> class Parent 
+{
+  <span class="code-keyword">public</span> Parent() 
+  {
+    DoSomething();  <span class="code-comment">// Noncompliant
+</span>  }
+
+  <span class="code-keyword">public</span> virtual void DoSomething() <span class="code-comment">// can be overridden
+</span>  {  
+    ...
+  }
+}
+
+<span class="code-keyword">public</span> class Child : Parent 
+{
+  <span class="code-keyword">private</span> string foo;
+
+  <span class="code-keyword">public</span> Child(string foo) <span class="code-comment">// leads to call DoSomething() in Parent constructor which triggers a NullReferenceException as foo has not yet been initialized
+</span>  {
+    <span class="code-keyword">this</span>.foo = foo;
+  }
+
+  <span class="code-keyword">public</span> override void DoSomething() 
+  {
+    Console.WriteLine(<span class="code-keyword">this</span>.foo.Length);
+  }
+}
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-1186" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-1186" class="rule-toggle" value="RSPEC-1186"></input>
+        <label for="toggle_RSPEC-1186" class="toggle" id="label_RSPEC-1186">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Methods should not be empty
+          <a href="#RSPEC-1186"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>There are several reasons for a method not to have a method body:</p>
+
+<ul>
+	<li>It is an unintentional omission, and should be fixed.</li>
+	<li>It is not yet, or never will be, supported. In this case a <tt>NotSupportedException</tt> should be thrown.</li>
+	<li>The method is an intentionally-blank override. In this case a nested comment should explain the reason for the blank override.</li>
+</ul>
+
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> override void DoSomething() 
+{
+}
+
+<span class="code-keyword">public</span> override void DoSomethingElse() 
+{
+}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> override void DoSomething() 
+{
+  <span class="code-comment">// Do nothing because of X and Y.
+</span>}
+
+<span class="code-keyword">public</span> override void DoSomethingElse() 
+{
+  <span class="code-keyword">throw</span> <span class="code-keyword">new</span> NotSupportedException();
+}
+</pre>
+</div></div>
+
+<h2><a name="Exceptions"></a>Exceptions</h2>
+<p>The following methods are ignored:</p>
+<ul>
+	<li>empty <tt>virtual</tt> methods,</li>
+	<li>empty methods that override an <tt>abstract</tt> method,</li>
+	<li>empty overrides in test assemblies.</li>
+</ul>
+
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-1163" class="rule filter_Code_Smell_Detection filter_CERT ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-1163" class="rule-toggle" value="RSPEC-1163"></input>
+        <label for="toggle_RSPEC-1163" class="toggle" id="label_RSPEC-1163">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Exceptions should not be thrown in finally blocks
+          <a href="#RSPEC-1163"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">try</span> 
+{
+  /* some work which end up throwing an exception */
+  <span class="code-keyword">throw</span> <span class="code-keyword">new</span> ArgumentException();
+} 
+<span class="code-keyword">finally</span> 
+{
+  /* clean up */
+  <span class="code-keyword">throw</span> <span class="code-keyword">new</span> InvalidOperationException();       <span class="code-comment">// Noncompliant; will mask the ArgumentException
+</span>}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">try</span>
+{
+  /* some work which end up throwing an exception */
+  <span class="code-keyword">throw</span> <span class="code-keyword">new</span> ArgumentException();
+} 
+<span class="code-keyword">finally</span> 
+{
+  /* clean up */                       <span class="code-comment">// Compliant
+</span>}
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-2696" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-2696" class="rule-toggle" value="RSPEC-2696"></input>
+        <label for="toggle_RSPEC-2696" class="toggle" id="label_RSPEC-2696">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Instance members should not write to &quot;static&quot; fields
+          <a href="#RSPEC-2696"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>Correctly updating a <tt>static</tt> field from a non-static method is tricky to get right and could easily lead to bugs if there are multiple class instances  and/or multiple threads in play. </p>
+
+<p>This rule raises an issue each time a <tt>static</tt> field is updated from a non-static method or property.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> class MyClass 
+{
+  <span class="code-keyword">private</span> <span class="code-keyword">static</span> <span class="code-object">int</span> count = 0;
+
+  <span class="code-keyword">public</span> void DoSomething() 
+  {
+    <span class="code-comment">//...
+</span>    count++;  <span class="code-comment">// Noncompliant
+</span>  }
+}
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-1215" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-1215" class="rule-toggle" value="RSPEC-1215"></input>
+        <label for="toggle_RSPEC-1215" class="toggle" id="label_RSPEC-1215">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          &quot;GC.Collect&quot; should not be called
+          <a href="#RSPEC-1215"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>Calling <tt>GC.Collect</tt> is rarely necessary, and can significantly affect application performance. That's because it triggers a blocking operation that examines <em>every object in memory</em> for cleanup. Further, you don't have control over when this blocking cleanup will actually run.</p>
+
+<p>As a general rule, the consequences of calling this method far outweigh the benefits unless perhaps you've just triggered some event that is unique in the run of your program that caused a lot of long-lived objects to die.</p>
+
+<p>This rule raises an issue when <tt>GC.Collect</tt> is invoked.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">static</span> void Main(string[] args)
+{
+  <span class="code-comment">// ...
+</span>  GC.Collect(2, GCCollectionMode.Optimized); <span class="code-comment">// Noncompliant
+</span>}
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-2692" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-2692" class="rule-toggle" value="RSPEC-2692"></input>
+        <label for="toggle_RSPEC-2692" class="toggle" id="label_RSPEC-2692">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          &quot;IndexOf&quot; checks should not be for positive numbers
+          <a href="#RSPEC-2692"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>Most checks against an <tt>IndexOf</tt> value compare it with -1 because 0 is a valid index. Any checks which look for values <tt>&gt;0</tt> ignore the first element, which is likely a bug. If the intent is merely to check inclusion of a value in a <tt>string</tt>, <tt>List</tt>, or an array, consider using the <tt>Contains</tt> method instead.</p>
+
+<p>This rule raises an issue when an <tt>IndexOf</tt> value retrieved from a <tt>string</tt>, <tt>List</tt>, or array is tested against <tt>&gt;0</tt>.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+string color = <span class="code-quote">"blue"</span>;
+string name = <span class="code-quote">"ishmael"</span>;
+
+List&lt;string&gt; strings = <span class="code-keyword">new</span> List&lt;string&gt;();
+strings.Add(color);
+strings.Add(name);
+string[] stringArray = strings.ToArray();
+
+<span class="code-keyword">if</span> (strings.IndexOf(color) &gt; 0) <span class="code-comment">// Noncompliant
+</span>{  
+  <span class="code-comment">// ...
+</span>}
+<span class="code-keyword">if</span> (name.IndexOf(<span class="code-quote">"ish"</span>) &gt; 0) <span class="code-comment">// Noncompliant
+</span>{ 
+  <span class="code-comment">// ...
+</span>}
+<span class="code-keyword">if</span> (name.IndexOf(<span class="code-quote">"ae"</span>) &gt; 0) <span class="code-comment">// Noncompliant
+</span>{ 
+  <span class="code-comment">// ...
+</span>}
+<span class="code-keyword">if</span> (Array.IndexOf(stringArray, color) &gt; 0) <span class="code-comment">// Noncompliant
+</span>{  
+  <span class="code-comment">// ...
+</span>}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+string color = <span class="code-quote">"blue"</span>;
+string name = <span class="code-quote">"ishmael"</span>;
+
+List&lt;string&gt; strings = <span class="code-keyword">new</span> List&lt;string&gt; ();
+strings.Add(color);
+strings.Add(name);
+string[] stringArray = strings.ToArray();
+
+<span class="code-keyword">if</span> (strings.IndexOf(color) &gt; -1) 
+{
+  <span class="code-comment">// ...
+</span>}
+<span class="code-keyword">if</span> (name.IndexOf(<span class="code-quote">"ish"</span>) &gt;= 0) 
+{
+  <span class="code-comment">// ...
+</span>}
+<span class="code-keyword">if</span> (name.Contains(<span class="code-quote">"ae"</span>))
+{
+  <span class="code-comment">// ...
+</span>}
+<span class="code-keyword">if</span> (Array.IndexOf(stringArray, color) &gt;= 0)
+{  
+  <span class="code-comment">// ...
+</span>}
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-927" class="rule filter_Code_Smell_Detection filter_CERT filter_MISRA ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-927" class="rule-toggle" value="RSPEC-927"></input>
+        <label for="toggle_RSPEC-927" class="toggle" id="label_RSPEC-927">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          &quot;partial&quot; method parameter names should match
+          <a href="#RSPEC-927"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>When the parameters to the implementation of a <tt>partial</tt> method don't match those in the signature declaration, then confusion is almost guaranteed. Either the implementer was confused when he renamed, swapped or mangled the parameter names in the implementation, or callers will be confused.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+partial class Point
+{
+  partial void MoveVertically(<span class="code-object">int</span> z);
+}
+
+partial class Point
+{
+  <span class="code-object">int</span> x = 0;
+  <span class="code-object">int</span> y = 0;
+  <span class="code-object">int</span> z = 0;
+
+  partial void MoveVertically(<span class="code-object">int</span> y)  <span class="code-comment">// Noncompliant
+</span>  {
+    <span class="code-keyword">this</span>.y = y;
+  }
+}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+partial class Point
+{
+  partial void MoveVertically(<span class="code-object">int</span> z);
+}
+
+partial class Point
+{
+  <span class="code-object">int</span> x = 0;
+  <span class="code-object">int</span> y = 0;
+  <span class="code-object">int</span> z = 0;
+
+  partial void MoveVertically(<span class="code-object">int</span> z)
+  {
+    <span class="code-keyword">this</span>.z = z;
+  }
+}
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-3776" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-3776" class="rule-toggle" value="RSPEC-3776"></input>
+        <label for="toggle_RSPEC-3776" class="toggle" id="label_RSPEC-3776">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Cognitive Complexity of methods should not be too high
+          <a href="#RSPEC-3776"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>Cognitive Complexity is a measure of how hard the control flow of a method is to understand. Methods with high Cognitive Complexity will be difficult to maintain.</p>
+
+<h2><a name="See"></a>See</h2>
+<ul>
+	<li><a href="http://redirect.sonarsource.com/doc/cognitive-complexity.html" class="external-link" rel="nofollow">Cognitive Complexity</a></li>
+</ul>
+
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-1006" class="rule filter_Code_Smell_Detection filter_CERT filter_MISRA ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-1006" class="rule-toggle" value="RSPEC-1006"></input>
+        <label for="toggle_RSPEC-1006" class="toggle" id="label_RSPEC-1006">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Method overrides should not change parameter defaults
+          <a href="#RSPEC-1006"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>Default arguments are determined by the static type of the object. If a default argument is different for a parameter in an overriding method, the value used in the call will be different when calls are made via the base or derived object, which may be contrary to developer expectations. </p>
+
+<p>Default parameter values are useless in explicit interface implementations, because the static type of the object will always be the implemented interface. Thus, specifying default values is useless and confusing.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> class Base
+{
+  <span class="code-keyword">public</span> virtual void Write(<span class="code-object">int</span> i = 42)
+  {
+    Console.WriteLine(i);
+  }
+}
+
+<span class="code-keyword">public</span> class Derived : Base
+{
+  <span class="code-keyword">public</span> override void Write(<span class="code-object">int</span> i = 5) <span class="code-comment">// Noncompliant
+</span>  {
+    Console.WriteLine(i);
+  }
+}
+
+<span class="code-keyword">public</span> class Program
+{
+  <span class="code-keyword">public</span> <span class="code-keyword">static</span> void Main()
+  {
+    <span class="code-keyword">var</span> derived = <span class="code-keyword">new</span> Derived();
+    derived.Write(); <span class="code-comment">// writes 5
+</span>    Print(derived);  <span class="code-comment">// writes 42; was that expected?
+</span>  }
+  <span class="code-keyword">private</span> void Print(Base item)
+  {
+    item.Write();
+  }
+}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> class Base
+{
+  <span class="code-keyword">public</span> virtual void Write(<span class="code-object">int</span> i = 42)
+  {
+    Console.WriteLine(i);
+  }
+}
+
+<span class="code-keyword">public</span> class Derived : Base
+{
+  <span class="code-keyword">public</span> override void Write(<span class="code-object">int</span> i = 42)
+  {
+    Console.WriteLine(i);
+  }
+}
+
+<span class="code-keyword">public</span> class Program
+{
+  <span class="code-keyword">public</span> <span class="code-keyword">static</span> void Main()
+  {
+    <span class="code-keyword">var</span> derived = <span class="code-keyword">new</span> Derived();
+    derived.Write(); <span class="code-comment">// writes 42
+</span>    Print(derived);  <span class="code-comment">// writes 42
+</span>  }
+  <span class="code-keyword">private</span> void Print(Base item)
+  {
+    item.Write();
+  }
+}
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-3871" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-3871" class="rule-toggle" value="RSPEC-3871"></input>
+        <label for="toggle_RSPEC-3871" class="toggle" id="label_RSPEC-3871">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Exception types should be &quot;public&quot;
+          <a href="#RSPEC-3871"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>The point of having custom exception types is to convey more information than is available in standard types. But custom exception types must be <tt>public</tt> for that to work. </p>
+
+<p>If a method throws a non-public exception, the best you can do on the caller's side is to <tt>catch</tt> the closest <tt>public</tt> base of the class. That is, you lose all that custom information you created the exception type to pass. </p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+internal class MyException : Exception   <span class="code-comment">// Noncompliant
+</span>{
+  <span class="code-comment">// ...
+</span>}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> class MyException : Exception
+{
+  <span class="code-comment">// ...
+</span>}
+</pre>
+</div></div>
+
+<h2><a name="Exceptions"></a>Exceptions</h2>
+<p>This rule ignores Exception types that are not derived directly from <tt>System.Exception</tt>, <tt>System.SystemException</tt>, or <tt>System.ApplicationException</tt>.</p>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-2290" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-2290" class="rule-toggle" value="RSPEC-2290"></input>
+        <label for="toggle_RSPEC-2290" class="toggle" id="label_RSPEC-2290">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Field-like events should not be virtual
+          <a href="#RSPEC-2290"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>Field-like events are events that do not have explicit <tt>add</tt> and <tt>remove</tt> methods. The compiler generates a <tt>private</tt> <tt>delegate</tt> field to back the event, as well as generating the implicit <tt>add</tt> and <tt>remove</tt> methods.</p>
+
+<p>When a <tt>virtual</tt> field-like <tt>event</tt> is overridden by another field-like <tt>event</tt>, the behavior of the C# compiler is to generate a new <tt>private</tt> <tt>delegate</tt> field in the derived class, separate from the parent's field. This results in multiple and separate events being created, which is rarely what's actually intended.</p>
+
+<p>To prevent this, remove the <tt>virtual</tt> designation from the parent class event.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">abstract</span> class Car
+{
+  <span class="code-keyword">public</span> virtual event EventHandler OnRefueled; <span class="code-comment">// Noncompliant
+</span>
+  <span class="code-keyword">public</span> void Refuel()
+  {
+    <span class="code-comment">// This OnRefueld will always be <span class="code-keyword">null</span>
+</span>     <span class="code-keyword">if</span> (OnRefueled != <span class="code-keyword">null</span>)
+     {
+       OnRefueled(<span class="code-keyword">this</span>, <span class="code-keyword">null</span>);
+     }
+  }
+}
+
+class R2 : Car
+{
+  <span class="code-keyword">public</span> override event EventHandler OnRefueled;
+}
+
+class Program
+{
+  <span class="code-keyword">static</span> void Main(string[] args)
+  {
+    <span class="code-keyword">var</span> r2 = <span class="code-keyword">new</span> R2();
+    r2.OnRefueled += <span class="code-keyword">new</span> EventHandler((o, a) =&gt;
+    {
+      Console.WriteLine(<span class="code-quote">"This event will never be called"</span>);
+    });
+    r2.Refuel();
+  }
+}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">abstract</span> class Car
+{
+  <span class="code-keyword">public</span> event EventHandler OnRefueled; <span class="code-comment">// Compliant
+</span>
+  <span class="code-keyword">public</span> void Refuel()
+  {
+    <span class="code-keyword">if</span> (OnRefueled != <span class="code-keyword">null</span>)
+    {
+      OnRefueled(<span class="code-keyword">this</span>, <span class="code-keyword">null</span>);
+    }
+  }
+}
+
+class R2 : Car {}
+
+class Program
+{
+  <span class="code-keyword">static</span> void Main(string[] args)
+  {
+    <span class="code-keyword">var</span> r2 = <span class="code-keyword">new</span> R2();
+    r2.OnRefueled += <span class="code-keyword">new</span> EventHandler((o, a) =&gt;
+    {
+      Console.WriteLine(<span class="code-quote">"This event will be called"</span>);
+    });
+    r2.Refuel();
+  }
+}
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-3218" class="rule filter_Code_Smell_Detection filter_CERT ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-3218" class="rule-toggle" value="RSPEC-3218"></input>
+        <label for="toggle_RSPEC-3218" class="toggle" id="label_RSPEC-3218">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Inner class members should not shadow outer class &quot;static&quot; or type members
+          <a href="#RSPEC-3218"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>It's possible to name the members of an inner class the same as the <tt>static</tt> members of its enclosing class - possible, but a bad idea. That's because maintainers may be confused about which members are being used where. Instead the inner class' members should be renamed and all the references updated.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+class Outer
+{
+  <span class="code-keyword">public</span> <span class="code-keyword">static</span> <span class="code-object">int</span> A;
+
+  <span class="code-keyword">public</span> class Inner
+  {
+    <span class="code-keyword">public</span> <span class="code-object">int</span> A; <span class="code-comment">//Noncompliant
+</span>    <span class="code-keyword">public</span> <span class="code-object">int</span> MyProp
+    {
+      get { <span class="code-keyword">return</span> A; }  <span class="code-comment">// Returns <span class="code-keyword">inner</span> A. Was that intended?
+</span>    }
+  }
+}
+</pre>
+</div></div>
+<p>After a rename</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+class Outer
+{
+  <span class="code-keyword">public</span> <span class="code-keyword">static</span> <span class="code-object">int</span> A;
+
+  <span class="code-keyword">public</span> class Inner
+  {
+    <span class="code-keyword">public</span> <span class="code-object">int</span> B;
+    <span class="code-keyword">public</span> <span class="code-object">int</span> MyProp
+    {
+      get { <span class="code-keyword">return</span> A; }  <span class="code-comment">// Still compiles and runs but functionality has changed
+</span>    }
+  }
+}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+class Outer
+{
+  <span class="code-keyword">public</span> <span class="code-keyword">static</span> <span class="code-object">int</span> A;
+
+  <span class="code-keyword">public</span> class Inner
+  {
+    <span class="code-keyword">public</span> <span class="code-object">int</span> InnerA;
+    <span class="code-keyword">public</span> <span class="code-object">int</span> MyProp
+    {
+      get { <span class="code-keyword">return</span> InnerA; }
+    }
+  }
+}
+</pre>
+</div></div>
+
+<h2><a name="See"></a>See</h2>
+<ul>
+	<li><a href="https://www.securecoding.cert.org/confluence/x/2ADEAw" class="external-link" rel="nofollow">CERT, DCL51-J.</a> - Do not shadow or obscure identifiers in subscopes</li>
+</ul>
+
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-2223" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-2223" class="rule-toggle" value="RSPEC-2223"></input>
+        <label for="toggle_RSPEC-2223" class="toggle" id="label_RSPEC-2223">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Non-constant static fields should not be visible
+          <a href="#RSPEC-2223"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>A <tt>static</tt> field that is neither constant nor read-only is not thread-safe. Correctly accessing these fields from different threads needs synchronization with <tt>lock}}s. Improper synchronization may lead to unexpected results, thus publicly visible static fields are best suited for storing non-changing data shared by many consumers. To enforce this intent, these fields should be marked {{readonly</tt> or converted to constants.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> class <span class="code-object">Math</span>
+{
+  <span class="code-keyword">public</span> <span class="code-keyword">static</span> <span class="code-object">double</span> Pi = 3.14;  <span class="code-comment">// Noncompliant
+</span>} 
+</pre>
+</div></div>
+<p>or</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> class Shape
+{
+  <span class="code-keyword">public</span> <span class="code-keyword">static</span> Shape Empty = <span class="code-keyword">new</span> EmptyShape();  <span class="code-comment">// Noncompliant
+</span>
+  <span class="code-keyword">private</span> class EmptyShape : Shape
+  {
+  } 
+} 
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> class <span class="code-object">Math</span>
+{
+  <span class="code-keyword">public</span> <span class="code-keyword">const</span> <span class="code-object">double</span> Pi = 3.14;
+} 
+</pre>
+</div></div>
+<p>or</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> class Shape
+{
+  <span class="code-keyword">public</span> <span class="code-keyword">static</span> readonly Shape Empty = <span class="code-keyword">new</span> EmptyShape(); 
+
+  <span class="code-keyword">private</span> class EmptyShape : Shape
+  {
+  } 
+} 
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-3265" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-3265" class="rule-toggle" value="RSPEC-3265"></input>
+        <label for="toggle_RSPEC-3265" class="toggle" id="label_RSPEC-3265">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Non-flags enums should not be used in bitwise operations
+          <a href="#RSPEC-3265"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p><tt>enum}}s are usually used to identify distinct elements in a set of values. However {{enum}}s can be treated as bit fields and bitwise operations can be used on them to combine the values. This is a good way of specifying multiple elements of set with a single value. When {{enum}}s are used this way, it is a best practice to mark the {{enum</tt> with the <tt>FlagsAttribute</tt>.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">enum</span> Permissions
+{ 
+  None = 0,
+  Read = 1,   
+  Write = 2, 
+  Execute = 4 
+}
+<span class="code-comment">// ...
+</span>
+<span class="code-keyword">var</span> x = Permissions.Read | Permissions.Write;  <span class="code-comment">// Noncompliant; <span class="code-keyword">enum</span> is not marked with [Flags]</span>
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+[Flags]
+<span class="code-keyword">enum</span> Permissions
+{ 
+  None = 0,
+  Read = 1, 
+  Write = 2, 
+  Execute = 4
+}
+<span class="code-comment">// ...
+</span>
+<span class="code-keyword">var</span> x = Permissions.Read | Permissions.Write;
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-2291" class="rule filter_Code_Smell_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-2291" class="rule-toggle" value="RSPEC-2291"></input>
+        <label for="toggle_RSPEC-2291" class="toggle" id="label_RSPEC-2291">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Overflow checking should not be disabled for &quot;Enumerable.Sum&quot;
+          <a href="#RSPEC-2291"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p><tt>Enumerable.Sum()</tt> always executes addition in a <tt>checked</tt> context, so an <tt>OverflowException</tt> will be thrown if the value exceeds <tt>MaxValue</tt> even if an <tt>unchecked</tt> context was specified. Using an <tt>unchecked</tt> context anyway represents a misunderstanding of how <tt>Sum</tt> works.</p>
+
+<p>This rule raises an issue when an <tt>unchecked</tt> context is specified for a <tt>Sum</tt> on integer types.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+void Add(List&lt;<span class="code-object">int</span>&gt; list)
+{
+  <span class="code-object">int</span> d = unchecked(list.Sum());  <span class="code-comment">// Noncompliant
+</span>
+  unchecked 
+  {
+    <span class="code-object">int</span> e = list.Sum();  <span class="code-comment">// Noncompliant
+</span>  }
+}
+</pre>
+</div></div>
+
+<h2><a name="CompliantSolution"></a>Compliant Solution</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+void Add(List&lt;<span class="code-object">int</span>&gt; list)
+{
+  <span class="code-object">int</span> d = list.Sum();
+
+  <span class="code-keyword">try</span> 
+  {
+    <span class="code-object">int</span> e = list.Sum();
+  } 
+  <span class="code-keyword">catch</span> (<span class="code-object">System</span>.OverflowException e) 
+  {
+    <span class="code-comment">// exception handling...
+</span>  }
+}
+</pre>
+</div></div>
+
+<h2><a name="Exceptions"></a>Exceptions</h2>
+<p>When the <tt>Sum()</tt> call is inside a <tt>try-catch</tt> block, no issues are reported.</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+void Add(List&lt;<span class="code-object">int</span>&gt; list)
+{
+  unchecked 
+  {
+    <span class="code-keyword">try</span> 
+    {
+      <span class="code-object">int</span> e = list.Sum();
+    } 
+    <span class="code-keyword">catch</span> (<span class="code-object">System</span>.OverflowException e) 
+    {
+      <span class="code-comment">// exception handling...
+</span>    }
+  }
+}
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>
+    
+    <li id="rule_RSPEC-3449" class="rule filter_Bug_Detection ">
+      <div class="rule-title"><input type="checkbox" id="toggle_RSPEC-3449" class="rule-toggle" value="RSPEC-3449"></input>
+        <label for="toggle_RSPEC-3449" class="toggle" id="label_RSPEC-3449">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 253.5"><path d="M93.2 206c-1.9 0-3.8-.7-5.3-2.2-2.9-2.9-2.9-7.7 0-10.6l67.2-67.2L87 58c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l73.3 73.3c1.4 1.4 2.2 3.3 2.2 5.3s-.8 3.9-2.2 5.3l-72.5 72.5c-1.4 1.5-3.3 2.2-5.2 2.2z"/></svg>
+          Right operands of shift operators should be integers
+          <a href="#RSPEC-3449"><?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 54.971 54.971" style="enable-background:new 0 0 54.971 54.971;" xml:space="preserve">
+<g>
+	<path d="M51.173,3.801c-5.068-5.068-13.315-5.066-18.384,0l-9.192,9.192c-0.781,0.781-0.781,2.047,0,2.828
+		c0.781,0.781,2.047,0.781,2.828,0l9.192-9.192c1.691-1.69,3.951-2.622,6.363-2.622c2.413,0,4.673,0.932,6.364,2.623
+		s2.623,3.951,2.623,6.364c0,2.412-0.932,4.672-2.623,6.363L36.325,31.379c-3.51,3.508-9.219,3.508-12.729,0
+		c-0.781-0.781-2.047-0.781-2.828,0s-0.781,2.048,0,2.828c2.534,2.534,5.863,3.801,9.192,3.801s6.658-1.267,9.192-3.801
+		l12.021-12.021c2.447-2.446,3.795-5.711,3.795-9.192C54.968,9.512,53.62,6.248,51.173,3.801z"/>
+	<path d="M27.132,40.57l-7.778,7.778c-1.691,1.691-3.951,2.623-6.364,2.623c-2.412,0-4.673-0.932-6.364-2.623
+		c-3.509-3.509-3.509-9.219,0-12.728L17.94,24.306c1.691-1.69,3.951-2.622,6.364-2.622c2.412,0,4.672,0.932,6.363,2.622
+		c0.781,0.781,2.047,0.781,2.828,0s0.781-2.047,0-2.828c-5.067-5.067-13.314-5.068-18.384,0L3.797,32.793
+		c-2.446,2.446-3.794,5.711-3.794,9.192c0,3.48,1.348,6.745,3.795,9.191c2.446,2.447,5.711,3.795,9.191,3.795
+		c3.481,0,6.746-1.348,9.192-3.795l7.778-7.778c0.781-0.781,0.781-2.047,0-2.828S27.913,39.789,27.132,40.57z"/>
+</g>
+</svg>
+</a>
+        </label>
+        <div class="rule-description">
+          <p>Numbers can be shifted with the <tt>&lt;&lt;</tt> and <tt>&gt;&gt;</tt> operators, but the right operand of the operation needs to be an <tt>int</tt> or a type that has an implicit conversion to <tt>int</tt>. However, with <tt>dynamic</tt>, the compiler's type checking is turned off, so you can pass anything to a shift operator and have it compile. And if  the argument can't be converted to <tt>int</tt> at runtime, then a <tt>RuntimeBinderException</tt> will be raised.</p>
+
+<h2><a name="NoncompliantCodeExample"></a>Noncompliant Code Example</h2>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+dynamic d = 5;
+<span class="code-keyword">var</span> x = d &gt;&gt; 5.4; <span class="code-comment">// Noncompliant
+</span>x = d &gt;&gt; <span class="code-keyword">null</span>; <span class="code-comment">// Noncompliant
+</span>x &lt;&lt;= <span class="code-keyword">new</span> object(); <span class="code-comment">// Noncompliant</span>
+</pre>
+</div></div>
+        </div>
+      </div>
+    </li>      
+  </ul>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+(function(context) {
+
+  function setRuleFilter(criterion) {
+    Array.prototype.slice.call(
+      context.document.getElementsByClassName('rule'))
+      .forEach(
+        function(el) {
+          el.style.display = 'none';
+        }
+      );
+    Array.prototype.slice.call(
+      context.document.getElementsByClassName('filter_' + criterion)).forEach(
+        function(el) {
+          el.style.display = 'block';
+        }
+      );
+    context.location.hash = criterion;
+  }
+
+  function resetRuleFilter() {
+    Array.prototype.slice.call(
+      context.document.getElementsByClassName('rule'))
+      .forEach(
+        function(el) {
+          el.style.display = 'block';
+        }
+      );
+    context.location.hash = '';
+  }
+
+  function uncheckOtherInputs(criterion) {
+    Array.prototype.slice.call(
+      context.document.getElementsByTagName('input'))
+      .filter(criterion)
+      .forEach(
+        function(el) {
+          el.checked = false;
+        }
+      );
+  }
+
+  function initFilters() {
+    Array.prototype.slice.call(
+      context.document.getElementsByClassName('filters')).forEach(
+        function(el) {
+          Array.prototype.slice.call(el.getElementsByTagName('li'))
+          .forEach(function (el) {
+            var inputElement = el.firstChild;
+            inputElement.addEventListener('change', function() {
+              if (inputElement.checked) {
+                setRuleFilter(inputElement.value);
+                uncheckOtherInputs(function(el) { return el.value !== inputElement.value });
+              } else {
+                resetRuleFilter();
+              }
+            });
+          });
+        }
+      );
+  }
+
+  function enableFilterFromUrlFragment() {
+    if (!! context.location.hash && context.location.hash.length > 1) {
+      var filterFromUrl = context.location.hash.substring(1);
+      if (filterFromUrl.indexOf('RSPEC-') == 0) {
+        showRule(filterFromUrl);
+      } else {
+        enableFilter(filterFromUrl);
+      }
+    }
+  }
+
+  function showRule(ruleId) {
+    var toggleCheckBox = context.document.getElementById('toggle_' + ruleId);
+    toggleCheckBox.checked = true;
+    scrollToRule(toggleCheckBox.parentElement);
+  }
+
+  function enableFilter(criterion) {
+    var filterInput = document.getElementById(decodeURIComponent(criterion));
+    filterInput.checked = true;
+    setRuleFilter(criterion);
+  }
+
+  function enableAccordionBehavior() {
+    Array.prototype.slice.call(
+      context.document.getElementsByClassName('rule-title'))
+      .forEach(
+        function (el) {
+          var toggleElement = el.firstChild;
+          toggleElement.addEventListener('change', function() {
+            if (toggleElement.checked) {
+              var topBefore = el.getBoundingClientRect().top;
+              uncheckOtherInputs(function(el) {
+                return el.className.indexOf('rule-toggle') >= 0 &&
+                  el.value !== toggleElement.value });
+              var topAfter = el.getBoundingClientRect().top;
+              var scrollingElement = getScrollingElement();
+              scrollingElement.scrollTop = (scrollingElement.scrollTop + topAfter - topBefore);
+            }
+          });
+        }
+      );
+  }
+
+  function getScrollingElement() {
+    return (!!context.document.scrollingElement ?
+      context.document.scrollingElement :
+      context.document.documentElement);
+  }
+
+  // Height of top nav bar
+  var navigationOffset = 81;
+  var totalNavOffset = navigationOffset;
+
+  function scrollToRule(element) {
+    element.scrollIntoView();
+    getScrollingElement().scrollTop -= 81;
+  }
+
+  enableFilterFromUrlFragment();
+  initFilters();
+  enableAccordionBehavior();
+})(window);
+</script>
+
+</div>
+
+<div class="page-footer">
+  
+
+  <div class="page-footer-nav">
+    <div class="page-container clearfix">
+      <div class="page-footer-nav-column pull-left">
+        <h4>Unique Approach</h4>
+        <ul>
+          <li><a href="/why-us/unique-approach/water-leak/">Fix the Leak!</a></li>
+          <li><a href="/why-us/unique-approach/#qualitygate">Quality Gate</a></li>
+          <li><a href="/solutions/full-experience/">Full Experience</a></li>
+          <li><a href="/why-us/code-quality/">Quality of Code</a></li>
+        </ul>
+      </div>
+
+      <div class="page-footer-nav-column pull-left">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="https://www.sonarqube.org" target="_blank">SonarQube</a></li>
+          <li><a href="https://www.sonarlint.org" target="_blank">SonarLint</a></li>
+          <li><a href="/products/codeanalyzers">Code Analyzers</a></li>
+          <li><a href="/resources/product-news/">Product News</a></li>
+        </ul>
+      </div>
+
+      <div class="page-footer-nav-column pull-left">
+        <h4>Deployments</h4>
+        <ul>
+          <li><a href="/solutions/deployments/enterprise-grade/">Enterprise Grade</a></li>
+          <li><a href="/solutions/deployments/team-grade/"> For Teams</a></li>
+          <li><a href="https://sonarcloud.io/"> SonarCloud</a></li>
+        </ul>
+      </div>
+
+      <div class="page-footer-nav-column pull-left">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="https://blog.sonarsource.com" target="_blank">Blog</a></li>
+          <li><a href="/company/events/">Events</a></li>
+          <li><a href="/company/jobs/">Jobs</a></li>
+          <li><a href="/company/contact/">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="page-footer-nav-column pull-right">
+        <a class="page-footer-logo" href="/">
+          <img width="135" height="25" alt="SonarSource" src="/assets/sonarsource-white-logo-39c3bb8498ae8c2a2936daf394fce9b60b799f5f0bf3367a7d615bf72133cba7.svg">
+        </a>
+        <a class="page-footer-social" href="https://twitter.com/SonarSource" target="_blank">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 416 448">
+  <path d="M405 102q-16.75 24.5-40.5 41.75.25 3.5.25 10.5 0 32.5-9.5 64.875t-28.875 62.125-46.125 52.625-64.5 36.5T135 384q-67.75 0-124-36.25 8.75 1 19.5 1 56.25 0 100.25-34.5-26.25-.5-47-16.125t-28.5-39.875q8.25 1.25 15.25 1.25 10.75 0 21.25-2.75-28-5.75-46.375-27.875T27 177.5v-1q17 9.5 36.5 10.25-16.5-11-26.25-28.75t-9.75-38.5q0-22 11-40.75 30.25 37.25 73.625 59.625T205 163.25q-2-9.5-2-18.5 0-33.5 23.625-57.125T283.75 64q35 0 59 25.5Q370 84.25 394 70q-9.25 28.75-35.5 44.5Q381.75 112 405 102z"/>
+</svg>
+
+        </a>
+        <a class="page-footer-social" href="https://www.linkedin.com/company/sonarsource" target="_blank">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 448">
+  <path d="M87.25 156.25V404H4.75V156.25h82.5zm5.25-76.5q.25 18.25-12.625 30.5T46 122.5h-.5q-20.5 0-33-12.25T0 79.75q0-18.5 12.875-30.625T46.5 37t33.25 12.125T92.5 79.75zM384 262v142h-82.25V271.5q0-26.25-10.125-41.125T260 215.5q-15.75 0-26.375 8.625T217.75 245.5Q215 253 215 265.75V404h-82.25q.5-99.75.5-161.75t-.25-74l-.25-12H215v36h-.5q5-8 10.25-14t14.125-13 21.75-10.875 28.625-3.875q42.75 0 68.75 28.375T384 262z"/>
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer-copyright">
+    <p>&#169; 2008-2017, SonarSource S.A, Switzerland. All content is copyright protected. SONARSOURCE, SONARLINT, SONARQUBE and
+  SONARCLOUD are trademarks of SonarSource SA.</p>
+<p>All other trademarks and copyrights are the property of their respective owners. All rights are expressly
+  reserved.</p>
+
+    <p>
+      <a href="/company/privacy/">Privacy Policy</a> |
+      <a href="/docs/sonarsource_terms_and_conditions.pdf">Terms and Conditions</a>
+    </p>
+  </div>
+</div>
+
+
+
+    
+      <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-1880045-6', 'auto');
+  ga('send', 'pageview');
+</script>
+
+    
+    <script type="text/javascript">
+    document.onkeydown = function(evt) {
+      var event = evt || window.event;
+
+      if (event.defaultPrevented) {
+        return;
+      }
+
+      var handled = false;
+      var isEscape = false;
+      var isLeft = false;
+      var isright = false;
+
+      if (event.key !== undefined) {
+        handled = true;
+        isEscape = (event.key === "Escape" || event.key == "Esc");
+        isLeft = (event.key === "ArrowLeft" || event.key === "Left");
+        isRight = (event.key === "ArrowRight" || event.key === "Right");
+      } else if (event.keyCode !== undefined) {
+        handled = true;
+        isEscape = (event.keyCode === 27);
+        isLeft = (event.keyCode === 37);
+        isRight = (event.keyCode === 39);
+      }
+
+      handled = (isEscape || isLeft || isRight);
+
+      if (handled) {
+        // Suppress "double action" if event handled
+        event.preventDefault();
+      }
+
+      if (window.location.hash.length > 2) {
+        if (isEscape) {
+          window.location.hash="_";
+        } else {
+          var currentIndex = Number(window.location.hash.replace(/[^0-9]/g, ''));
+          if (isLeft && currentIndex > 1) {
+            window.location.replace("#img" + (currentIndex - 1));
+          } else if (isRight && document.getElementById('img' + (currentIndex + 1))) {
+            window.location.replace("#img" + (currentIndex + 1));
+          }
+        }
+      }
+    };
+    </script>
+  </body>
+</html>

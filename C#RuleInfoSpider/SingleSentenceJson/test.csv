@@ -1,0 +1,5206 @@
+role_title,role_desc_en,role_have_noncompliant_code,role_noncompliant_code,role_origin_id,role_id,role_desc,role_type,role_have_compliant_code,role_compliant_code,role_level,role_title_en
+“CoSetProxyBlanket”和“CoInitializeSecurity”不应该被使用.,"CoSetProxyBlanket and CoInitializeSecurity both work to set the permissions context in which the process invoked immediately after is executed. Calling them from within that process is useless because it's to late at that point; the permissions context has already been set.Specifically, these methods are meant to be called from a non-managed code such as a C++ wrapper that then invokes the managed, i.e. C# or VB.NET, code.",Y,"
+
+[DllImport(""ole32.dll"")]
+static extern int CoSetProxyBlanket([MarshalAs(UnmanagedType.IUnknown)]object pProxy, uint dwAuthnSvc, uint dwAuthzSvc,
+	[MarshalAs(UnmanagedType.LPWStr)] string pServerPrincName, uint dwAuthnLevel, uint dwImpLevel, IntPtr pAuthInfo,
+	uint dwCapabilities);
+
+public enum RpcAuthnLevel
+{
+	Default = 0,
+	None = 1,
+	Connect = 2,
+	Call = 3,
+	Pkt = 4,
+	PktIntegrity = 5,
+	PktPrivacy = 6
+}
+
+public enum RpcImpLevel
+{
+	Default = 0,
+	Anonymous = 1,
+	Identify = 2,
+	Impersonate = 3,
+	Delegate = 4
+}
+
+public enum EoAuthnCap
+{
+	None = 0x00,
+	MutualAuth = 0x01,
+	StaticCloaking = 0x20,
+	DynamicCloaking = 0x40,
+	AnyAuthority = 0x80,
+	MakeFullSIC = 0x100,
+	Default = 0x800,
+	SecureRefs = 0x02,
+	AccessControl = 0x04,
+	AppID = 0x08,
+	Dynamic = 0x10,
+	RequireFullSIC = 0x200,
+	AutoImpersonate = 0x400,
+	NoCustomMarshal = 0x2000,
+	DisableAAA = 0x1000
+}
+
+[DllImport(""ole32.dll"")]
+public static extern int CoInitializeSecurity(IntPtr pVoid, int cAuthSvc, IntPtr asAuthSvc, IntPtr pReserved1,
+	RpcAuthnLevel level, RpcImpLevel impers, IntPtr pAuthList, EoAuthnCap dwCapabilities, IntPtr pReserved3);
+
+static void Main(string[] args)
+{
+	var hres1 = CoSetProxyBlanket(null, 0, 0, null, 0, 0, IntPtr.Zero, 0); // Noncompliant
+
+	var hres2 = CoInitializeSecurity(IntPtr.Zero, -1, IntPtr.Zero, IntPtr.Zero, RpcAuthnLevel.None,
+		RpcImpLevel.Impersonate, IntPtr.Zero, EoAuthnCap.None, IntPtr.Zero); // Noncompliant
+}
+
+",rule_RSPEC-3884,S3884,CoSetProxyBlanket和CoInitializeSecurity都可以设置执行后立即调用该进程的权限上下文.在这个过程中召唤他们是无用的，因为那时候迟到了;具体来说，这些方法意在从非托管代码调用，例如C ++包装器，然后调用受管理的.C＃或VB.NET，代码.,Vulnerability,,,BLOCKER,"""CoSetProxyBlanket"" and ""CoInitializeSecurity"" should not be used"
+“IDisposables”应该被处理.,"When writing managed code, you don't need to worry about allocating or freeing memory: The garbage collector takes care of it. For efficiency reasons, some objects such as Bitmap use unmanaged memory, enabling for example the use of pointer arithmetic. Such objects have potentially huge unmanaged memory footprints, but will have tiny managed ones. Unfortunately, the garbage collector only sees the tiny managed footprint, and fails to reclaim the unmanaged memory (by calling Bitmap's finalizer method) in a timely fashion. Moreover, memory is not the only system resource which needs to be managed in a timely fashion: The operating system can only handle having so many file descriptors (e.g. FileStream) or sockets (e.g. WebClient) open at any given time. Therefore, it is important to Dispose of them as soon as they are no longer needed, rather than relying on the garbage collector to call these objects' finalizers at some nondeterministic point in the future.This rule tracks private fields and local variables of the following IDisposable types, which are never disposed, closed, aliased, returned, or passed to other methods.which are either instantiated directly using the new operator, or using one of the following factory methods:on both private fields and local variables.",Y,"
+
+public class ResourceHolder 
+{
+  private FileStream fs; // Noncompliant; Dispose or Close are never called
+
+  public void OpenResource(string path)
+  {
+    this.fs = new FileStream(path, FileMode.Open);
+  }
+
+  public void WriteToFile(string path, string text)
+  {
+    var fs = new FileStream(path, FileMode.Open); // Noncompliant
+    var bytes = Encoding.UTF8.GetBytes(text);
+    fs.Write(bytes, 0, bytes.Length);
+  }
+}
+
+",rule_RSPEC-2930,S2930,编写托管代码时，您不必担心分配或释放内存：垃圾回收器负责处理.出于效率的原因，一些诸如Bitmap的对象使用非托管内存，例如使用指针算术.这样的对象具有潜在的巨大的非管理内存占用空间，但将具有微小的管理内存.不幸的是，垃圾收集器只能看到微小的管理足迹，并且无法及时收回非托管内存（通过调用Bitmap的终结器方法）.此外，内存不是需要及时管理的唯一系统资源：操作系统只能处理具有如此多的文件描述符（e.G.FileStream）或套接字（e.G.WebClient）在任何给定的时间打开.因此，重要的是一旦不再需要处理它们，而不是依靠垃圾收集器在将来的某个非确定性点将这些对象的终止者称为“非确定性”.此规则跟踪以下IDisposable类型的私有字段和局部变量，这些类型不会被处理，关闭，别名，返回或传递给其他方法.它们可以直接使用新的运算符进行实例化，也可以使用以下工厂方法之一：.在私有字段和局部变量上.,Bug,Y,"
+
+public class ResourceHolder : IDisposable
+{
+  private FileStream fs;
+
+  public void OpenResource(string path)
+  {
+    this.fs = new FileStream(path, FileMode.Open);
+  }
+
+  public void Dispose() 
+  {
+    this.fs.Dispose();
+  }
+
+  public void WriteToFile(string path, string text)
+  {
+    using (var fs = new FileStream(path, FileMode.Open))
+    {
+      var bytes = Encoding.UTF8.GetBytes(text);
+      fs.Write(bytes, 0, bytes.Length);
+    }
+  }
+}
+
+",BLOCKER,"""IDisposables"" should be disposed"
+“的SafeHandle.DangerousGetHandle“不应该被调用.,"Not surprisingly, the SafeHandle.DangerousGetHandle method is dangerous. That's because it may not return a valid handle. Using it can lead to leaks and vulnerabilities. While it is possible to use the method successfully, it's extremely difficult to do correctly, so the method should simply be avoided altogether.",Y,"
+
+static void Main(string[] args)
+{
+    System.Reflection.FieldInfo fieldInfo = ...;
+    SafeHandle handle = (SafeHandle)fieldInfo.GetValue(rKey);
+    IntPtr dangerousHandle = handle.DangerousGetHandle();  // Noncompliant
+}
+
+",rule_RSPEC-3869,S3869,不奇怪的是，SafeHandle.DangerousGetHandle方法是危险的.这是因为它可能不会返回有效的句柄.使用它可能会导致泄漏和漏洞.虽然可以成功使用该方法，但是很难正确执行，所以该方法应该完全避免.,Bug,,,BLOCKER,"""SafeHandle.DangerousGetHandle"" should not be called"
+“async”和“等待”不应该用作标识符.,"Since C# 5.0, async and await are contextual keywords. Contextual keywords do have a particular meaning in some contexts, but can still be used as variable names. Keywords, on the other hand, are always reserved, and therefore are not valid variable names. To avoid any confusion though, it is best to not use async and await as identifiers.",Y,"
+
+int await = 42; // Noncompliant
+
+",rule_RSPEC-2306,S2306,自C＃5.0，异步等待是上下文关键字.上下文关键字在某些上下文中具有特定的含义，但仍可用作变量名称.另一方面，关键字始终保留，因此不是有效的变量名.为了避免混淆，最好不要使用异步，等待标识符.,CodeSmell,Y,"
+
+int someOtherName = 42;
+
+",BLOCKER,"""async"" and ""await"" should not be used as identifiers"
+“operator ==”不应该在引用类型上重载.,"The use of == to compare to objects is expected to do a reference comparison. That is, it is expected to return true if and only if they are the same object instance. Overloading the operator to do anything else will inevitably lead to the introduction of bugs by callers. On the other hand, overloading it to do exactly that is pointless; that's what == does by default.",Y,"
+
+public static bool operator== (MyType x, MyType y) // Noncompliant
+{
+
+",rule_RSPEC-3875,S3875,使用==来比较对象有望做一个参考比较.也就是说，当且仅当它们是相同的对象实例时，才会返回true.重载操作员做任何其他操作将不可避免地导致呼叫者引入错误.另一方面，超载它做的确是毫无意义的;.,CodeSmell,,,BLOCKER,"""operator=="" should not be overloaded on reference types"
+应该使用“值”参数.,"In property and indexer set methods, and in event add and remove methods, the implicit value parameter holds the value the accessor was called with. Not using the value means that the accessor ignores the caller's intent which could cause unexpected results at runtime.",Y,"
+
+private int count;
+public int Count
+{
+  get { return count; }
+  set { count = 42; } // Noncompliant 
+}
+
+",rule_RSPEC-3237,S3237,在属性和索引器集合方法中，在事件添加和删除方法中，implicit值参数保存访问者调用的值.不使用该值意味着访问者忽略了可能在运行时导致意外结果的调用者意图.,CodeSmell,Y,"
+
+private int count;
+public int Count
+{
+  get { return count; }
+  set { count = value; }
+}
+
+",BLOCKER,"""value"" parameters should be used"
+公共方法不应该有多维数组参数.,,Y,"
+
+public class Program
+{
+    public void WriteMatrix(int[][] matrix) // Non-Compliant
+    {
+    }
+}
+
+",rule_RSPEC-2368,S2368,,CodeSmell,Y,"
+
+public class Matrix
+{
+    // ...
+}
+
+public class Program
+{
+    public void WriteMatrix(Matrix matrix) // Compliant
+    {
+    }
+}
+
+",BLOCKER,Public methods should not have multidimensional array parameters
+不应使用DES（数据加密标准）和DESEDE（3DES）.,,Y,"
+
+using (var tripleDES = new TripleDESCryptoServiceProvider()) //Noncompliant
+{
+  //...
+}
+
+",rule_RSPEC-2278,S2278,,Vulnerability,Y,"
+
+using (var aes = new AesCryptoServiceProvider())
+{
+  //...
+}
+
+",BLOCKER,Neither DES (Data Encryption Standard) nor DESede (3DES) should be used
+递归不应该是无限的.,,Y,"
+
+int Pow(int num, int exponent)   // Noncompliant; no condition under which pow isn't re-called
+{
+  num = num * Pow(num, exponent-1);
+  return num;  // this is never reached
+}
+
+void InternalRecursion(int i)  
+{
+  start:
+    goto end;
+  end:
+    goto start; // Noncompliant; there's no way to break out of this method
+}
+
+",rule_RSPEC-2190,S2190,,Bug,Y,"
+
+int Pow(int num, int exponent) 
+{
+  if (exponent &gt; 1) // recursion now conditional and stop-able
+  {  
+    num = num * Pow(num, exponent-1);
+  }
+  return num;
+}
+
+",BLOCKER,Recursion should not be infinite
+布尔上下文中应使用短路逻辑.,,Y,"
+
+if (GetTrue() | GetFalse()) // Noncompliant; both sides evaluated
+{
+}
+
+",rule_RSPEC-2178,S2178,,CodeSmell,Y,"
+
+if (GetTrue() || GetFalse()) // true short-circuit logic
+{
+}
+
+",BLOCKER,Short-circuit logic should be used in boolean contexts
+复合格式字符串不应在运行时导致意外的行为.,"Because composite format strings are interpreted at runtime, rather than validated by the compiler, they can contain errors that lead to unexpected behaviors or runtime errors. This rule statically validates the good behavior of composite formats when calling the methods of String.Format, StringBuilder.AppendFormat, Console.Write, Console.WriteLine, TextWriter.Write, TextWriter.WriteLine, Debug.WriteLine(String, Object[]), Trace.TraceError(String, Object[]), Trace.TraceInformation(String, Object[]), Trace.TraceWarning(String, Object[]) and TraceSource.TraceInformation(String, Object[]). ",Y,"
+
+s = string.Format(""[0}"", arg0); 
+s = string.Format(""{{0}"", arg0);
+s = string.Format(""{0}}"", arg0);
+s = string.Format(""{-1}"", arg0);
+s = string.Format(""{0} {1}"", arg0);
+
+",rule_RSPEC-2275,S2275,因为复合格式字符串在运行时解释，而不是由编译器验证，它们可能包含导致意外行为或运行时错误的错误.当调用String的方法时，此规则静态地验证复合格式的良好行为.格式，StringBuilder.AppendFormat，控制台.写，控制台.WriteLine，TextWriter.写，TextWriter.WriteLine，Debug.WriteLine（String，Object []），Trace.TraceError（String，Object []），Trace.TraceInformation（String，Object []），Trace.TraceWarning（String，Object []）和TraceSource.TraceInformation（字符串，对象[]）.,Bug,Y,"
+
+s = string.Format(""{0}"", 42); // Compliant
+s = string.Format(""{0,10}"", 42); // Compliant
+s = string.Format(""{0,-10}"", 42); // Compliant
+s = string.Format(""{0:0000}"", 42); // Compliant
+s = string.Format(""{2}-{0}-{1}"", 1, 2, 3); // Compliant
+s = string.Format(""no format""); // Compliant
+
+",BLOCKER,Composite format strings should not lead to unexpected behavior at runtime
+异常不应该从意外的方法抛出.,"It is expected that some methods should be called with caution, but others, such as ToString, are expected to ""just work"". Throwing an exception from such a method is likely to break callers' code unexpectedly.An issue is raised when an exception is thrown from any of the following: ",Y,"
+
+public override string ToString()
+{
+  if (string.IsNullOrEmpty(Name)) 
+  {
+    throw new ArgumentException(""..."");  // Noncompliant
+  }
+  //...
+
+",rule_RSPEC-3877,S3877,预计应谨慎采取一些方法，但其他方法（如ToString）预计“正常工作”.从这种方法抛出异常可能会意外地中断呼叫者的代码.当从以下任何一个引发异常时，会引发一个问题：.,CodeSmell,,,BLOCKER,Exceptions should not be thrown from unexpected methods
+使用默认参数值的方法重载不应重叠.,The rules for method resolution are complex and perhaps not properly understood by all coders. Having overloads with optional parameter values makes the matter even harder to understand. This rule raises an issue when an overload with default parameter values is hidden by one without the optional parameters. ,Y,"
+
+public class MyClass
+{
+  void Print(string[] messages) {...} 
+  void Print(string[] messages, string delimiter = ""\n"") {...} // Noncompliant; default parameter value is hidden by overload
+}
+
+// ...
+MyClass myClass = new MyClass();
+
+myClass.Print(new string[3] {""yes"", ""no"", ""maybe""});  // which version of Print will be called?
+
+",rule_RSPEC-3427,S3427,方法解决的规则是复杂的，也可能没有被所有编码人员正确理解.使用可选参数值重载可使问题更加难以理解.当具有默认参数值的重载被一个没有可选参数隐藏时，此规则引发了一个问题.,CodeSmell,,,BLOCKER,Method overloads with default parameter values should not overlap
+名为“Dispose”的方法应该实现“IDisposable”.处置”.,"Dispose as a method name should be used exclusively to implement IDisposable.Dispose to prevent any confusion.It may be tempting to create a Dispose method for other purposes, but doing so will result in confusion and likely lead to problems in production.",Y,"
+
+public class GarbageDisposal 
+{
+  private int Dispose()  // Noncompliant
+  {
+    // ...
+  }
+}
+
+",rule_RSPEC-2953,S2953,处理方法名称应该专门用于实现IDisposable.处理以防止任何混淆.为其他目的创建一个Dispose方法可能是诱人的，但这样做会导致混乱，并可能导致生产中的问题.,CodeSmell,Y,"
+
+public class GarbageDisposal : IDisposable
+{
+  public void Dispose() 
+  {
+    // ...
+  }
+}
+
+",BLOCKER,"Methods named ""Dispose"" should implement ""IDisposable.Dispose"""
+线程.恢复“也不”线程.暂停使用“.,"Thread.Suspend and Thread.Resume can give unpredictable results, and both methods have been deprecated. Indeed, if Thread.Suspend is not used very carefully, a thread can be suspended while holding a lock, thus leading to a deadlock. Other safer synchronization mechanisms should be used, such as Monitor, Mutex, and Semaphore.",Y,"
+
+static void Main(string[] args)
+{
+  // ...
+  Thread.CurrentThread.Suspend(); // Noncompliant
+  Thread.CurrentThread.Resume(); // Noncompliant
+}
+
+",rule_RSPEC-3889,S3889,线.暂停和线程.简历可以提供不可预测的结果，并且这两种方法都已被弃用.的确，如果线程.挂起不是非常小心地使用，一个螺纹可以在锁定时暂停，从而导致死锁.应使用其他更安全的同步机制，如监视器，互斥和信号量.,Bug,,,BLOCKER,"Neither ""Thread.Resume"" nor ""Thread.Suspend"" should be used"
+不应执行傻位操作.,"Certain bit operations are just silly and should not be performed because their results are predictable.Specifically, using &amp; -1 with any value will always result in the original value, as will anyValue ^ 0 and anyValue | 0.",,,rule_RSPEC-2437,S2437,某些位操作只是愚蠢的，不应该执行，因为它们的结果是可预测的.具体来说，使用＆amp; .,CodeSmell,,,BLOCKER,Silly bit operations should not be performed
+不应在“系统”上检查类型.键入“实例.,"If you call GetType() on a Type variable, the return value will always be typeof(System.Type). So there's no real point in making that call. The same applies to passing a type argument to IsInstanceOfType. In both cases the results are entirely predictable.",Y,"
+
+var type = typeof(int);
+var ttype = type.GetType(); //Noncompliant, always typeof(System.Type)
+
+var s = ""abc"";
+
+if (s.GetType().IsInstanceOfType(typeof(string))) //Noncompliant; false
+{ /* ... */ }
+
+",rule_RSPEC-3443,S3443,如果在Type变量上调用GetType（），返回值将始终为typeof（System）.类型）.所以打电话没有什么意义.将类型参数传递给IsInstanceOfType也是一样.在这两种情况下，结果是完全可预测的.,CodeSmell,Y,"
+
+var s = ""abc"";
+
+if (s.GetType().IsInstanceOfType(""ssss""))
+{ /* ... */ }
+
+",BLOCKER,"Type should not be examined on ""System.Type"" instances"
+不要使用“foreach”循环的“显式”转换.,"The foreach statement was introduced in the C# language prior to generics to make it easier to work with the non-generic collections available at that time such as ArrayList. The foreach statements allows you to downcast elements of a collection of Object}}s to any other type. The problem is that to achieve the cast, the {{foreach statements silently performs explicit type conversion, which at runtime can result in an InvalidCastException.C# code iterating on generic collections or arrays should not rely on foreach statement's silent explicit conversions.",Y,"
+
+public class Fruit { }
+public class Orange : Fruit { }
+public class Apple : Fruit { }
+
+class MyTest
+{
+  public void Test()
+  {
+    var fruitBasket = new List&lt;Fruit&gt;();
+    fruitBasket.Add(new Orange());
+    fruitBasket.Add(new Orange());
+    // fruitBasket.Add(new Apple());  // uncommenting this line will make both foreach below throw an InvalidCastException
+
+    foreach (Fruit fruit in fruitBasket) 
+    {
+      var orange = (Orange)fruit; // This ""explicit"" conversion is hidden within the foreach loop below
+      ...
+    }
+
+    foreach (Orange orange in fruitBasket) // Noncompliant
+    {
+      ...
+    } 
+  }
+}
+
+",rule_RSPEC-3217,S3217,foreach语句在泛型之前以C＃语言介绍，以便更容易使用当时可用的非泛型集合，如ArrayList.foreach语句允许您将Object}}集合的元素下拉到任何其他类型.问题是为了实现该转换，{{foreach语句静默地执行显式类型转换，在运行时可以导致InvalidCastException.对通用集合或数组进行迭代的C＃代码不应该依赖于foreach语句的静默显式转换.,CodeSmell,Y,"
+
+var fruitBasket = new List&lt;Orange&gt;();
+fruitBasket.Add(new Orange());
+fruitBasket.Add(new Orange());
+// fruitBasket.Add(new Apple());  // uncommenting this line won't compile
+
+foreach (Orange orange in fruitBasket)
+{
+  ...
+} 
+
+",CRITICAL,"""Explicit"" conversions of ""foreach"" loops should not be used"
+“ISerializable”应该正确实现.,The ISerializable interface is the mechanism to control the type serialization process. If not implemented correctly this could result in an invalid serialization and hard to detect bugs.This rules raises an issue on types that implement ISerializable without following the serialization pattern recommended by Microsoft.Specifically this rule checks for these problems:,Y,"
+
+public class Foo : ISerializable // Noncompliant the [Serializable] attribute is missing
+{
+}
+
+",rule_RSPEC-3925,S3925,ISerializable接口是控制类型序列化过程的机制.如果未正确实现，可能会导致无效的序列化，并且难以检测到错误.此规则引发了在不遵循Microsoft推荐的序列化模式的情况下实现ISerializable的类型的问题.具体来说，这个规则检查这些问题：.,Bug,Y,"
+
+public class Bar
+{
+}
+
+[Serializable]
+public class Foo : ISerializable
+{
+    [NonSerialized]
+    private readonly Bar bar;
+
+    public Foo()
+    {
+        // ...
+    }
+
+    protected Foo(SerializationInfo info, StreamingContext context)
+    {
+        // ...
+    }
+
+    public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
+    {
+        // ...
+    }
+}
+
+[Serializable]
+public sealed class SubFoo : Foo
+{
+    private int val;
+
+    public SubFoo()
+    {
+        // ...
+    }
+
+    private SubFoo(SerializationInfo info, StreamingContext context)
+        : base(info, context)
+    {
+        // ...
+    }
+
+    public override void GetObjectData(SerializationInfo info, StreamingContext context)
+    {
+        base.GetObjectData(info, context);
+        // ...
+    }
+}
+
+",MAJOR,"""ISerializable"" should be implemented correctly"
+“[DefaultParameterValue]”的意思是不应该使用“DefaultValue”.,"The use of [DefaultValue] with [Optional] has no more effect than [Optional] alone. That's because [DefaultValue] doesn't actually do anything; it merely indicates the intent for the value. More than likely, [DefaultValue] was used in confusion instead of [DefaultParameterValue].",Y,"
+
+class MyClass
+{
+    public void DoStuff([Optional][DefaultValue(4)]int i, int j = 5)  // Noncompliant
+    {
+        Console.WriteLine(i);
+    }
+
+    public static void Main()
+    {
+        new MyClass().DoStuff(); // prints 0
+    }
+}
+
+",rule_RSPEC-3451,S3451,[DefaultValue]与[可选]的使用比单独的[可选]更有效果.那是因为[DefaultValue]实际上没有做任何事情;.更有可能的是，[DefaultValue]被用于混淆而不是[DefaultParameterValue].,CodeSmell,Y,"
+
+class MyClass
+{
+    public void DoStuff([Optional][DefaultParameterValue(4)]int i, int j = 5) 
+    {
+        Console.WriteLine(i);
+    }
+
+    public static void Main()
+    {
+        new MyClass().DoStuff(); // prints 4
+    }
+}
+
+",CRITICAL,"""[DefaultValue]"" should not be used when ""[DefaultParameterValue]"" is meant"
+“ref”或“out”参数不能使用“[可选]”.,"The use of ref or out in combination with [Optional] is both confusing and contradictory. [Optional] indicates that the parameter doesn't have to be provided, while out and ref mean that the parameter will be used to return data to the caller (ref additionally indicates that the parameter may also be used to pass data into the method).Thus, making it [Optional] to provide the parameter in which you will be passing back the method results doesn't make sense. In fact, the compiler will raise an error on such code. Unfortunately, it raises the error on method calls where the [Optional] parameter has been omitted, not the source of the problem, the method declaration. ",Y,"
+
+class MyClass
+{
+    public void DoStuff([Optional] ref int i) // Noncompliant
+    {
+        Console.WriteLine(i);
+    }
+
+    public static void Main()
+    {
+        new MyClass().DoStuff(); // This doesn't compile, CS7036 shows
+    }
+}
+
+",rule_RSPEC-3447,S3447,使用参考文献或与[可选]组合使用是混淆和矛盾的.[可选]表示不必提供参数，而out和ref表示该参数将用于向调用者返回数据（ref另外表示该参数也可用于将数据传递给该方法）.因此，使它[可选]提供您将要传回方法结果的参数没有意义.实际上，编译器会引发这样的代码的错误.不幸的是，它引发了方法调用中忽略了[Optional]参数的错误，而不是问题的根源，方法声明.,CodeSmell,Y,"
+
+class MyClass
+{
+  public void DoStuff(ref int i)
+  {
+    Console.WriteLine(i);
+  }
+
+  public static void Main()
+  {
+    var i = 42;
+    new MyClass().DoStuff(ref i); 
+  }
+}
+
+",CRITICAL,"""[Optional]"" should not be used on ""ref"" or ""out"" parameters"
+不应该在覆盖上引入“params”.,"Adding params to a method override has no effect. The compiler accepts it, but the callers won't be able to benefit from the added modifier.",Y,"
+
+class Base
+{
+  public virtual void Method(int[] numbers)
+  {
+    ...
+  }
+}
+class Derived : Base
+{
+  public override void Method(params int[] numbers) // Noncompliant, method can't be called with params syntax.
+  {
+    ...
+  }
+}
+
+",rule_RSPEC-3600,S3600,将参数添加到方法覆盖不起作用.编译器接受它，但调用者将无法从添加的修饰符中受益.,CodeSmell,Y,"
+
+class Base
+{
+  public virtual void Method(int[] numbers)
+  {
+    ...
+  }
+}
+class Derived : Base
+{
+  public override void Method(int[] numbers)
+  {
+    ...
+  }
+}
+
+",CRITICAL,"""params"" should not be introduced on overrides"
+装配应具有版本信息.,"If no AssemblyVersionAttribute is provided, the same default version will be used for every build. Since the version number is used by The .NET Framework to uniquely identify an assembly this can lead to broken dependencies.",Y,"
+
+using System;
+using System.Reflection;
+
+[assembly: AssemblyTitle(""MyAssembly"")] // Noncompliant
+
+namespace MyLibrary
+{
+}
+
+",rule_RSPEC-3904,S3904,如果没有提供AssemblyVersionAttribute，则每个构建将使用相同的默认版本.由于版本号由The使用.NET框架来唯一标识一个程序集，这可能导致破坏依赖.,CodeSmell,Y,"
+
+using System;
+using System.Reflection;
+
+[assembly: AssemblyTitle(""MyAssembly"")] 
+[assembly: AssemblyVersionAttribute(""1.2.125.0"")]
+
+namespace MyLibrary
+{
+}
+
+",CRITICAL,Assemblies should have version information
+属性不应该使集合或数组复制.,"Most developers expect property access to be as efficient as field access. However, if a property returns a copy of an array or collection, it will be much slower than a simple field access, contrary to the caller's likely expectations. Therefore, such properties should be refactored into methods so that callers are not surprised by unexpectedly poor performance.",Y,"
+
+private List&lt;string&gt; _foo = new List&lt;string&gt; { ""a"", ""b"", ""c"" };
+public IEnumerable&lt;string&gt; Foo  // Noncompliant
+{ 
+    get
+    {
+        return _foo.ToList(); 
+    }
+}
+
+private string[] _bar = new string[] { ""a"", ""b"", ""c"" };
+public IEnumerable&lt;string&gt; Bar // Noncompliant
+{ 
+    get
+    {
+        return (string[])_bar.Clone(); 
+    } 
+}
+
+",rule_RSPEC-2365,S2365,大多数开发人员希望财产访问与现场访问一样高效.但是，如果一个属性返回数组或集合的副本，它将比简单的字段访问慢得多，这与调用者的可能期望相反.因此，这些属性应该被重构成方法，使得呼叫者对于意想不到的性能不感到惊讶.,CodeSmell,Y,"
+
+private List&lt;string&gt; _foo = new List&lt;string&gt; { ""a"", ""b"", ""c"" };
+private string[] _bar = new string[] { ""a"", ""b"", ""c"" };
+
+public IEnumerable&lt;string&gt; GetFoo()
+{ 
+    return _foo.ToList();
+}
+
+public IEnumerable&lt;string&gt; GetBar()
+{
+    return (string[])_bar.Clone();
+}
+
+",CRITICAL,Properties should not make collection or array copies
+标志枚举零值成员应该命名为“无”.,,Y,"
+
+[Flags]
+enum FruitType
+{
+    Void = 0,        // Non-Compliant
+    Banana = 1,
+    Orange = 2,
+    Strawberry = 4
+}
+
+",rule_RSPEC-2346,S2346,,CodeSmell,Y,"
+
+[Flags]
+enum FruitType
+{
+    None = 0,        // Compliant
+    Banana = 1,
+    Orange = 2,
+    Strawberry = 4
+}
+
+",CRITICAL,"Flags enumerations zero-value members should be named ""None"""
+不应该做不适当的演员.,"Inappropriate casts are issues that will lead to unexpected behavior or runtime errors, such as {{InvalidCastException}}s. The compiler will catch bad casts from one class to another, but not bad casts to interfaces. Nor will it catch nullable values that are known to be null but that are cast to their underlying value types anyway.",Y,"
+
+public interface IMyInterface 
+{ /* ... */ }
+
+public class Implementer : IMyInterface
+{ /* ... */ }
+
+public class MyClass
+{ /* ... */ }
+
+public static class Program
+{
+  public static void Main()
+  {
+    var myclass = new MyClass();
+    var x = (IMyInterface) myclass; // Noncompliant, InvalidCastException is being thrown
+    var b = myclass is IMyInterface; // Noncompliant, always false
+    
+    int? i = null;
+    var ii = (int)i; // Noncompliant, InvalidOperationException is being thrown
+  }
+}
+
+",rule_RSPEC-1944,S1944,不适当的转换是导致意外行为或运行时错误的问题，例如{{InvalidCastException}}.编译器将捕获从一个类到另一个类的不良转换，但不会对接口造成不良的转换.它也不会捕获已知为null的可空值，但也将被转换为其基础值类型.,Bug,Y,"
+
+public interface IMyInterface 
+{ /* ... */ }
+
+public class Implementer : IMyInterface
+{ /* ... */ }
+
+public class MyClass
+{ /* ... */ }
+
+public static class Program
+{
+  public static void Main()
+  {
+    var myclass = new MyClass();
+    var x = myclass as IMyInterface; // Compliant, but will always be null
+    var b = false;
+    
+    int? i = null;
+    if (i.HasValue)
+    {
+      var ii = (int)i;
+    }
+  }
+}
+
+",CRITICAL,Inappropriate casts should not be made
+构造函数只应该调用不可覆盖的方法.,Calling an overridable method from a constructor could result in failures or strange behaviors when instantiating a subclass which overrides the method.For example:,Y,"
+
+public class Parent 
+{
+  public Parent() 
+  {
+    DoSomething();  // Noncompliant
+  }
+
+  public virtual void DoSomething() // can be overridden
+  {  
+    ...
+  }
+}
+
+public class Child : Parent 
+{
+  private string foo;
+
+  public Child(string foo) // leads to call DoSomething() in Parent constructor which triggers a NullReferenceException as foo has not yet been initialized
+  {
+    this.foo = foo;
+  }
+
+  public override void DoSomething() 
+  {
+    Console.WriteLine(this.foo.Length);
+  }
+}
+
+",rule_RSPEC-1699,S1699,从构造函数调用一个可覆盖的方法可能导致在实例化覆盖该方法的子类时出现故障或奇怪的行为.例如：.,CodeSmell,,,CRITICAL,Constructors should only call non-overridable methods
+方法不应该是空的.,There are several reasons for a method not to have a method body:,Y,"
+
+public override void DoSomething() 
+{
+}
+
+public override void DoSomethingElse() 
+{
+}
+
+",rule_RSPEC-1186,S1186,有一个方法没有方法体的几个原因：.,CodeSmell,Y,"
+
+public override void DoSomething() 
+{
+  // Do nothing because of X and Y.
+}
+
+public override void DoSomethingElse() 
+{
+  throw new NotSupportedException();
+}
+
+",CRITICAL,Methods should not be empty
+异常不应该在最后的块中抛出.,,Y,"
+
+try 
+{
+  /* some work which end up throwing an exception */
+  throw new ArgumentException();
+} 
+finally 
+{
+  /* clean up */
+  throw new InvalidOperationException();       // Noncompliant; will mask the ArgumentException
+}
+
+",rule_RSPEC-1163,S1163,,CodeSmell,Y,"
+
+try
+{
+  /* some work which end up throwing an exception */
+  throw new ArgumentException();
+} 
+finally 
+{
+  /* clean up */                       // Compliant
+}
+
+",CRITICAL,Exceptions should not be thrown in finally blocks
+实例成员不应写入“静态”字段.,Correctly updating a static field from a non-static method is tricky to get right and could easily lead to bugs if there are multiple class instances  and/or multiple threads in play. This rule raises an issue each time a static field is updated from a non-static method or property.,Y,"
+
+public class MyClass 
+{
+  private static int count = 0;
+
+  public void DoSomething() 
+  {
+    //...
+    count++;  // Noncompliant
+  }
+}
+
+",rule_RSPEC-2696,S2696,从非静态方法正确更新静态字段是很难正确的，如果有多个类实例和/或多个线程正在播放，可能容易导致错误.每次从非静态方法或属性更新静态字段时，此规则都会引发问题.,CodeSmell,,,CRITICAL,"Instance members should not write to ""static"" fields"
+“GC.收集“不应该被调用.,"Calling GC.Collect is rarely necessary, and can significantly affect application performance. That's because it triggers a blocking operation that examines every object in memory for cleanup. Further, you don't have control over when this blocking cleanup will actually run.As a general rule, the consequences of calling this method far outweigh the benefits unless perhaps you've just triggered some event that is unique in the run of your program that caused a lot of long-lived objects to die.This rule raises an issue when GC.Collect is invoked.",Y,"
+
+static void Main(string[] args)
+{
+  // ...
+  GC.Collect(2, GCCollectionMode.Optimized); // Noncompliant
+}
+
+",rule_RSPEC-1215,S1215,调用GC.收集很少是必要的，可以显着影响应用程序的性能.这是因为它触发了一个阻止操作来检查内存中的每个对象以进行清理.此外，您无法控制这个阻塞清理实际运行.作为一般规则，调用此方法的后果远远超过了好处，除非您刚刚触发了一些在程序运行中独一无二的事件，这些事件导致许多长命的对象死亡.这个规则引发了GC问题.收集被调用.,CodeSmell,,,CRITICAL,"""GC.Collect"" should not be called"
+“IndexOf”检查不应该是正数.,"Most checks against an IndexOf value compare it with -1 because 0 is a valid index. Any checks which look for values &gt;0 ignore the first element, which is likely a bug. If the intent is merely to check inclusion of a value in a string, List, or an array, consider using the Contains method instead.This rule raises an issue when an IndexOf value retrieved from a string, List, or array is tested against &gt;0.",Y,"
+
+string color = ""blue"";
+string name = ""ishmael"";
+
+List&lt;string&gt; strings = new List&lt;string&gt;();
+strings.Add(color);
+strings.Add(name);
+string[] stringArray = strings.ToArray();
+
+if (strings.IndexOf(color) &gt; 0) // Noncompliant
+{  
+  // ...
+}
+if (name.IndexOf(""ish"") &gt; 0) // Noncompliant
+{ 
+  // ...
+}
+if (name.IndexOf(""ae"") &gt; 0) // Noncompliant
+{ 
+  // ...
+}
+if (Array.IndexOf(stringArray, color) &gt; 0) // Noncompliant
+{  
+  // ...
+}
+
+",rule_RSPEC-2692,S2692,大多数针对IndexOf值的检查与-1进行比较，因为0是有效的索引.任何查找值\u003e 0的检查都忽略第一个元素，这可能是一个错误.如果意图只是检查字符串，列表或数组中的值是否包含，请考虑使用Contains方法.当从字符串，列表或数组检索到的IndexOf值针对＆gt; 0进行测试时，此规则引发问题.,CodeSmell,Y,"
+
+string color = ""blue"";
+string name = ""ishmael"";
+
+List&lt;string&gt; strings = new List&lt;string&gt; ();
+strings.Add(color);
+strings.Add(name);
+string[] stringArray = strings.ToArray();
+
+if (strings.IndexOf(color) &gt; -1) 
+{
+  // ...
+}
+if (name.IndexOf(""ish"") &gt;= 0) 
+{
+  // ...
+}
+if (name.Contains(""ae""))
+{
+  // ...
+}
+if (Array.IndexOf(stringArray, color) &gt;= 0)
+{  
+  // ...
+}
+
+",CRITICAL,"""IndexOf"" checks should not be for positive numbers"
+“partial”方法参数名称应该匹配.,"When the parameters to the implementation of a partial method don't match those in the signature declaration, then confusion is almost guaranteed. Either the implementer was confused when he renamed, swapped or mangled the parameter names in the implementation, or callers will be confused.",Y,"
+
+partial class Point
+{
+  partial void MoveVertically(int z);
+}
+
+partial class Point
+{
+  int x = 0;
+  int y = 0;
+  int z = 0;
+
+  partial void MoveVertically(int y)  // Noncompliant
+  {
+    this.y = y;
+  }
+}
+
+",rule_RSPEC-927,S927,当执行部分方法的参数与签名声明中的参数不匹配时，几乎可以保证混淆.当实施者在实施中重命名，交换或调整参数名称时，实施者感到困惑，或者调用者将被困惑.,CodeSmell,Y,"
+
+partial class Point
+{
+  partial void MoveVertically(int z);
+}
+
+partial class Point
+{
+  int x = 0;
+  int y = 0;
+  int z = 0;
+
+  partial void MoveVertically(int z)
+  {
+    this.z = z;
+  }
+}
+
+",CRITICAL,"""partial"" method parameter names should match"
+认知方法的复杂性不应太高.,Cognitive Complexity is a measure of how hard the control flow of a method is to understand. Methods with high Cognitive Complexity will be difficult to maintain.,,,rule_RSPEC-3776,S3776,认知复杂度是衡量一种方法的控制流程要了解的程度.认知复杂性高的方法难以维持.,CodeSmell,,,CRITICAL,Cognitive Complexity of methods should not be too high
+方法覆盖不应该更改参数默认值.,"Default arguments are determined by the static type of the object. If a default argument is different for a parameter in an overriding method, the value used in the call will be different when calls are made via the base or derived object, which may be contrary to developer expectations. Default parameter values are useless in explicit interface implementations, because the static type of the object will always be the implemented interface. Thus, specifying default values is useless and confusing.",Y,"
+
+public class Base
+{
+  public virtual void Write(int i = 42)
+  {
+    Console.WriteLine(i);
+  }
+}
+
+public class Derived : Base
+{
+  public override void Write(int i = 5) // Noncompliant
+  {
+    Console.WriteLine(i);
+  }
+}
+
+public class Program
+{
+  public static void Main()
+  {
+    var derived = new Derived();
+    derived.Write(); // writes 5
+    Print(derived);  // writes 42; was that expected?
+  }
+  private void Print(Base item)
+  {
+    item.Write();
+  }
+}
+
+",rule_RSPEC-1006,S1006,默认参数由对象的静态类型决定.如果默认参数对于重写方法中的参数是不同的，那么当通过基础或派生对象进行调用时，调用中使用的值将不同，这可能与开发人员的期望相反.默认参数值在显式接口实现中是无用的，因为对象的静态类型将始终是实现的接口.因此，指定默认值是无用的和令人困惑的.,CodeSmell,Y,"
+
+public class Base
+{
+  public virtual void Write(int i = 42)
+  {
+    Console.WriteLine(i);
+  }
+}
+
+public class Derived : Base
+{
+  public override void Write(int i = 42)
+  {
+    Console.WriteLine(i);
+  }
+}
+
+public class Program
+{
+  public static void Main()
+  {
+    var derived = new Derived();
+    derived.Write(); // writes 42
+    Print(derived);  // writes 42
+  }
+  private void Print(Base item)
+  {
+    item.Write();
+  }
+}
+
+",CRITICAL,Method overrides should not change parameter defaults
+异常类型应为“公开”.,"The point of having custom exception types is to convey more information than is available in standard types. But custom exception types must be public for that to work. If a method throws a non-public exception, the best you can do on the caller's side is to catch the closest public base of the class. That is, you lose all that custom information you created the exception type to pass. ",Y,"
+
+internal class MyException : Exception   // Noncompliant
+{
+  // ...
+}
+
+",rule_RSPEC-3871,S3871,具有自定义异常类型的要点是传达比标准类型可用的更多信息.但是，定制的异常类型必须是公共的才能使它工作.如果一个方法抛出一个非公开的异常，那么你可以在调用者方面做的最好的事情就是抓住类的最接近的公共基础.也就是说，您将丢失创建的异常类型的所有自定义信息.,CodeSmell,Y,"
+
+public class MyException : Exception
+{
+  // ...
+}
+
+",CRITICAL,"Exception types should be ""public"""
+场景事件不应该是虚拟的.,"Field-like events are events that do not have explicit add and remove methods. The compiler generates a private delegate field to back the event, as well as generating the implicit add and remove methods.When a virtual field-like event is overridden by another field-like event, the behavior of the C# compiler is to generate a new private delegate field in the derived class, separate from the parent's field. This results in multiple and separate events being created, which is rarely what's actually intended.To prevent this, remove the virtual designation from the parent class event.",Y,"
+
+abstract class Car
+{
+  public virtual event EventHandler OnRefueled; // Noncompliant
+
+  public void Refuel()
+  {
+    // This OnRefueld will always be null
+     if (OnRefueled != null)
+     {
+       OnRefueled(this, null);
+     }
+  }
+}
+
+class R2 : Car
+{
+  public override event EventHandler OnRefueled;
+}
+
+class Program
+{
+  static void Main(string[] args)
+  {
+    var r2 = new R2();
+    r2.OnRefueled += new EventHandler((o, a) =&gt;
+    {
+      Console.WriteLine(""This event will never be called"");
+    });
+    r2.Refuel();
+  }
+}
+
+",rule_RSPEC-2290,S2290,场类事件是没有显式添加和删除方法的事件.编译器生成一个专用委托字段来备份事件，并生成隐式的add和remove方法.当类似虚拟场景的事件被另一个类似场景的事件覆盖时，C＃编译器的行为是在派生类中生成一个新的专用委托字段，与父字段不同.这将导致创建多个单独的事件，这很少是实际意图.为了防止这种情况，请从父类事件中删除虚拟名称.,CodeSmell,Y,"
+
+abstract class Car
+{
+  public event EventHandler OnRefueled; // Compliant
+
+  public void Refuel()
+  {
+    if (OnRefueled != null)
+    {
+      OnRefueled(this, null);
+    }
+  }
+}
+
+class R2 : Car {}
+
+class Program
+{
+  static void Main(string[] args)
+  {
+    var r2 = new R2();
+    r2.OnRefueled += new EventHandler((o, a) =&gt;
+    {
+      Console.WriteLine(""This event will be called"");
+    });
+    r2.Refuel();
+  }
+}
+
+",CRITICAL,Field-like events should not be virtual
+内部类成员不应该影响外部类“静态”或类型成员.,"It's possible to name the members of an inner class the same as the static members of its enclosing class - possible, but a bad idea. That's because maintainers may be confused about which members are being used where. Instead the inner class' members should be renamed and all the references updated.",Y,"
+
+class Outer
+{
+  public static int A;
+
+  public class Inner
+  {
+    public int A; //Noncompliant
+    public int MyProp
+    {
+      get { return A; }  // Returns inner A. Was that intended?
+    }
+  }
+}
+
+",rule_RSPEC-3218,S3218,可以将内部类的成员命名为它的包围类的静态成员 - 可能，但是一个坏主意.这是因为维护者可能会将哪些成员在哪里使用而感到困惑.而应该重命名内部类的成员，并更新所有的引用.,CodeSmell,Y,"
+
+class Outer
+{
+  public static int A;
+
+  public class Inner
+  {
+    public int InnerA;
+    public int MyProp
+    {
+      get { return InnerA; }
+    }
+  }
+}
+
+",CRITICAL,"Inner class members should not shadow outer class ""static"" or type members"
+非常数静态字段不可见.,"A static field that is neither constant nor read-only is not thread-safe. Correctly accessing these fields from different threads needs synchronization with lock}}s. Improper synchronization may lead to unexpected results, thus publicly visible static fields are best suited for storing non-changing data shared by many consumers. To enforce this intent, these fields should be marked {{readonly or converted to constants.",Y,"
+
+public class Math
+{
+  public static double Pi = 3.14;  // Noncompliant
+} 
+
+",rule_RSPEC-2223,S2223,既不是常量也不是只读的静态字段不是线程安全的.正确地从不同的线程访问这些字段需要与lock}}同步.不正确的同步可能导致意想不到的结果，因此公开可见的静态字段最适合于存储许多消费者共享的不变数据.为了实现这个意图，这些字段应该被标记为{{只读或转换为常量.,CodeSmell,Y,"
+
+public class Math
+{
+  public const double Pi = 3.14;
+} 
+
+",CRITICAL,Non-constant static fields should not be visible
+非标记枚举不应该用于按位操作.,"enum}}s are usually used to identify distinct elements in a set of values. However {{enum}}s can be treated as bit fields and bitwise operations can be used on them to combine the values. This is a good way of specifying multiple elements of set with a single value. When {{enum}}s are used this way, it is a best practice to mark the {{enum with the FlagsAttribute.",Y,"
+
+enum Permissions
+{ 
+  None = 0,
+  Read = 1,   
+  Write = 2, 
+  Execute = 4 
+}
+// ...
+
+var x = Permissions.Read | Permissions.Write;  // Noncompliant; enum is not marked with [Flags]
+
+",rule_RSPEC-3265,S3265,枚举}}通常用于标识一组值中的不同元素.然而，{{enum}}可以被视为位字段，并且可以使用按位操作来组合这些值.当这样使用{{enum}}时，最好将标记为{{枚举的FlagsAttribute.,CodeSmell,Y,"
+
+[Flags]
+enum Permissions
+{ 
+  None = 0,
+  Read = 1, 
+  Write = 2, 
+  Execute = 4
+}
+// ...
+
+var x = Permissions.Read | Permissions.Write;
+
+",CRITICAL,Non-flags enums should not be used in bitwise operations
+“Enumerable”不能禁用溢出检查.和”.,"Enumerable.Sum() always executes addition in a checked context, so an OverflowException will be thrown if the value exceeds MaxValue even if an unchecked context was specified. Using an unchecked context anyway represents a misunderstanding of how Sum works.This rule raises an issue when an unchecked context is specified for a Sum on integer types.",Y,"
+
+void Add(List&lt;int&gt; list)
+{
+  int d = unchecked(list.Sum());  // Noncompliant
+
+  unchecked 
+  {
+    int e = list.Sum();  // Noncompliant
+  }
+}
+
+",rule_RSPEC-2291,S2291,枚举.Sum（）总是在检查的上下文中执行添加，因此即使指定了未检查的上下文，如果该值超过MaxValue，则抛出OverflowException.无论如何使用未经检查的上下文表示对于Sum如何工作的误解.当为整数类型的Sum指定未检查的上下文时，此规则引发问题.,CodeSmell,Y,"
+
+void Add(List&lt;int&gt; list)
+{
+  int d = list.Sum();
+
+  try 
+  {
+    int e = list.Sum();
+  } 
+  catch (System.OverflowException e) 
+  {
+    // exception handling...
+  }
+}
+
+",CRITICAL,"Overflow checking should not be disabled for ""Enumerable.Sum"""
+移位操作符的右操作数应为整数.,"Numbers can be shifted with the &lt;&lt; and &gt;&gt; operators, but the right operand of the operation needs to be an int or a type that has an implicit conversion to int. However, with dynamic, the compiler's type checking is turned off, so you can pass anything to a shift operator and have it compile. And if  the argument can't be converted to int at runtime, then a RuntimeBinderException will be raised.",Y,"
+
+dynamic d = 5;
+var x = d &gt;&gt; 5.4; // Noncompliant
+x = d &gt;&gt; null; // Noncompliant
+x &lt;&lt;= new object(); // Noncompliant
+
+",rule_RSPEC-3449,S3449,数字可以与＆lt;.但是，使用动态方法，编译器的类型检查将被关闭，因此您可以将任何内容传递给移位运算符并进行编译.并且如果参数在运行时无法转换为int，则会引发RuntimeBinderException.,Bug,,,CRITICAL,Right operands of shift operators should be integers
+不应该使用“= +”而不是“+ =”.,"The use of operators pairs ( =+, =- or =Unable to render embedded object: File (}} ) where the reversed, single operator was meant ({{+=}}, {{-=}} or {{) not found.=) will compile and run, but not produce the expected results.This rule raises an issue when =+, =-, or =! is used without any spacing between the two operators and when there is at least one whitespace character after.",Y,"
+
+int target = -5;
+int num = 3;
+
+target =- num;  // Noncompliant; target = -3. Is that really what's meant?
+target =+ num; // Noncompliant; target = 3
+
+",rule_RSPEC-2757,S2757,使用反转的单个运算符（{{+ =}}，{{ -  =}}或{{）可以使用运算符对（= +，=  - 或=无法呈现嵌入对象：File（}.=）将编译并运行，但不会产生预期的结果.当= +，=  - 或=！时，此规则引发问题。.,Bug,Y,"
+
+int target = -5;
+int num = 3;
+
+target = -num;  // Compliant; intent to assign inverse value of num is clear
+target += num;
+
+",MAJOR,"""=+"" should not be used instead of ""+="""
+“部件.应使用“负载”.,"The parameter to Assembly.Load includes the full specification of the dll to be loaded. Use another method, and you might end up with a dll other than the one you expected. This rule raises an issue when Assembly.LoadFrom, Assembly.LoadFile, or Assembly.LoadWithPartialName is called.",Y,"
+
+static void Main(string[] args)
+{
+    Assembly.LoadFrom(...); // Noncompliant
+    Assembly.LoadFile(...); // Noncompliant
+    Assembly.LoadWithPartialName(...); // Noncompliant + deprecated
+}
+
+",rule_RSPEC-3885,S3885,装配参数.负载包括要加载的dll的完整规范.使用另一种方法，你可能会遇到一个不同于你预期的DLL.这个规则在汇编时提出了一个问题.LoadFrom，装配.LoadFile或Assembly.LoadWithPartialName被调用.,Bug,,,MAJOR,"""Assembly.Load"" should be used"
+“GC.SuppressFinalize“不应该被调用.,"GC.SuppressFinalize requests that the system not call the finalizer for the specified object. This should only be done when implementing Dispose as part of the Dispose Pattern.
+This rule raises an issue when GC.SuppressFinalize is called outside that pattern.",,,rule_RSPEC-3971,S3971,GC.SuppressFinalize请求系统不调用指定对象的终结器.这只能在Dispose作为Dispose Pattern的一部分实现时完成.这个规则引发了GC问题.SuppressFinalize在该模式之外被调用.,CodeSmell,,,MAJOR,"""GC.SuppressFinalize"" should not be called"
+“IDisposable”应该正确实现.,"The IDisposable interface is a mechanism to release unmanaged resources, if not implemented correctly this could result in resource leaks or more severe bugs.This rule raises an issue when the recommended dispose pattern, as defined by Microsoft, is not adhered to. See the Compliant Solution section for examples.Satisfying the rule's conditions will enable potential derived classes to correctly dispose the members of your class:",Y,"
+
+public class Foo1 : IDisposable // Noncompliant - provide protected overridable implementation of Dispose(bool) on Foo or mark the type as sealed.
+{
+    public void Dispose() // Noncompliant - should contain only a call to Dispose(true) and then GC.SuppressFinalize(this)
+    {
+        // Cleanup
+    }
+}
+
+public class Foo2 : IDisposable
+{
+    void IDisposable.Dispose() // Noncompliant - Dispose() should be public
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    public virtual void Dispose() // Noncompliant - Dispose() should be sealed
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+}
+
+public class Foo3 : IDisposable
+{
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        // Cleanup
+    }
+
+    ~Foo3() // Noncompliant - Modify Foo.~Foo() so that it calls Dispose(false) and then returns.
+    {
+        // Cleanup
+    }
+}
+",rule_RSPEC-3881,S3881,IDisposable接口是一种释放非托管资源的机制，如果未正确实现，可能会导致资源泄漏或更严重的错误.当不遵守由Microsoft定义的推荐处置模式时，此规则引发问题.有关示例，请参阅兼容性解决方案部分.满足规则的条件将使得潜在的派生类能够正确地处理您的课程成员：.,Bug,Y,"
+
+// Sealed class
+public sealed class Foo1 : IDisposable
+{
+    public void Dispose()
+    {
+        // Cleanup
+    }
+}
+
+// Simple implementation
+public class Foo2 : IDisposable
+{
+    public void Dispose()
+    {
+        Dispose(true);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        // Cleanup
+    }
+}
+
+// Implementation with a finalizer
+public class Foo3 : IDisposable
+{
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        // Cleanup
+    }
+
+    ~Foo3()
+    {
+        Dispose(false);
+    }
+}
+
+// Base disposable class
+public class Foo4 : DisposableBase
+{
+    protected override void Dispose(bool disposing)
+    {
+        // Cleanup
+        // Do not forget to call base
+        base.Dispose(disposing);
+    }
+}
+
+",MAJOR,"""IDisposable"" should be implemented correctly"
+不能返回在“using”语句中创建的“IDisposables”.,"Typically you want to use using to create a local IDisposable variable; it will trigger disposal of the object when control passes out of the block's scope. The exception to this rule is when your method returns that IDisposable. In that case using disposes of the object before the caller can make use of it, likely causing exceptions at runtime. So you should either remove using or avoid returning the IDisposable.",Y,"
+
+public FileStream WriteToFile(string path, string text)
+{
+  using (var fs = File.Create(path)) // Noncompliant
+  {
+    var bytes = Encoding.UTF8.GetBytes(text);
+    fs.Write(bytes, 0, bytes.Length);
+    return fs; 
+  }
+}
+
+",rule_RSPEC-2997,S2997,通常你想使用使用来创建一个本地的IDisposable变量;.此规则的例外是当您的方法返回该IDisposable.在这种情况下，在调用者可以使用它之前使用对象的配置，可能在运行时引起异常.所以你应该删除使用或避免返回IDisposable.,Bug,Y,"
+
+public FileStream WriteToFile(string path, string text)
+{
+  var fs = File.Create(path);
+  var bytes = Encoding.UTF8.GetBytes(text);
+  fs.Write(bytes, 0, bytes.Length);
+  return fs;
+}
+
+",MAJOR,"""IDisposables"" created in a ""using"" statement should not be returned"
+“IEnumerable”应该简化LINQ.,"In the interests of readability, code that can be simplified should be simplified. To that end, there are several ways {{IEnumerable LINQ}}s can be simplified",Y,"
+
+seq1.Select(element =&gt; element as T).Any(element =&gt; element != null);  // Noncompliant; use OfType
+seq2.Select(element =&gt; element as T).Any(element =&gt; element != null &amp;&amp; CheckCondition(element));  // Noncompliant; use OfType
+seq3.Where(element =&gt; element is T).Select(element =&gt; element as T); // Noncompliant; use OfType
+seq4.Where(element =&gt; element is T).Select(element =&gt; (T)element); // Noncompliant; use OfType
+seq5.Where(element =&gt; [expression]).Any();  // Noncompliant; use Any([expression])
+
+var num = seq6.Count(); // Noncompliant
+var arr = seq.ToList().ToArray(); //Noncompliant
+var count = seq.ToList().Count(x=&gt;[condition]); //Noncompliant
+
+",rule_RSPEC-2971,S2971,为了可读性，可以简化可以简化的代码.为此，可以简化{{IEnumerable LINQ}}的几种方式.,CodeSmell,Y,"
+
+seq1.OfType&lt;T&gt;().Any();
+seq2.OfType&lt;T&gt;().Any(element =&gt; CheckCondition(element));
+seq3.OfType&lt;T&gt;();
+seq4.OfType&lt;T&gt;();
+seq5.Any(element =&gt; [expression])
+
+var num = seq6.Count;
+var arr = seq.ToArray();
+var count = seq.Count(x=&gt;[condition]); 
+
+",MAJOR,"""IEnumerable"" LINQs should be simplified"
+“目的.ReferenceEquals“不应用于值类型.,"Using Object.ReferenceEquals to compare the references of two value types simply won't return the expected results most of the time because such types are passed by value, not by reference.",Y,"
+
+public class MyClass
+{
+  private MyStruct myStruct;
+
+  public void DoSomething(MyStruct s1) {
+    int a = 1;
+    int b = 1;
+
+    if (Object.ReferenceEquals(myStruct, s1))  // Noncompliant; this can never be true
+    {
+      // ...
+    }
+    else if (Object.ReferenceEquals(a,b)) // Noncompliant
+    {
+      // ...
+    }
+  }
+}
+
+",rule_RSPEC-2995,S2995,使用对象.比较两个值类型的引用的ReferenceEquals根本不会返回大多数时间的预期结果，因为这些类型是通过值传递的，而不是通过引用.,Bug,,,MAJOR,"""Object.ReferenceEquals"" should not be used for value types"
+应该使用“ServiceContract”和“OperationContract”属性.,"The ServiceContract attribute specifies that a class or interface defines the communication contract of a Windows Communication Foundation (WCF) service. The service operations of this class or interface are defined by OperationContract attributes added to methods. It doesn't make sense to define a contract without any service operations; thus, in a ServiceContract class or interface at least one method should be annotated with OperationContract. Similarly, WCF only serves OperationContract methods that are defined inside ServiceContract classes or interfaces; thus, this rule also checks that ServiceContract is added to the containing type of OperationContract methods.",Y,"
+
+[ServiceContract]
+interface IMyService // Noncompliant
+{
+  int MyServiceMethod();
+}
+
+",rule_RSPEC-3597,S3597,ServiceContract属性指定类或接口定义Windows Communication Foundation（WCF）服务的通信合同.此类或接口的服务操作由添加到方法的OperationContract属性定义.在没有任何服务操作的情况下定义合同是没有意义的;.类似地，WCF仅提供在ServiceContract类或接口中定义的OperationContract方法;.,CodeSmell,Y,"
+
+[ServiceContract]
+interface IMyService
+{
+  [OperationContract]
+  int MyServiceMethod();
+}
+
+",MAJOR,"""ServiceContract"" and ""OperationContract"" attributes should be used together"
+“ThreadStatic”字段不应该被初始化.,"When an object has a field annotated with ThreadStatic, that field is shared within a given thread, but unique across threads. Since a class' static initializer is only invoked for the first thread created, it also means that only the first thread will have the expected initial values.Instead, allow such fields to be initialized to their default values or make the initialization lazy.",Y,"
+
+public class Foo
+{
+  [ThreadStatic]
+  public static object PerThreadObject = new object(); // Noncompliant. Will be null in all the threads except the first one.
+}
+
+",rule_RSPEC-2996,S2996,当一个对象具有使用ThreadStatic注释的字段时，该字段在给定的线程内共享，但在线程之间是唯一的.由于只为第一个线程创建了一个静态初始值类，所以这也意味着只有第一个线程将具有预期的初始值.相反，允许将这些字段初始化为其默认值或使初始化懒惰.,Bug,Y,"
+
+public class Foo
+{
+  [ThreadStatic]
+  public static object _perThreadObject;
+  public static object PerThreadObject 
+  {
+    get 
+    {
+      if (_perThreadObject == null) 
+      {
+        _perThreadObject = new object();
+      }
+      return _perThreadObject;
+    }
+  }
+}
+
+",MAJOR,"""ThreadStatic"" fields should not be initialized"
+不应该在非静态字段上使用“ThreadStatic”.,"When a non-static class field is annotated with ThreadStatic, the code seems to show that the field can have different values for different calling threads, but that's not the case, since the ThreadStatic attribute is simply ignored on non-static fields. So ThreadStatic should either be removed or replaced with a use of the ThreadLocal&lt;T&gt; class, which gives a similar behavior for non-static fields.",Y,"
+
+public class MyClass 
+{
+  [ThreadStatic]  // Noncompliant
+  private int count = 0;
+
+  // ...
+}
+
+",rule_RSPEC-3005,S3005,当使用ThreadStatic注释非静态类字段时，代码似乎表明该字段对于不同的调用线程可以具有不同的值，但事实并非如此，因为ThreadStatic属性在非静态字段上被简单地忽略.所以ThreadStatic应该被使用ThreadLocal＆lt; T＆gt;.,Bug,Y,"
+
+public class MyClass 
+{
+  private int count = 0;
+
+  // ...
+}
+
+",MAJOR,"""ThreadStatic"" should not be used on non-static fields"
+“抽象”类不应该有“公共”构造函数.,"Since abstract classes can't be instantiated, there's no point in their having public or internal constructors. If there is basic initialization logic that should run when an extending class instance is created, you can by all means put it in a constructor, but make that constructor private or protected.",Y,"
+
+abstract class Base
+{
+    public Base() // Noncompliant, should be private or protected
+    {
+      //...
+    }
+}
+
+",rule_RSPEC-3442,S3442,由于抽象类不能被实例化，所以他们有公共或内部构造函数没有任何意义.如果有一个基本的初始化逻辑应该在扩展类实例被创建的时候运行，你可以通过一切手段把它放在一个构造函数中，但是使该构造函数是私有或受保护的.,CodeSmell,Y,"
+
+abstract class Base
+{
+    protected Base()
+    {
+      //...
+    }
+}
+
+",MAJOR,"""abstract"" classes should not have ""public"" constructors"
+“异步”方法不应该返回“void”.,"An async method with a void return type is a ""fire and forget"" method best reserved for event handlers because there's no way to wait for the method's execution to complete and respond accordingly. There's also no way to catch exceptions thrown from the method.Having an async void method that is not an event handler could mean your program works some times and not others because of timing issues. Instead, async methods should return Task.This rule raises an issue when non-event handler methods are both async and void.",Y,"
+
+class HttpPrinter
+{
+  private string content;
+
+  public async void CallNetwork(string url) //Noncompliant
+  {
+    var client = new HttpClient();
+    var response = await client.GetAsync(url);
+    content = await response.Content.ReadAsStringAsync();
+  }
+
+  public async Task PrintContent(string url)  // works correctly if web request finishes in under 1 second, otherwise content will be null
+  {
+    CallNetwork(url);
+    await Task.Delay(1000);
+    Console.Write(content);
+  }
+}
+
+",rule_RSPEC-3168,S3168,具有void返回类型的异步方法是对事件处理程序最好的“fire and forget”方法，因为无法等待方法的执行完成并相应地进行响应.也没有办法捕获从方法抛出的异常.使用不是事件处理程序的异步void方法可能意味着您的程序可以工作一些时间，而不是其他因为时序问题.相反，异步方法应该返回任务.当非事件处理程序方法都是async和void时，此规则引发了一个问题.,Bug,Y,"
+
+class HttpPrinter
+{
+  private string content;
+
+  public async Task CallNetwork(string url)
+  {
+    var client = new HttpClient();
+    var response = await client.GetAsync(url);
+    content = await response.Content.ReadAsStringAsync();
+  }
+
+  public async Task PrintContent(string url)
+  {
+    await CallNetwork(url); // &lt;----- call changed here. If await is not added warning CS4014 will be triggered
+    await Task.Delay(1000);
+    Console.Write(content);
+  }
+}
+
+",MAJOR,"""async"" methods should not return ""void"""
+“goto”语句不应该被使用.,"goto is an unstructured control flow statement. It makes code less readable and maintainable. Structured control flow statements such as if, for, while, continue or break should be used instead.",,,rule_RSPEC-907,S907,goto是一个非结构化的控制流程语句.它使代码的可读性和可维护性降低.应使用结构化控制流程语句（如if，for，while，continue或break）.,CodeSmell,,,MAJOR,"""goto"" statement should not be used"
+“params”应该用于覆盖.,"Overriding methods automatically inherit the params behavior. To ease readability, this modifier should be explicitly used in the overriding method as well.",Y,"
+
+class Base
+{
+  public virtual void Method(params int[] numbers)
+  {
+    ...
+  }
+}
+class Derived : Base
+{
+  public override void Method(int[] numbers) // Noncompliant, the params is missing.
+  {
+    ...
+  }
+}
+
+",rule_RSPEC-3262,S3262,覆盖方法会自动继承params行为.为了简化可读性，此修饰符也应该在覆盖方法中明确使用.,CodeSmell,Y,"
+
+class Base
+{
+  public virtual void Method(params int[] numbers)
+  {
+    ...
+  }
+}
+class Derived : Base
+{
+  public override void Method(params int[] numbers)
+  {
+    ...
+  }
+}
+
+",MAJOR,"""params"" should be used on overrides"
+匿名代表不应该被用来取消订阅事件.,"It is possible to subscribe to events with anonymous delegates, but having done so, it is impossible to unsubscribe from them. That's because the process of subscribing adds the delegate to a list. The process of unsubscribing essentially says: remove this item from the subscription list. But because an anonymous delegate was used in both cases, the unsubscribe attempt tries to remove a different item from the list than was added. The result: NOOP.Instead, save the delegate to a variable and use the variable to subscribe and unsubscribe.",Y,"
+
+listView.PreviewTextInput += (obj,args) =&gt;
+        listView_PreviewTextInput(obj,args,listView);  
+
+// ...
+
+listView.PreviewTextInput -= (obj, args) =&gt; 
+        listView_PreviewTextInput(obj, args, listView); // Noncompliant; this delegate was never subscribed
+
+",rule_RSPEC-3244,S3244,可以使用匿名代表订阅事件，但是这样做是不可能取消订阅的.这是因为订阅过程将委托添加到列表中.取消订阅的过程基本上说：从订阅列表中删除此项.但是因为在这两种情况下都使用了匿名委托，所以取消订阅的尝试会尝试从列表中删除与添加的不同的项目.结果：NOOP.相反，将代理保存到变量中，并使用该变量来订阅和取消订阅.,Bug,Y,"
+
+EventHandler func = (obj,args) =&gt; listView_PreviewTextInput(obj,args,listView);
+
+listView.PreviewTextInput += func;
+
+// ...
+
+listView.PreviewTextInput -= func;
+
+",MAJOR,Anonymous delegates should not be used to unsubscribe from Events
+静态字段不应该在构造函数中更新.,,Y,"
+
+public class Person 
+{
+  private static DateTime dateOfBirth;
+  private static int expectedFingers;
+
+  public Person(DateTime birthday) 
+  {
+    dateOfBirth = birthday;  // Noncompliant; now everyone has this birthday
+    expectedFingers = 10;  // Noncompliant
+  }
+}
+
+",rule_RSPEC-3010,S3010,,Bug,Y,"
+
+public class Person 
+{
+  private DateTime dateOfBirth;
+  private static int expectedFingers = 10;
+
+  public Person(DateTime birthday) 
+  {
+    this.dateOfBirth = birthday;
+  }
+}
+
+",MAJOR,Static fields should not be updated in constructors
+不管条件如何，三元运算符都不应该返回相同的值.,,Y,"
+
+public bool CanVote(Person person) 
+{
+  return person.GetAge() &gt; 18 ? true : true; // Noncompliant; is this what was intended?
+}
+
+",rule_RSPEC-2758,S2758,,Bug,Y,"
+
+public bool CanVote(Person person) 
+{
+  return person.GetAge() &gt; 18 ? true : false; 
+  // or even better: 
+  // return person.GetAge() &gt; 18;
+}
+
+",MAJOR,The ternary operator should not return the same value regardless of the condition
+“NaN”不应该用于比较.,,Y,"
+
+var a = double.NaN;
+
+if (a == double.NaN) // Noncompliant; always false
+{
+  Console.WriteLine(""a is not a number"");  // this is dead code
+}
+if (a != double.NaN)  // Noncompliant; always true
+{
+  Console.WriteLine(""a is not NaN""); // this statement is not necessarily true
+}
+
+",rule_RSPEC-2688,S2688,,Bug,Y,"
+
+if (double.IsNaN(a)) 
+{
+  console.log(""a is not a number"");
+}
+
+",MAJOR,"""NaN"" should not be used in comparisons"
+多列块应用大括号括起来.,,Y,"
+
+if (condition)
+  FirstActionInBlock();
+  SecondAction();  // Noncompliant; executed unconditionally
+ThirdAction();
+
+if(condition) FirstActionInBlock(); SecondAction();  // Noncompliant; secondAction executed unconditionally
+
+if(condition) FirstActionInBlock();  // Noncompliant
+  SecondAction();  // Executed unconditionally
+
+string str = null;
+for (int i = 0; i &lt; array.Length; i++) 
+  str = array[i];
+  DoTheThing(str);  // Noncompliant; executed only on last array element
+
+",rule_RSPEC-2681,S2681,,Bug,Y,"
+
+if (condition) 
+{
+  FirstActionInBlock();
+  SecondAction();
+}
+ThirdAction();
+
+string str = null;
+for (int i = 0; i &lt; array.Length; i++) 
+{
+  str = array[i];
+  DoTheThing(str);
+}
+
+",MAJOR,Multiline blocks should be enclosed in curly braces
+布尔表达式不应该是无偿的.,,Y,"
+
+a = true;
+if (a) // Noncompliant
+{
+  DoSomething();
+}
+
+if (b &amp;&amp; a) // Noncompliant; ""a"" is always ""true""
+{
+  DoSomething();
+}
+
+if (c || !a) // Noncompliant; ""!a"" is always ""false""
+{
+  DoSomething();
+}
+
+",rule_RSPEC-2589,S2589,,CodeSmell,Y,"
+
+a = true;
+if (Foo(a))
+{
+  DoSomething();
+}
+
+if (b)
+{
+  DoSomething();
+}
+
+if (c)
+{
+  DoSomething();
+}
+
+",MAJOR,Boolean expressions should not be gratuitous
+有条件执行的块应该是可达到的.,,Y,"
+
+a = false;
+if (a) // Noncompliant
+{
+  DoSomething(); // never executed
+}
+
+if (!a || b) // Noncompliant; ""!a"" is always ""true"", ""b"" is never evaluated
+{
+  DoSomething();
+}
+else
+{
+  DoSomethingElse(); // never executed
+}
+
+",rule_RSPEC-2583,S2583,,Bug,,,MAJOR,Conditionally executed blocks should be reachable
+不要使用只写属性.,,Y,"
+
+class Program
+{
+    public int Foo  //Non-Compliant
+    {
+        set
+        {
+            // ... some code ...
+        }
+    }
+}
+
+",rule_RSPEC-2376,S2376,,CodeSmell,Y,"
+
+class Program
+{
+    private int foo;
+
+    public void SetFoo(int value)
+    {
+        // ... some code ...
+        foo = value;
+    }
+}
+
+",MAJOR,Write-only properties should not be used
+不应该从物业吸引者抛出例外.,,Y,"
+
+public int Foo
+{
+  get
+  {
+    throw new Exception(); // Noncompliant
+  }
+}
+
+",rule_RSPEC-2372,S2372,,CodeSmell,,,MAJOR,Exceptions should not be thrown from property getters
+空指针不应该被取消引用.,"A reference to null should never be dereferenced/accessed. Doing so will cause a NullReferenceException to be thrown. At best, such an exception will cause abrupt program termination. At worst, it could expose debugging information that would be useful to an attacker, or it could allow an attacker to bypass security measures.",Y,"
+
+object o = null;
+if (condition)
+{
+  M1(o.ToString()); // Noncompliant, always null
+}
+else
+{
+  o = new object();
+}
+M2(o.ToString());
+
+",rule_RSPEC-2259,S2259,不应该引用/访问对null的引用.这样做会导致抛出NullReferenceException.最好的是，这样的例外会导致程序终止.最糟糕的是，它可能暴露对攻击者有用的调试信息，或者可能允许攻击者绕过安全措施.,Bug,,,MAJOR,Null pointers should not be dereferenced
+参数应以正确的顺序传递.,,Y,"
+
+public double Divide(int divisor, int dividend) 
+{
+  return divisor/dividend;
+}
+
+public void DoTheThing() 
+{
+  int divisor = 15;
+  int dividend = 5;
+
+  double result = Divide(dividend, divisor);  // Noncompliant; operation succeeds, but result is unexpected
+  //...
+}
+
+",rule_RSPEC-2234,S2234,,Bug,Y,"
+
+public double Divide(int divisor, int dividend) 
+{
+  return divisor/dividend;
+}
+
+public void DoTheThing() 
+{
+  int divisor = 15;
+  int dividend = 5;
+
+  double result = Divide(divisor, dividend);
+  //...
+}
+
+",MAJOR,Parameters should be passed in the correct order
+当函数调用没有任何副作用时，不应忽略返回值.,"When the call to a function doesn't have any side effects, what is the point of making the call if the results are ignored? In such case, either the function call is useless and should be dropped or the source code doesn't behave as expected.This rule raises an issue when the results of the following methods are ignored:",Y,"
+
+coll.Where(i =&gt; i &gt; 5).Select(i =&gt; i*i); // Noncompliant
+""this string"".Equals(""other string""); // Noncompliant
+
+",rule_RSPEC-2201,S2201,当对功能的调用没有任何副作用时，如果忽略结果，拨打电话的要点是什么？.当忽略以下方法的结果时，此规则引发了一个问题：.,Bug,Y,"
+
+var res = coll.Where(i =&gt; i &gt; 5).Select(i =&gt; i*i);
+var isEqual = ""this string"".Equals(""other string"");
+
+",MAJOR,Return values should not be ignored when function calls don't have any side effects
+价值观不应该无谓地增加.,,Y,"
+
+public int PickNumber()
+{
+  int i = 0;
+  int j = 0;
+
+  i = i++; // Noncompliant; i is still zero
+
+  return j++; // Noncompliant; 0 returned
+}
+
+",rule_RSPEC-2123,S2123,,Bug,Y,"
+
+public int PickNumber()
+{
+  int i = 0;
+  int j = 0;
+
+  i++; 
+  return ++j; 
+}
+
+",MAJOR,Values should not be uselessly incremented
+条件结构中的两个分支不应该具有完全相同的实现.,"Having two cases in the same switch statement or branches in the same if structure with the same implementation is at best duplicate code, and at worst a coding error. If the same logic is truly needed for both instances, then in an if structure they should be combined, or for a switch, one should fall  through to the other.",Y,"
+
+switch (i)
+{
+  case 1:
+    DoSomething();
+    break;
+  case 2:
+    DoSomethingDifferent();
+    break;
+  case 3:  // Noncompliant; duplicates case 1's implementation
+    DoSomething();
+    break;
+  default:
+    DoTheRest();
+}
+
+if (a &gt;= 0 &amp;&amp; a &lt; 10)
+{
+  DoTheThing();
+}
+else if (a &gt;= 10 &amp;&amp; a &lt; 20)
+{
+  DoTheOtherThing();
+}
+else if (a &gt;= 20 &amp;&amp; a &lt; 50)
+{
+  DoTheThing();  // Noncompliant; duplicates first condition
+}
+else
+{
+  DoTheRest();
+}
+
+if (b == 0)
+{
+  DoOneMoreThing();
+}
+
+",rule_RSPEC-1871,S1871,在相同的switch语句中有两种情况或相同的if结构中具有相同实现的分支是最多的重复代码，最糟糕的是编码错误.如果两个实例都需要相同的逻辑，那么在if结构中，它们应该被组合，或者对于一个交换机，应该通过另一个.,CodeSmell,Y,"
+
+switch (i) {
+  case 1:
+  case 3:
+    DoSomething();
+    break;
+  case 2:
+    DoSomethingDifferent();
+    break;
+  default:
+    DoTheRest();
+}
+
+if ((a &gt;= 0 &amp;&amp; a &lt; 10) || (a &gt;= 20 &amp;&amp; a &lt; 50))
+{
+  DoTheThing();
+}
+else if (a &gt;= 10 &amp;&amp; a &lt; 20)
+{
+  DoTheOtherThing();
+}
+else
+{
+  DoTheRest();
+}
+
+DoOneMoreThing();
+
+",MAJOR,Two branches in a conditional structure should not have exactly the same implementation
+相关的“if / else if”语句不应该有相同的条件.,,Y,"
+
+if (param == 1)
+{
+  OpenWindow();
+}
+else if (param == 2)
+{
+  CloseWindow();
+}
+else if (param == 1) // Noncompliant
+{
+  MoveWindowToTheBackground();
+}
+
+",rule_RSPEC-1862,S1862,,Bug,Y,"
+
+if (param == 1)
+{
+  OpenWindow();
+}
+else if (param == 2)
+{
+  CloseWindow();
+}
+else if (param == 3)
+{
+  MoveWindowToTheBackground();
+}
+
+",MAJOR,"Related ""if/else if"" statements should not have the same condition"
+应该删除死店.,,Y,"
+
+void CalculateRate(int a, int b)
+{
+  int i;
+  
+  i = a + b; // Noncompliant; calculation result not used before value is overwritten
+  i = DoSomething();  // Noncompliant; retrieved value not used
+  for (i = 0; i &lt; 10; i++) 
+  { 
+    //  ...
+  }
+  // ...
+}
+
+",rule_RSPEC-1854,S1854,,CodeSmell,Y,"
+
+void CalculateRate(int a, int b)
+{
+  int i;
+
+  i = DoSomething();
+  i += a + b;
+  StoreI(i);
+
+  for (i = 0; i &lt; 10; i++) 
+  { 
+    //  ...
+  }
+}
+
+",MAJOR,Dead stores should be removed
+对象不应该被创建为立即被丢弃而不使用.,,Y,"
+
+if (x &lt; 0)
+  new ArgumentException(""x must be nonnegative"");
+
+",rule_RSPEC-1848,S1848,,Bug,Y,"
+
+if (x &lt; 0)
+  throw new ArgumentException(""x must be nonnegative"");
+
+",MAJOR,Objects should not be created to be dropped immediately without being used
+不应在二进制运算符的两面使用相同的表达式.,"Using the same value on either side of a binary operator is almost always a mistake. In the case of logical operators, it is either a copy/paste error and therefore a bug, or it is simply wasted code, and should be simplified. In the case of bitwise operators and most binary mathematical operators, having the same value on both sides of an operator yields predictable results, and should be simplified.
+This rule ignores *, +, =, <<, and >>;.",Y,"
+
+if ( a == a ) // always true
+{ 
+  doZ();
+}
+if ( a != a ) // always false
+{
+  doY();
+}
+if ( a == b &amp;&amp; a == b ) // if the first one is true, the second one is too
+{ 
+  doX();
+}
+if ( a == b || a == b ) // if the first one is true, the second one is too
+{ 
+  doW();
+}
+
+int j = 5 / 5; //always 1
+int k = 5 - 5; // always 0
+
+c.Equals(c);    //always true
+Object.Equals(c, c); //always true
+
+",rule_RSPEC-1764,S1764,"在二进制运算符的任一侧使用相同的值几乎总是一个错误.在逻辑运算符的情况下，它是一个复制/粘贴错误，因此是一个错误，或者它只是浪费代码，应该被简化.在按位运算符和大多数二进制数学运算符的情况下，在运算符的两侧具有相同的值产生可预测的结果，并且应该被简化.该规则忽略*，+，=，<<, and >>;.",Bug,,,MAJOR,Identical expressions should not be used on both sides of a binary operator
+跳转语句不能无条件地使用.,,Y,"
+
+for (var i = 0; i &lt; 10; i++)
+{
+    Console.WriteLine(i);
+    break;  // loop only executes once
+}
+
+for (var i = 0; i &lt; 10; i++)
+{
+    continue;
+    Console.WriteLine(i); // this is never executed
+}
+
+for (var i = 0; i &lt; 10; i++)
+{
+    Console.WriteLine(i);
+    continue;  // this is meaningless; the loop would continue anyway
+}
+
+",rule_RSPEC-1751,S1751,,Bug,Y,"
+
+for (var i = 0; i &lt; 10; i++)
+{
+    Console.WriteLine(i);
+}
+
+for (var i = 0; i &lt; 10; i++)
+{
+    Console.WriteLine(i);
+    if (ErrorOccurred())
+    {
+        break;
+    }
+}
+
+",MAJOR,Jump statements should not be used unconditionally
+变量不应该是自我分配的.,,Y,"
+
+public void SetName(string name)
+{
+  name = name;
+}
+
+",rule_RSPEC-1656,S1656,,Bug,Y,"
+
+public void SetName(string name)
+{
+  this.name = name;
+}
+
+",MAJOR,Variables should not be self-assigned
+“switch”语句不应该有太多的“case”子句.,,,,rule_RSPEC-1479,S1479,,CodeSmell,,,MAJOR,"""switch"" statements should not have too many ""case"" clauses"
+跟踪“FIXME”标签的使用.,,Y,"
+
+private int Divide(int numerator, int denominator) 
+{
+  return numerator / denominator;              // FIXME denominator value might be  0
+}
+
+",rule_RSPEC-1134,S1134,,CodeSmell,,,MAJOR,"Track uses of ""FIXME"" tags"
+不应在子表达式中作出分配.,,Y,"
+
+if (string.IsNullOrEmpty(result = str.Substring(index, length))) // Noncompliant
+{
+  //...
+}
+
+",rule_RSPEC-1121,S1121,,CodeSmell,Y,"
+
+var result = str.Substring(index, length);
+if (string.IsNullOrEmpty(result))
+{
+  //...
+}
+
+",MAJOR,Assignments should not be made from within sub-expressions
+实用类不应该有公共构造函数.,"Utility classes, which are collections of static members, are not meant to be instantiated. Even abstract utility classes, which can be extended, should not have public constructors.C# adds an implicit public constructor to every class which does not explicitly define at least one constructor. Hence, at least one protected constructor should be defined if you wish to subclass this utility class. Or the static keyword should be added to the class declaration to prevent subclassing.",Y,"
+
+public class StringUtils // Noncompliant
+{ 
+  public static string Concatenate(string s1, string s2) 
+  {
+    return s1 + s2;
+  }
+}
+
+",rule_RSPEC-1118,S1118,实用程序类（它们是静态成员的集合）不是要实例化的.即使是可以扩展的抽象实用程序类也不应该有公共构造函数.C＃向每个不显式定义至少一个构造函数的类添加一个隐式的公共构造函数.因此，如果您希望对此实用程序类进行子类化，则应至少定义一个受保护的构造函数.或者static关键字应该添加到类声明中以防止子类化.,CodeSmell,Y,"
+
+public static class StringUtils
+{ 
+  public static string Concatenate(string s1, string s2) 
+  {
+    return s1 + s2;
+  }
+}
+
+",MAJOR,Utility classes should not have public constructors
+局部变量不应该影响类字段.,,Y,"
+
+class Foo 
+{
+  public int myField;
+
+  public void DoSomething() 
+  {
+    int myField = 0;  // Noncompliant
+    ...
+  }
+}
+
+",rule_RSPEC-1117,S1117,,CodeSmell,,,MAJOR,Local variables should not shadow class fields
+可合并的“if”语句应该合并.,,Y,"
+
+if (condition1)
+{
+  if (condition2)
+  {        
+    ...
+  }
+}
+
+",rule_RSPEC-1066,S1066,,CodeSmell,Y,"
+
+if (condition1 &amp;&amp; condition2)
+{        
+  ...
+}
+
+",MAJOR,"Collapsible ""if"" statements should be merged"
+类的继承树不应该太深.,"Inheritance is certainly one of the most valuable concepts in object-oriented programming. It's a way to compartmentalize and reuse code by creating collections of attributes and behaviors called classes which can be based on previously created classes. But abusing this concept by creating a deep inheritance tree can lead to very complex and unmaintainable source code. Most of the time a too deep inheritance tree is due to bad object oriented design which has led to systematically use 'inheritance' when for instance 'composition' would suit better.This rule raises an issue when the inheritance tree, starting from Object has a greater depth than is allowed. ",,,rule_RSPEC-110,S110,继承是面向对象编程中最有价值的概念之一.这是通过创建属性和行为的集合来划分和重用代码的方式，这些属性和行为称为类，可以基于以前创建的类.但是通过创建一个很深的继承树来滥用这个概念可以导致非常复杂和不可维护的源代码.大多数时候，一个太深的继承树是由于面向对象设计不好，导致系统地使用“继承”，当“组合”适合更好.当从Object开始的继承树具有比允许的更深的深度时，此规则引发了一个问题.,CodeSmell,,,MAJOR,Inheritance tree of classes should not be too deep
+“ToString（）”方法不应该返回null.,Calling ToString() on an object should always return a string. Returning null instead contravenes the method's implicit contract.,Y,"
+
+public override string ToString ()
+{
+  if (this.collection.Count == 0) 
+  {
+    return null; // Noncompliant
+  } 
+  else 
+  {
+    // ...
+  }
+}
+
+",rule_RSPEC-2225,S2225,调用对象上的ToString（）应该总是返回一个字符串.返回null而不是方法的隐式契约.,Bug,Y,"
+
+public override string ToString () 
+{
+  if (this.collection.Count == 0) 
+  {
+    return string.Empty;
+  } 
+  else 
+  {
+    // ...
+  }
+}
+
+",MAJOR,"""ToString()"" method should not return null"
+应删除未使用的方法参数.,,Y,"
+
+void DoSomething(int a, int b) // ""b"" is unused
+{     
+  Compute(a);
+}
+
+void DoSomething2(int a) // value of ""a"" is unused
+{     
+  a = 10;
+  Compute(a);
+}
+
+",rule_RSPEC-1172,S1172,,CodeSmell,Y,"
+
+void DoSomething(int a)
+{     
+  Compute(a);
+}
+
+void DoSomething2()
+{     
+  var a = 10;
+  Compute(a);
+}
+
+",MAJOR,Unused method parameters should be removed
+类和方法不应该有太多的通用参数.,A method or class with too many type parameters has likely aggregated too many responsibilities and should be split.,Y,"
+
+&lt;S, T, U, V&gt; void foo() {} // Noncompliant; not really readable
+&lt;String, Integer, Object, String&gt;foo(); // especially on invocations
+
+",rule_RSPEC-2436,S2436,具有太多类型参数的方法或类可能会累积太多的责任，并且应该被分割.,CodeSmell,,,MAJOR,Classes and methods should not have too many generic parameters
+复合格式字符串应该正确使用.,"Because composite format strings are interpreted at runtime, rather than validated by the compiler, they can contain errors that lead to unexpected behaviors or runtime errors. This rule statically validates the good behavior of composite formats when calling the methods of String.Format, StringBuilder.AppendFormat, Console.Write, Console.WriteLine, TextWriter.Write, TextWriter.WriteLine, Debug.WriteLine(String, Object[]), Trace.TraceError(String, Object[]), Trace.TraceInformation(String, Object[]), Trace.TraceWarning(String, Object[]) and TraceSource.TraceInformation(String, Object[]). ",Y,"
+
+s = string.Format(""{0}"", arg0, arg1); // Noncompliant, arg1 is declared but not used.
+s = string.Format(""{0} {2}"", arg0, arg1, arg2); // Noncompliant, the format item with index 1 is missing so arg1 will not be used.
+s = string.Format(""foo""); // Noncompliant, there is no need to use string.Format here.
+
+",rule_RSPEC-3457,S3457,因为复合格式字符串在运行时解释，而不是由编译器验证，它们可能包含导致意外行为或运行时错误的错误.当调用String的方法时，此规则静态地验证复合格式的良好行为.格式，StringBuilder.AppendFormat，控制台.写，控制台.WriteLine，TextWriter.写，TextWriter.WriteLine，Debug.WriteLine（String，Object []），Trace.TraceError（String，Object []），Trace.TraceInformation（String，Object []），Trace.TraceWarning（String，Object []）和TraceSource.TraceInformation（字符串，对象[]）.,CodeSmell,Y,"
+
+s = string.Format(""{0}"", arg0);
+s = string.Format(""{0} {1}"", arg0, arg2);
+s = ""foo"";
+
+",MAJOR,Composite format strings should be used correctly
+一般异常不应该被抛出.,"Throwing such general exceptions as Exception, SystemException, ApplicationException, IndexOutOfRangeException, NullReferenceException, OutOfMemoryException and ExecutionEngineException prevents calling methods from handling true, system-generated exceptions differently than application-generated errors. ",Y,"
+
+public void DoSomething(object obj)
+{
+  if (obj == null)
+  {
+    throw new NullReferenceException(""obj"");  // Noncompliant
+  }
+  // ...
+}
+
+",rule_RSPEC-112,S112,抛出诸如Exception，SystemException，ApplicationException，IndexOutOfRangeException，NullReferenceException，OutOfMemoryException和ExecutionEngineException之类的一般异常会阻止调用方法处理真正的系统生成的异常，而不是应用程序生成的错误.,CodeSmell,Y,"
+
+public void DoSomething(object obj)
+{
+  if (obj == null)
+  {
+    throw new ArgumentNullException(""obj"");
+  }
+  // ...
+}
+
+",MAJOR,General exceptions should never be thrown
+方法不应该有太多的参数.,A long parameter list can indicate that a new structure should be created to wrap the numerous parameters or that the function is doing too many things.,Y,"
+
+public void doSomething(int param1, int param2, int param3, string param4, long param5) 
+{
+...
+}
+
+",rule_RSPEC-107,S107,长参数列表可以指示应该创建一个新的结构来包装大量参数，或者该函数做太多的事情.,CodeSmell,Y,"
+
+public void doSomething(int param1, int param2, int param3, string param4) 
+{
+...
+}
+
+",MAJOR,Methods should not have too many parameters
+应删除未使用的私有类型或成员.,"private or internal types or private members that are never executed or referenced are dead code: unnecessary, inoperative code that should be removed. Cleaning out dead code decreases the size of the maintained codebase, making it easier to understand the program and preventing bugs from being introduced.",Y,"
+
+public class Foo
+{
+  private void UnusedPrivateMethod() {...} // Noncompliant
+
+  private class UnusedClass {...} // Noncompliant
+}
+
+",rule_RSPEC-1144,S1144,从未执行或引用的私有或内部类型或私有成员都是死码：不必要的，应该删除的不工作代码.清理死码会减少维护的代码库的大小，从而更容易理解程序并防止引入错误.,CodeSmell,Y,"
+
+public class Foo
+{
+  private Foo()
+  {
+    UsedPrivateMethod();
+  }
+
+  private void UsedPrivateMethod() 
+  {
+    var c = new UsedClass();
+  } 
+
+  private class UsedClass {...}
+}
+
+",MAJOR,Unused private types or members should be removed
+直接扩展“对象”的类不应该在“GetHashCode”或“Equals”中调用“base”.,"Making a base call in an overriding method is generally a good idea, but not in GetHashCode and Equals for classes that directly extend object because those methods are based on the object reference. Meaning that no two objects that use those base methods will ever be equal or have the same hash.",Y,"
+
+public class Point
+{
+  private readonly int x;
+  public MyClass(int x)
+  {
+    ",rule_RSPEC-3249,S3249,以覆盖方法进行基本调用通常是一个好主意，但不能在GetHashCode和Equals中直接扩展对象的类，因为这些方法基于对象引用.意思是没有使用这些基本方法的两个对象将相同或具有相同的哈希.,Bug,,,MAJOR,"Classes directly extending ""object"" should not call ""base"" in ""GetHashCode"" or ""Equals"""
+类不应该只有“私有”构造函数.,"A class with only private constructors can't be instantiated, thus, it seems to be pointless code.",Y,"
+
+public class MyClass // Noncompliant
+{
+  private MyClass() { ... }
+}
+
+",rule_RSPEC-3453,S3453,只有私有构造函数的类不能被实例化，因此似乎是无意义的代码.,Bug,Y,"
+
+public class MyClass 
+{
+  public MyClass() { ... }
+}
+
+",MAJOR,"Classes should not have only ""private"" constructors"
+提供“Equals（\u003cT\u003e）”或覆盖“Equals（Object）”的类应实现“IEquatable \u003cT\u003e”.,"The IEquatable&lt;T&gt; interface has only one method in it: Equals(&lt;T&gt;). If you've already written Equals(T), there's no reason not to explicitly implement IEquatable&lt;T&gt;. Doing so expands the utility of your class by allowing it to be used where an IEquatable is called for.Similarly, having written Equals(&lt;T&gt;), it's not that much further to go to write Equals(Object) and vice versa; just a couple more lines brings a large dividend of functionality. So this rule raises an issue when Equals(&lt;T&gt;) is not accompanied by IEquatable and Equals(Object), and vice versa.",Y,"
+
+class MyClass  // Noncompliant
+{
+  public override bool Equals(object other)
+  {
+    //...
+  }
+}
+
+",rule_RSPEC-3897,S3897,IEquatable＆lt; T＆gt;.如果你已经写了Equals（T），那么没有理由不明确地实现IEquatable＆T;.这样做可以扩展您的类的实用程序，方法是将其用于调用IEquatable的位置.类似地，在写入Equals（＆lt; T））时，写入Equals（Object）并没有太多进一步的，反之亦然;.所以当Equals（＆lt; T＆gt;）不伴随着IEquatable和Equals（Object）时，这个规则引发了一个问题，反之亦然.,CodeSmell,Y,"
+
+class MyClass : IEquatable&lt;MyClass&gt;
+{
+  public override bool Equals(object other)
+  {
+    return Equals(other as MyClass);
+  }
+
+  public bool Equals(MyClass other) 
+  {
+    //...
+  }
+}
+
+",MINOR,"Classes that provide ""Equals(<T>)"" or override ""Equals(Object)"" should implement Equatable<T>"""
+代表不应该被减去.,"In C#, delegates can be added together to chain their execution, and subtracted to remove their execution from the chain.Subtracting a chain of delegates from another one might yield unexpected results as shown hereunder - and is likely to be a bug.",Y,"
+
+MyDelegate first, second, third, fourth;
+first = () =&gt; Console.Write(""1"");
+second = () =&gt; Console.Write(""2"");
+third = () =&gt; Console.Write(""3"");
+fourth = () =&gt; Console.Write(""4"");
+
+MyDelegate chain1234 = first + second + third + fourth; // Compliant - chain sequence = ""1234""
+MyDelegate chain12 = chain1234 - third - fourth; // Compliant - chain sequence = ""12""
+
+
+MyDelegate chain14 = first + fourth; // creates a new MyDelegate instance which is a list under the covers
+MyDelegate chain23 = chain1234 - chain14; // Noncompliant; (first + fourth) doesn't exist in chain1234
+
+
+// The chain sequence of ""chain23"" will be ""1234"" instead of ""23""!
+// Indeed, the sequence ""1234"" does not contain the subsequence ""14"", so nothing is subtracted
+// (but note that ""1234"" contains both the ""1"" and ""4"" subsequences)
+chain23 = chain1234 - (first + fourth); // Noncompliant
+
+chain23(); // will print ""1234""!
+
+",rule_RSPEC-3172,S3172,在C＃中，代理可以加在一起以链接其执行，并减去它们从链中删除其执行.从另一个减去代表链可能会产生意想不到的结果，如下所示 - 可能是一个错误.,Bug,Y,"
+
+MyDelegate chain23 = chain1234 - first - fourth; // Compliant - ""1"" is first removed, followed by ""4""
+
+chain23(); // will print ""23""
+
+",MAJOR,Delegates should not be subtracted
+应为“可选字段”成员提供反序列化方法.,"Fields marked with System.Runtime.Serialization.OptionalFieldAttribute are serialized just like any other field. But such fields are ignored on deserialization, and retain the default values associated with their types. Therefore, deserialization event handlers should be declared to set such fields during the deserialization process.This rule raises when at least one field with the System.Runtime.Serialization.OptionalFieldAttribute attribute is declared but one (or both) of the following event handlers System.Runtime.Serialization.OnDeserializingAttribute or System.Runtime.Serialization.OnDeserializedAttribute are not present.",Y,"
+
+[Serializable]
+public class Foo
+{
+    [OptionalField(VersionAdded = 2)]
+    int optionalField = 5;    
+}
+
+",rule_RSPEC-3926,S3926,标有系统的字段.运行.序列化.OptionalFieldAttribute就像任何其他字段一样被序列化.但这样的字段在反序列化时被忽略，并保留与其类型相关联的默认值.因此，反序列化事件处理程序应该被声明在反序列化过程中设置这样的字段.当系统至少有一个字段时，此规则会引发.运行.序列化.OptionalFieldAttribute属性被声明为一个（或两个）以下事件处理程序System.运行.序列化.OnDeserializingAttribute或System.运行.序列化.OnDeserializedAttribute不存在.,Bug,Y,"
+
+[Serializable]
+public class Foo
+{
+    [OptionalField(VersionAdded = 2)]
+    int optionalField = 5;
+    
+    [OnDeserializing]
+    void OnDeserializing(StreamingContext context)
+    {
+	    optionalField = 5;
+    }
+    
+    [OnDeserialized]
+    void OnDeserialized(StreamingContext context)
+    {
+        // Set optionalField if dependent on other deserialized values.
+    }
+}
+
+",MAJOR,"Deserialization methods should be provided for ""OptionalField"" members"
+双重前缀运算符“!!”.,"Calling the ! or ~ prefix operator twice does nothing: the second invocation undoes the first. Such mistakes are typically caused by accidentally double-tapping the key in question without noticing.Either this is a bug, if the operator was actually meant to be called once, or misleading if done on purpose.",Y,"
+
+int v1 = 0;
+bool v2 = false;
+
+var v3 = !!v1; // Noncompliant
+var v4 = ~~v2; // Noncompliant
+
+",rule_RSPEC-2761,S2761,打电话给！.这种错误通常是由于意外地双击所关注的密钥而没有注意到.这是一个错误，如果操作者实际上是打算被叫一次，或者是误导，如果有目的的话.,Bug,Y,"
+
+int v1 = 0;
+bool v2 = false;
+
+var v3 = !v1;
+var v4 = ~v2;
+
+",MAJOR,"Doubled prefix operators ""!!"" and ""~~"" should not be used"
+空的可空值不应被访问.,"Nullable value types can hold either a value or null. The value held in the nullable type can be accessed with the Value property, but .Value throws an InvalidOperationException when the value is null. To avoid the exception, a nullable type should always be tested before .Value is accessed.",Y,"
+
+int? nullable = null;
+...
+UseValue(nullable.Value); // Noncompliant
+
+",rule_RSPEC-3655,S3655,可空值可以包含一个值或一个null.可以使用Value属性访问保持在可空类型中的值，但是.当值为null时，值会抛出InvalidOperationException异常.为了避免这个例外，一个可以为空的类型应该先经过测试.访问值.,Bug,Y,"
+
+int? nullable = null;
+...
+if (nullable.HasValue)
+{
+  UseValue(nullable.Value);
+}
+
+",MAJOR,Empty nullable value should not be accessed
+事件应该被调用.,"Events that are not invoked anywhere are dead code, and there's no good reason to keep them in the source.",Y,"
+
+class UninvokedEventSample
+{
+    private event Action&lt;object, EventArgs&gt; Happened; //Noncompliant
+
+    public void RegisterEventHandler(Action&lt;object, EventArgs&gt; handler)
+    {
+        Happened += handler; //we register some event handlers
+    }
+
+    public void RaiseEvent()
+    {
+        if (Happened != null)
+        {
+            // Happened(this, null); // the event is never triggered, because this line is commented out.
+        }
+    }
+}
+
+",rule_RSPEC-3264,S3264,在任何地方没有被调用的事件都是死码，没有什么好的理由将它们保留在源代码中.,CodeSmell,,,MAJOR,Events should be invoked
+异常不应该被明确地推翻.,"When rethrowing an exception, you should do it by simply calling throw; and not throw exc;, because the stack trace is reset with the second syntax, making debugging a lot harder.",Y,"
+
+try
+{}
+catch(ExceptionType1 exc)
+{
+  Console.WriteLine(exc);
+  throw exc; // Noncompliant; stacktrace is reset
+}
+catch (ExceptionType2 exc) 
+{
+  throw new Exception(""My custom message"", exc);  // Compliant; stack trace preserved
+}
+
+",rule_RSPEC-3445,S3445,当重新抛出异常时，你应该通过简单地调用throw来实现;.,CodeSmell,Y,"
+
+try
+{}
+catch(ExceptionType1 exc)
+{
+  Console.WriteLine(exc);
+  throw;
+}
+catch (ExceptionType2 exc) 
+{
+  throw new Exception(""My custom message"", exc);
+}
+
+",MAJOR,Exceptions should not be explicitly rethrown
+仅在构造函数中分配的字段应为“只读”.,"readonly fields can only be assigned in a class constructor. If a class has a field that's not marked readonly but is only set in the constructor, it could cause confusion about the field's intended use. To avoid confusion, such fields should be marked readonly to make their intended use explicit, and to prevent future maintainers from inadvertently changing their use.",,,rule_RSPEC-2933,S2933,只读字段只能在类构造函数中分配.如果一个类没有标记为只读的字段，但只能在构造函数中设置，那么可能会导致对字段的预期用途的混淆.为了避免混淆，这些字段应该被标记为只读，以使其用途明确，并防止未来的维护者无意中更改使用.,CodeSmell,Y,"
+
+class Person
+{
+  readonly int _birthYear;
+  Person(int birthYear) 
+  {
+    _birthYear = birthYear;
+  }
+}
+
+",MAJOR,"Fields that are only assigned in the constructor should be ""readonly"""
+通用型参数应尽可能共同/相反.,"In the interests of making code as usable as possible, interfaces and delegates with generic parameters should use the out and in modifiers when possible to make the interfaces and delegates covariant and contravariant, respectively.The out keyword can be used when the type parameter is used only as a return type in the interface or delegate. Doing so makes the parameter covariant, and allows interface and delegate instances created with a sub-type to be used as instances created with a base type. The most notable example of this is IEnumerable&lt;out T&gt;, which allows the assignment of an IEnumerable&lt;string&gt; instance to an IEnumerable&lt;object&gt; variable, for instance.The in keyword can be used when the type parameter is used only as a method parameter in the interface or a parameter in the delegate. Doing so makes the parameter contravariant, and allows interface and delegate instances created with a base type to be used as instances created with a sub-type. I.e. this is the inversion of covariance. The most notable example of this is the Action&lt;in T&gt; delegate, which allows the assignment of an Action&lt;object&gt; instance to a Action&lt;string&gt; variable, for instance.",Y,"
+
+interface IConsumer&lt;T&gt;  // Noncompliant
+{
+    bool Eat(T fruit);
+}
+
+",rule_RSPEC-3246,S3246,为了尽可能使代码尽可能地使用，具有通用参数的接口和委托应该在可能时使用out和in修饰符分别使接口和委托协变量和反变换.当类型参数仅在接口或委托中作为返回类型使用时，可以使用out关键字.这样做使参数协变，并允许使用子类创建的接口和委托实例作为使用基本类型创建的实例.其中最显着的例子是IEnumerable＆lt; out T＆gt;，其允许分配IEnumerable＆lt; string＆gt;.当type参数仅用作接口中的方法参数或委托中的参数时，可以使用in关键字.这样做会使参数相反，并允许使用基本类型创建的接口和委托实例作为使用子类型创建的实例.一世.这是协方差的反演.其中最显着的例子是Action＆lt; in T＆gt;.,CodeSmell,Y,"
+
+interface IConsumer&lt;in T&gt;
+{
+    bool Eat(T fruit);
+}
+
+",MAJOR,Generic type parameters should be co/contravariant when possible
+“Pure”属性的方法应该返回一个值.,"Marking a method with the [Pure] attribute specifies that the method doesn't make any visible changes; thus, the method should return a result, otherwise the call to the method should be equal to no-operation. So [Pure] on a void method is either a mistake, or the method doesn't do any meaningful task.",Y,"
+
+class Person
+{
+  private int age;
+  [Pure] // Noncompliant. In this case the method makes a possibly visible state change
+  void ConfigureAge(int age)
+  {
+    ...
+    this.age = age;
+  }
+  ...
+}
+
+",rule_RSPEC-3603,S3603,使用[Pure]属性标记方法指定该方法不会进行任何可见的更改;.所以[Pure]在一个void方法上是一个错误，或者该方法没有任何有意义的任务.,Bug,Y,"
+
+class Person
+{
+  private int age;
+
+  void ConfigureAge(int age)
+  {
+    ...
+    this.age = age;
+  }
+  ...
+}
+
+",MAJOR,"Methods with ""Pure"" attribute should return a value"
+不应该使用多个“OrderBy”调用.,"There's no point in chaining multiple OrderBy calls in a LINQ; only the last one will be reflected in the result because each subsequent call  completely reorders the list. Thus, calling OrderBy multiple times is a performance issue as well, because all of the sorting will be executed, but only the result of the last sort will be kept.Instead, use ThenBy for each call after the first. ",Y,"
+
+var x = personList
+  .OrderBy(person =&gt; person.Age)
+  .OrderBy(person =&gt; person.Name)  // Noncompliant
+  .ToList();  // x is sorted by Name, not sub-sorted
+
+",rule_RSPEC-3169,S3169,在LINQ中连接多个OrderBy调用没有任何意义;.因此，多次调用OrderBy也是一个性能问题，因为所有的排序都将被执行，但只会保留最后一个排序的结果.相反，在第一个之后的每个调用中使用ThenBy.,CodeSmell,Y,"
+
+var x = personList
+  .OrderBy(person =&gt; person.Age)
+  .ThenBy(person =&gt; person.Name)
+  .ToList();
+
+",MAJOR,"Multiple ""OrderBy"" calls should not be used"
+嵌套的代码块不应该是空的.,Most of the time a block of code is empty when a piece of code is really missing. So such empty block must be either filled or removed.,Y,"
+
+for (int i = 0; i &lt; 42; i++){}  // Empty on purpose or missing piece of code ?
+
+",rule_RSPEC-108,S108,当一段代码真的丢失时，大多数时候代码块是空的.所以这样的空块必须被填充或删除.,CodeSmell,,,MAJOR,Nested blocks of code should not be left empty
+可空类型比较不应该是多余的.,"Calling GetType() on a nullable object returns the underlying value type. Thus, comparing the returned Type object to typeof(Nullable&lt;SomeType&gt;) doesn't make sense. The comparison either throws an exception or the result can be known at compile time.",Y,"
+
+int? nullable = 42;
+bool comparison = nullable.GetType() == typeof(Nullable&lt;int&gt;); // Noncompliant, always false
+comparison = nullable.GetType() != typeof(Nullable&lt;int&gt;); // Noncompliant, always true
+
+nullable = null;
+comparison = nullable.GetType() != typeof(Nullable&lt;int&gt;); // Noncompliant, calling GetType on a null always throws an exception
+
+",rule_RSPEC-3610,S3610,在可空对象上调用GetType（）返回底层值类型.因此，将返回的Type对象与typeof（Nullable＆lt; SomeType＆gt;）进行比较没有任何意义.比较引发异常或结果可以在编译时知道.,Bug,,,MAJOR,Nullable type comparison should not be redundant
+单向“OperationContract”方法应该具有“void”返回类型.,"When declaring a Windows Communication Foundation (WCF) OperationContract method one-way, that service method won't return any result, not even an underlying empty confirmation message. These are fire-and-forget methods that are useful in event-like communication. Specifying a return type therefore does not make sense.",Y,"
+
+[ServiceContract]
+interface IMyService 
+{
+  [OperationContract(IsOneWay = true)]
+  int SomethingHappened(int parameter); // Noncompliant
+}
+
+",rule_RSPEC-3598,S3598,当以单向方式声明Windows Communication Foundation（WCF）OperationContract方法时，该服务方法将不会返回任何结果，甚至没有底层的空确认消息.这些是在类似事件的通信中有用的消防方式.因此，指定返回类型是没有意义的.,Bug,Y,"
+
+[ServiceContract]
+interface IMyService 
+{
+  [OperationContract(IsOneWay = true)]
+  void SomethingHappened(int parameter);
+}
+
+",MAJOR,"One-way ""OperationContract"" methods should have ""void"" return type"
+可选参数应传递给“基”调用.,"Generally, writing the least code that will readably do the job is a good thing, so omitting default parameter values seems to make sense. Unfortunately, when you omit them from the base call in an override, you're not actually getting the job done thoroughly, because you're ignoring the value the caller passed in. The result will likely not be what the caller expected.",Y,"
+
+public class BaseClass
+{
+    public virtual void MyMethod(int i = 1)
+    { 
+        Console.WriteLine(i);
+    }
+}
+
+public class DerivedClass : BaseClass
+{
+    public override void MyMethod(int i = 1)
+    {
+        // ... 
+        base.MyMethod(); // Noncompliant; caller's value is ignored
+    }
+
+    static int Main(string[] args) 
+    {
+        DerivedClass dc = new DerivedClass();
+        dc.MyMethod(12);  // prints 1
+    }
+}
+
+",rule_RSPEC-3466,S3466,一般来说，编写可以轻松完成工作的最小代码是一件好事，因此省略默认参数值似乎是有道理的.不幸的是，当您在覆盖中从基础调用中省略它们时，实际上并没有彻底地完成工作，因为您忽略了调用者传递的值.结果可能不是呼叫者预期的.,Bug,Y,"
+
+public class BaseClass
+{
+    public virtual void MyMethod(int i = 1)
+    { 
+        Console.WriteLine(i);
+    }
+}
+
+public class DerivedClass : BaseClass
+{
+    public override void MyMethod(int i = 1)
+    {
+        // ... 
+        base.MyMethod(i);
+    }
+
+    static int Main(string[] args) 
+    {
+        DerivedClass dc = new DerivedClass();
+        dc.MyMethod(12);  // prints 12
+    }
+}
+
+",MAJOR,"Optional parameters should be passed to ""base"" calls"
+用于ArgumentException构造函数的参数名称应与现有构造函数匹配.,"Some constructors of the ArgumentException, ArgumentNullException, ArgumentOutOfRangeException and DuplicateWaitObjectException classes must be fed with a valid parameter name. This rule raises an issue in two cases:",Y,"
+
+public void Foo(Bar a, int[] b) 
+{
+  throw new ArgumentException(); // Noncompliant
+  throw new ArgumentException(""My error message"", ""c""); // Noncompliant
+  throw new ArgumentException(""My error message"", ""c"", innerException); // Noncompliant 
+  throw new ArgumentNullException(""c""); // Noncompliant
+  throw new ArgumentNullException(""My error message"", ""c""); // Noncompliant
+  throw new ArgumentOutOfRangeException(""c"");
+  throw new ArgumentOutOfRangeException(""c"", ""My error message""); // Noncompliant
+  throw new ArgumentOutOfRangeException(""c"", b, ""My error message""); // Noncompliant
+}
+
+",rule_RSPEC-3928,S3928,ArgumentException，ArgumentNullException，ArgumentOutOfRangeException和DuplicateWaitObjectException类的某些构造函数必须使用有效的参数名称.这个规则在两种情况下提出了一个问题：.,CodeSmell,,,MAJOR,Parameter names used into ArgumentException constructors should match an existing one
+代码段不应该被“注释掉”.,"Programmers should not comment out code as it bloats programs and reduces readability.
+Unused code should be deleted and can be retrieved from source control history if required.",,,rule_RSPEC-125,S125,程序员不应该将代码注释掉，因为它会膨胀程序并降低可读性.应该删除未使用的代码，如果需要，可以从源代码控制历史记录中检索.,CodeSmell,,,MAJOR,"Sections of code should not be ""commented out"""
+静态字段应按照必须初始化的顺序显示.,"Static field initializers are executed in the order in which they appear in the class from top to bottom. Thus, placing a static field in a class above the field or fields required for its initialization will yield unexpected results.",Y,"
+
+class MyClass
+{
+  public static int X = Y; // Noncompliant; Y at this time is still assigned default(int), i.e. 0
+  public static int Y = 42;
+}
+
+",rule_RSPEC-3263,S3263,静态字段初始化器按照从上到下在类中出现的顺序执行.因此，将一个静态字段放在上面所需的字段或类似的字段中会产生意想不到的结果.,Bug,Y,"
+
+class MyClass
+{
+  public static int Y = 42;
+  public static int X = Y;
+}
+
+",MAJOR,Static fields should appear in the order they must be initialized
+静态字段不应该在通用类型中使用.,"A static field in a generic type is not shared among instances of different closed constructed types, thus LengthLimitedSingletonCollection&lt;int&gt;.instances and LengthLimitedSingletonCollection&lt;string&gt;.instances will point to different objects, even though instances is seemingly shared among all LengthLimitedSingletonCollection&lt;&gt; generic classes.If you need to have a static field shared among instances with different generic arguments, define a non-generic base class to store your static members, then set your generic type to inherit from the base class.",Y,"
+
+public class LengthLimitedSingletonCollection&lt;T&gt; where T : new() 
+{
+  protected const int MaxAllowedLength = 5;
+  protected static Dictionary&lt;Type, object&gt; instances = new Dictionary&lt;Type, object&gt;(); // Noncompliant
+
+  public static T GetInstance() 
+  {
+    object instance;
+
+    if (!instances.TryGetValue(typeof(T), out instance)) 
+    {
+      if (instances.Count &gt;= MaxAllowedLength) 
+      {
+        throw new Exception();
+      }
+      instance = new T();
+      instances.Add(typeof(T), instance);
+    }
+    return (T)instance;
+  }
+}
+
+",rule_RSPEC-2743,S2743,通用类型中的静态字段不在不同封闭构造类型的实例之间共享，因此LengthLimitedSingletonCollection＆lt; int＆gt;.实例和LengthLimitedSingletonCollection＆lt; string＆gt;.实例将指向不同的对象，即使实例在所有长度有限的SingletonCollection＆lt;＆gt;.如果您需要在具有不同通用参数的实例之间共享一个静态字段，请定义一个非泛型基类来存储静态成员，然后将通用类型设置为从基类继承.,Bug,Y,"
+
+public class SingletonCollectionBase 
+{
+  protected static Dictionary&lt;Type, object&gt; instances = new Dictionary&lt;Type, object&gt;(); 
+}
+
+public class LengthLimitedSingletonCollection&lt;T&gt; : SingletonCollectionBase where T : new()
+{
+  protected const int MaxAllowedLength = 5;
+
+  public static T GetInstance() 
+  {
+    object instance;
+
+    if (!instances.TryGetValue(typeof(T), out instance)) 
+    {
+      if (instances.Count &gt;= MaxAllowedLength) 
+      {
+        throw new Exception();
+      }
+      instance = new T();
+      instances.Add(typeof(T), instance);
+    }
+    return (T)instance;
+  }
+}
+
+",MAJOR,Static fields should not be used in generic types
+类型应在命名空间中定义.,Types are declared in namespaces in order to prevent name collisions and as a way to organize them into the object hierarchy. Types that are defined outside any named namespace are in a global namespace that cannot be referenced in code.,Y,"
+
+public class Foo // Noncompliant
+{
+}
+
+public struct Bar // Noncompliant
+{
+}
+
+",rule_RSPEC-3903,S3903,类型在命名空间中声明，以防止名称冲突，并将其组织到对象层次结构中.在任何命名空间之外定义的类型都在全局命名空间中，不能在代码中引用.,Bug,,,MAJOR,Types should be defined in named namespaces
+应删除未使用的类型参数.,"Type parameters that aren't used are dead code, which can only distract and possibly confuse developers during maintenance. Therefore, unused type parameters should be removed.",Y,"
+
+public class MoreMath&lt;T&gt;   // Noncompliant; &lt;T&gt; is ignored
+{
+  public int Add&lt;T&gt;(int a, int b) // Noncompliant; &lt;T&gt; is ignored
+  {
+    return a + b; 
+  }
+}
+
+",rule_RSPEC-2326,S2326,不使用的类型参数是死代码，只能在维护期间分散注意力并可能混淆开发人员.因此，应该删除未使用的类型参数.,CodeSmell,Y,"
+
+public class MoreMath 
+{
+  public int Add (int a, int b)
+  {
+    return a + b; 
+  }
+}
+
+",MAJOR,Unused type parameters should be removed
+“GetHashCode”不应该引用可变字段.,"GetHashCode is used to file an object in a Dictionary or Hashtable. If GetHashCode uses non-readonly fields and those fields change after the object is stored, the object immediately becomes mis-filed in the Hashtable. Any subsequent test to see if the object is in the Hashtable will return a false negative.",Y,"
+
+public class Person 
+{
+  public int age;
+  public string name;
+
+  public override int GetHashCode() 
+  {
+    int hash = 12;
+    hash += this.age.GetHashCode(); // Noncompliant
+    hash += this.name.GetHashCode(); // Noncompliant
+    return hash;
+  }
+
+",rule_RSPEC-2328,S2328,GetHashCode用于在Dictionary或Hashtable中提供对象.如果GetHashCode使用非readonly字段，并且这些字段在对象被存储之后发生更改，则该对象立即在Hashtable中被错误地归档.任何后续测试，以查看该对象是否在Hashtable中将返回一个假负数.,Bug,Y,"
+
+public class Person 
+{
+  public readonly DateTime birthday;
+  public string name;
+
+  public override int GetHashCode() 
+  {
+    int hash = 12;
+    hash += this.birthday.GetHashCode();
+    return hash;
+  }
+
+",MINOR,"""GetHashCode"" should not reference mutable fields"
+“基础.如果“base”不是“object”，则不应使用“Equals”来检查“Equals”中的引用相等性.,"object.Equals() overrides can be optimized by checking first for reference equality between this and the parameter. This check can be implemented by calling object.ReferenceEquals() or base.Equals(), where base is object. However, using base.Equals() is a maintenance hazard because while it works if you extend Object directly, if you introduce a new base class that overrides Equals, it suddenly stops working.This rule raises an issue if base.Equals() is used but base is not object.",Y,"
+
+class Base
+{
+  private int baseField;
+
+  public override bool Equals(object other)
+  {
+    if (base.Equals(other)) // Okay; base is object
+    {
+      return true;
+    }
+
+    return this.baseField == ((Base)other).baseField;
+  }
+}
+
+class Derived : Base
+{
+  private int derivedField;
+
+  public override bool Equals(object other)
+  {
+    if (base.Equals(other))  // Noncompliant
+    {
+      return true;
+    }
+
+    return this.derivedField == ((Derived)other).derivedField;
+  }
+}
+
+",rule_RSPEC-3397,S3397,目的.可以通过首先检查此参数之间的参考等同性来优化Equals（）覆盖.此检查可以通过调用对象来实现.ReferenceEquals（）或base.Equals（），其中base是对象.但是，使用base.Equals（）是一个维护危险，因为如果您直接扩展Object，它可以工作，如果引入覆盖Equals的新基类，它将突然停止工作.这个规则引发了一个问题，如果基础.使用Equals（），但base不是对象.,Bug,Y,"
+
+class Base
+{
+  private int baseField;
+
+  public override bool Equals(object other)
+  {
+    if (object.ReferenceEquals(this, other))  // base.Equals is okay here, but object.ReferenceEquals is better
+    {
+      return true;
+    }
+
+    return this.baseField == ((Base)other).baseField;
+  }
+}
+
+class Derived : Base
+{
+  private int derivedField;
+
+  public override bool Equals(object other)
+  {
+    if (object.ReferenceEquals(this, other))
+    {
+      return true;
+    }
+
+    return base.Equals(other) &amp;&amp; this.derivedField == ((Derived)other).derivedField;
+  }
+}
+
+",MINOR,"""base.Equals"" should not be used to check for reference equality in ""Equals"" if ""base"" is not ""object"""
+“捕捉”条款应该做的不止是反驳.,"A catch clause that only rethrows the caught exception has the same effect as omitting the catch altogether and letting it bubble up automatically, but with more code and the additional detrement of leaving maintainers scratching their heads. Such clauses should either be eliminated or populated with the appropriate logic.",Y,"
+
+string s = """";
+try
+{
+  s = File.ReadAllText(fileName);
+}
+catch (Exception e)  // Noncompliant
+{ 
+  throw;
+}
+
+",rule_RSPEC-2737,S2737,只有重新启动捕获到的异常的catch子句具有完全省略捕获的功能，并且自动启动它，但是具有更多的代码和额外的损害，让维护者抓住头部.这些条款应该被消除或者填入适当的逻辑.,CodeSmell,Y,"
+
+string s = """";
+try 
+{
+  s = File.ReadAllText(fileName);
+}
+catch (Exception e) // Compliant
+{  
+  logger.LogError(e);
+  throw;
+}
+
+",MINOR,"""catch"" clauses should do more than rethrow"
+“串.IsNullOrEmpty“.,"Using string.Equals to determine if a string is empty is significantly slower than using string.IsNullOrEmpty() or checking for string.Length == 0. string.IsNullOrEmpty() is both clear and concise, and therefore preferred to laborious, error-prone, manual null- and emptiness-checking.",Y,"
+
+"""".Equals(name); // Noncompliant
+!name.Equals(""""); // Noncompliant
+name.Equals(string.Empty); // Noncompliant
+
+",rule_RSPEC-3256,S3256,使用字符串.相当于确定一个字符串是否为空，显着慢于使用字符串.IsNullOrEmpty（）或检查字符串.长度== 0.串.IsNullOrEmpty（）既清晰简洁，因此更倾向于费力，容易出错的手动空和空白检查.,CodeSmell,Y,"
+
+name != null &amp;&amp; name.Length &gt; 0 // Compliant but more error prone
+!string.IsNullOrEmpty(name)
+string.IsNullOrEmpty(name)
+
+",MINOR,"""string.IsNullOrEmpty"" should be used"
+“串.ToCharArray（）“不应该被冗余调用.,"ToCharArray can be omitted when the operation on the array could have been done directly on the string, such as when iterating over the characters in a string, and when accessing a character in a string via an array index. In those cases, explicit ToCharArray calls should be omitted.",Y,"
+
+string str = ""some string"";
+foreach (var c in str.ToCharArray()) // Noncompliant
+{
+  // ...    
+}
+
+",rule_RSPEC-3456,S3456,当数组上的操作可以直接在字符串上完成时，例如当迭代字符串中的字符，以及通过数组索引访问字符串中的字符时，ToCharArray可以被省略.在这些情况下，应该省略显式的ToCharArray调用.,Bug,Y,"
+
+string str = ""some string"";
+foreach (var c in str)
+{
+  // ...    
+}
+
+",MINOR,"""string.ToCharArray()"" should not be called redundantly"
+Attribute，EventArgs和Exception类型名称应以扩展类型结束.,"Adherence to the standard naming conventions makes your code not only more readable, but more usable. For instance, class FirstAttribute : Attribute can be used simply with First, but you must use the full name for class AttributeOne : Attribute.This rule raises an issue when classes extending Attribute, EventArgs, or Exception, do not end with their parent class names.",Y,"
+
+class AttributeOne : Attribute  // Noncompliant
+{
+}
+
+",rule_RSPEC-3376,S3376,遵守标准命名约定使您的代码不仅更易读，更可用.例如，FirstAttribute：Attribute类可以简单地使用First，但是您必须使用AttributeOne类的全名：Attribute.当扩展Attribute，EventArgs或Exception的类不以其父类名称结尾时，此规则引发问题.,CodeSmell,Y,"
+
+class FirstAttribute : Attribute 
+{
+}
+
+",MINOR,"Attribute, EventArgs, and Exception type names should end with the type being extended"
+应该省略空的“case”子句落入“default”.,,Y,"
+
+switch(ch) 
+{
+  case 'a' :
+    HandleA();
+    break;
+  case 'b' :
+    HandleB();
+    break;
+  case 'c' :  // Noncompliant
+  default:
+    HandleTheRest();
+    break;
+}
+
+",rule_RSPEC-3458,S3458,,CodeSmell,Y,"
+
+switch(ch) 
+{
+  case 'a' :
+    HandleA();
+    break;
+  case 'b' :
+    HandleB();
+    break;
+  default:
+    HandleTheRest();
+    break;
+}
+
+",MINOR,"Empty ""case"" clauses that fall through to the ""default"" should be omitted"
+可变字段不应该是“public static”.,public static mutable fields of classes which are accessed directly should be protected to the degree possible. This can be done by reducing the accessibility of the field or by changing the return type to an immutable type.This rule raises issues for public static fields with a type inheriting/implementing System.Array or System.Collections.Generic.ICollection&lt;T&gt;.,Y,"
+
+public class A 
+{
+  public static string[] strings1 = {""first"",""second""};  // Noncompliant
+  public static List&lt;String&gt; strings3 = new List&lt;String&gt;();  // Noncompliant
+  // ...
+}
+
+",rule_RSPEC-2386,S2386,直接访问的类的公共静态可变字段应尽可能保护.这可以通过减少字段的可访问性或将返回类型更改为不可变类型来完成.该规则引入了具有类型继承/实现系统的公共静态字段的问题.阵列或系统.集合.通用.的ICollection＆LT; T＆GT;.,Vulnerability,,,MINOR,"Mutable fields should not be ""public static"""
+标志枚举应明确地初始化其所有成员.,,Y,"
+
+[Flags]
+enum FruitType    // Noncompliant
+{
+  None,
+  Banana,
+  Orange,
+  Strawberry
+}
+class Program
+{
+    static void Main()
+    {
+        var bananaAndStrawberry = FruitType.Banana | FruitType.Strawberry;
+        // Will display only Strawberry!
+        Console.WriteLine(bananaAndStrawberry.ToString());
+    }
+}
+
+",rule_RSPEC-2345,S2345,,Bug,Y,"
+
+[Flags]
+enum FruitType
+{
+  None = 0,
+  Banana = 1,
+  Orange = 2,
+  Strawberry = 4
+}
+class Program
+{
+    static void Main()
+    {
+        var bananaAndStrawberry = FruitType.Banana | FruitType.Strawberry;
+        // Will display Banana and Strawberry, as expected.
+        Console.WriteLine(bananaAndStrawberry.ToString());
+    }
+}
+
+",MINOR,Flags enumerations should explicitly initialize all their members
+枚举类型名称不应该有“Flags”或“Enum”后缀.,,Y,"
+
+enum FooFlags // Noncompliant
+{
+    Foo = 1
+    Bar = 2
+    Baz = 4
+}
+
+",rule_RSPEC-2344,S2344,,CodeSmell,Y,"
+
+enum Foo
+{
+    Foo = 1
+    Bar = 2
+    Baz = 4
+}
+
+",MINOR,"Enumeration type names should not have ""Flags"" or ""Enum"" suffixes"
+枚举类型应符合命名约定.,Shared naming conventions allow teams to collaborate efficiently. This rule checks that all enum names match a provided regular expression.The default configuration is the one recommended by Microsoft:,Y,"
+
+public enum foo // Noncompliant
+{
+    FooValue = 0
+}
+
+",rule_RSPEC-2342,S2342,共享命名约定允许团队有效协作.此规则检查所有枚举名称是否与提供的正则表达式匹配.默认配置是由Microsoft推荐的配置：.,CodeSmell,Y,"
+
+public enum Foo
+{
+    FooValue = 0
+}
+
+",MINOR,Enumeration types should comply with a naming convention
+布尔检查不应该被反转.,,Y,"
+
+if ( !(a == 2)) { ...}  // Noncompliant
+bool b = !(i &lt; 10);  // Noncompliant
+
+",rule_RSPEC-1940,S1940,,CodeSmell,Y,"
+
+if (a != 2) { ...} 
+bool b = (i &gt;= 10);
+
+",MINOR,Boolean checks should not be inverted
+不应使用冗余的演员.,,Y,"
+
+public int Example(int i) 
+{
+  return (int) (i + 42); // Noncompliant
+}
+public IEnumerable&lt;int&gt; ExampleCollection(IEnumerable&lt;int&gt; coll) 
+{
+  return coll.Reverse().OfType&lt;int&gt;(); // Noncompliant
+}
+
+",rule_RSPEC-1905,S1905,,CodeSmell,Y,"
+
+public int Example(int i) 
+{
+  return i + 42;
+}
+public IEnumerable&lt;int&gt; ExampleCollection(IEnumerable&lt;int&gt; coll) 
+{
+  return coll.Reverse();
+}
+
+",MINOR,Redundant casts should not be used
+字符串不应该在循环中使用'+'连接.,"StringBuilder is more efficient than string concatenation, especially when the operator is repeated over and over as in loops.",Y,"
+
+string str = """";
+for (int i = 0; i &lt; arrayOfStrings.Length ; ++i) 
+{
+  str = str + arrayOfStrings[i];
+}
+
+",rule_RSPEC-1643,S1643,StringBuilder比字符串连接效率更高，特别是当操作符重复一遍地循环时.,CodeSmell,Y,"
+
+StringBuilder bld = new StringBuilder();
+for (int i = 0; i &lt; arrayOfStrings.Length; ++i) 
+{
+  bld.Append(arrayOfStrings[i]);
+}
+string str = bld.ToString();
+
+",MINOR,Strings should not be concatenated using '+' in a loop
+应删除未使用的局部变量.,,Y,"
+
+public int NumberOfMinutes(int hours)
+{
+  int seconds = 0;   // seconds is never used 
+  return hours * 60;
+}
+
+",rule_RSPEC-1481,S1481,,CodeSmell,Y,"
+
+public int NumberOfMinutes(int hours)
+{
+  return hours * 60;
+}
+
+",MINOR,Unused local variables should be removed
+在方法中仅用作局部变量的专用字段应成为局部变量.,,Y,"
+
+public class Foo
+{
+  private int singularField;
+
+  public void DoSomething(int x)
+  {
+    singularField = x + 5;
+
+    if (singularField == 0) { /* ... */ }
+  }
+}
+
+",rule_RSPEC-1450,S1450,,CodeSmell,Y,"
+
+public class Foo
+{
+  public void DoSomething(int x)
+  {
+    int localVariable = x + 5;
+
+    if (localVariable == 0) { /* ... */ }
+  }
+}
+
+",MINOR,Private fields only used as local variables in methods should become local variables
+布尔文字不应该是多余的.,Redundant Boolean literals should be removed from expressions to improve readability.,Y,"
+
+if (booleanMethod() == true) { /* ... */ }
+if (booleanMethod() == false) { /* ... */ }
+if (booleanMethod() || false) { /* ... */ }
+doSomething(!false);
+doSomething(booleanMethod() == true);
+
+booleanVariable = booleanMethod() ? true : false;
+booleanVariable = booleanMethod() ? true : exp;
+booleanVariable = booleanMethod() ? false : exp;
+booleanVariable = booleanMethod() ? exp : true;
+booleanVariable = booleanMethod() ? exp : false;
+
+for (var x = 0; true; x++)
+{
+ ...
+}
+
+",rule_RSPEC-1125,S1125,应从表达式中删除冗余布尔文字以提高可读性.,CodeSmell,Y,"
+
+if (booleanMethod()) { /* ... */ }        
+if (!booleanMethod()) { /* ... */ }
+if (booleanMethod()) { /* ... */ }
+doSomething(true);
+doSomething(booleanMethod());
+
+booleanVariable = booleanMethod();
+booleanVariable = booleanMethod() || exp;
+booleanVariable = !booleanMethod() &amp;&amp; exp;
+booleanVariable = !booleanMethod() || exp;
+booleanVariable = booleanMethod() &amp;&amp; exp;
+
+for (var x = 0; ; x++)
+{
+ ...
+}
+
+",MINOR,Boolean literals should not be redundant
+应该删除空的语句.,,Y,"
+
+void doSomething() 
+{
+  ; // Noncompliant - was used as a kind of TODO marker
+}
+
+void doSomethingElse() 
+{
+  Console.WriteLine(""Hello, world!"");;  // Noncompliant - double ;
+  ...
+  // Rarely, they are used on purpose as the body of a loop. It is a bad practice to 
+  // have side-effects outside of the loop:
+  for (int i = 0; i &lt; 3; Console.WriteLine(i), i++); // Noncompliant
+  ...
+}
+
+",rule_RSPEC-1116,S1116,,CodeSmell,Y,"
+
+void doSomething() 
+{
+}
+
+void doSomethingElse() 
+{
+  Console.WriteLine(""Hello, world!"");
+  ...
+  for (int i = 0; i &lt; 3; i++)
+  {
+    Console.WriteLine(i);
+   }
+  ...
+}
+
+",MINOR,Empty statements should be removed
+文字后缀应为大写.,,Y,"
+
+const long b = 0l;      // Noncompliant
+
+",rule_RSPEC-818,S818,,CodeSmell,Y,"
+
+const long b = 0L;
+
+",MINOR,Literal suffixes should be upper case
+应该使用“Any（）”来测试空虚.,"Using .Count() to test for emptiness works, but using .Any() makes the intent clearer, and the code more readable. However, there are some cases where special attention should be paid:",Y,"
+
+private static bool HasContent(IEnumerable&lt;string&gt; strings)
+{
+  return strings.Count() &gt; 0;  // Noncompliant
+}
+
+private static bool HasContent2(IEnumerable&lt;string&gt; strings)
+{
+  return strings.Count() &gt;= 1;  // Noncompliant
+}
+
+private static bool IsEmpty(IEnumerable&lt;string&gt; strings)
+{
+  return strings.Count() == 0;  // Noncompliant
+}
+
+",rule_RSPEC-1155,S1155,运用.Count（）来测试空虚的工作，但使用.Any（）使意图更清晰，代码更可读.但是，有些情况要特别注意：.,CodeSmell,Y,"
+
+private static bool HasContent(IEnumerable&lt;string&gt; strings)
+{
+  return strings.Any();
+}
+
+private static bool IsEmpty(IEnumerable&lt;string&gt; strings)
+{
+  return !strings.Any();
+}
+
+",MINOR,"""Any()"" should be used to test for emptiness"
+“Equals”和比较运算符应该在实现“IComparable”时被覆盖.,"When you implement IComparable or IComparable&lt;T&gt; on a class you should also override Equals(object) and overload the comparison operators (==, !=, &lt;, &lt;=, &gt;, &gt;=). That's because the CLR cannot automatically call your CompareTo implementation from Equals(object) or from the base comparison operator implementations. Additionally, it is best practice to override GetHashCode along with Equals.This rule raises an issue when a class implements IComparable without also overriding Equals(object) and the comparison operators.",Y,"
+
+public class Foo: IComparable  // Noncompliant
+{
+  public int CompareTo(object obj) { /* ... */ }
+}
+
+",rule_RSPEC-1210,S1210,当您实现IComparable或IComparable＆lt; T＆gt;.这是因为CLR无法从Equals（object）或基本的比较运算符实现中自动调用CompareTo实现.另外，最好的做法是将GetHashCode与Equals一起重写.当一个类实现IComparable而不覆盖Equals（object）和比较运算符时，这个规则引发了一个问题.,Bug,Y,"
+
+public class Foo: IComparable
+{
+  public int CompareTo(object obj) { /* ... */ }
+  public override bool Equals(object obj)
+  {
+    var other = obj as Foo;
+    if (object.ReferenceEquals(other, null))
+    {
+      return false;
+    }
+    return this.CompareTo(other) == 0;
+  }
+  public int GetHashCode() { /* ... */ }
+  public static bool operator == (Foo left, Foo right) 
+  {
+    if (object.ReferenceEquals(left, null))
+    {
+      return object.ReferenceEquals(right, null);
+    }
+    return left.Equals(right);
+  }
+  public static bool operator &gt; (Foo left, Foo right) 
+  {
+    return Compare(left, right) &gt; 0;
+  }
+  public static bool operator &lt; (Foo left, Foo right) 
+  {
+    return Compare(left, right) &lt; 0;
+  }
+  public static bool operator != (Foo left, Foo right) 
+  {
+    return !(left == right);
+  }
+}
+
+",MINOR,"""Equals"" and the comparison operators should be overridden when implementing ""IComparable"""
+“Equals（Object）”和“GetHashCode（）”应该被成对重写.,"There is a contract between Equals(object) and GetHashCode(): If two objects are equal according to the Equals(object) method, then calling GetHashCode() on each of them must yield the same result. If this is not the case, many collections won't handle class instances correctly.In order to comply with the contract, Equals(object) and GetHashCode() should be either both inherited, or both overridden.",,,rule_RSPEC-1206,S1206,Equals（object）和GetHashCode（）之间有一个契约：如果两个对象根据Equals（object）方法相等，那么每个对象的GetHashCode（）都必须产生相同的结果.如果不是这种情况，许多集合将不会正确处理类实例.为了遵守合同，Equals（object）和GetHashCode（）既可以被继承，也可以被覆盖.,Bug,,,MINOR,"""Equals(Object)"" and ""GetHashCode()"" should be overridden in pairs"
+字段不应具有公共无障碍功能.,"Public fields in public classes do not respect the encapsulation principle and has three main disadvantages:By using private fields and public properties (set and get), unauthorized modifications are prevented. Properties also benefit from additional protection (security) features such as Link Demands.Note that due to optimizations on simple properties, public fields provide only very little performance gain.",Y,"
+
+public class Foo
+{
+    public int instanceData = 32; // Noncompliant
+}
+
+",rule_RSPEC-1104,S1104,公共场所公共场所不尊重封装原则，主要有三个缺点：.通过使用私有域和公共属性（设置和获取），可以防止未经授权的修改.属性还受益于附加保护（安全）功能，如链接要求.请注意，由于对简单属性的优化，公共字段的性能提升只有很小.,Vulnerability,Y,"
+
+public class Foo
+{
+    private int instanceData = 32;
+
+    public int InstanceData
+    {
+        get { return instanceData; }
+	set { instanceData = value ; }
+    }
+}
+
+",MINOR,Fields should not have public accessibility
+通用异常不应该被忽略.,"When exceptions occur, it is usually a bad idea to simply ignore them. Instead, it is better to handle them properly, or at least to log them.This rule only reports on empty catch clauses that catch generic {{Exception}}s.",Y,"
+
+string text = """";
+try 
+{
+  text = File.ReadAllText(fileName);
+} 
+catch (Exception exc) // Noncompliant
+{  
+}
+
+",rule_RSPEC-2486,S2486,当发生异常时，简单地忽略它们通常是一个坏主意.相反，最好是妥善处理它们，或至少记录它们.此规则仅报告捕获泛型{{Exception}}的空catch子句.,CodeSmell,Y,"
+
+string text = """";
+try 
+{
+  text = File.ReadAllText(fileName);
+} 
+catch (Exception exc) 
+{
+  logger.Log(exc);
+}
+
+",MINOR,Generic exceptions should not be ignored
+继承列表不应该是冗余的.,An inheritance list entry is redundant if:Such redundant declarations should be removed because they needlessly clutter the code and can be confusing.,Y,"
+
+public class MyClass : Object  // Noncompliant
+
+enum MyEnum : int",rule_RSPEC-1939,S1939,如果以下情况，继承列表条目是多余的：.应该删除这些冗余的声明，因为它们不必要地混淆代码并且可能会令人困惑.,CodeSmell,,,MINOR,Inheritance list should not be redundant
+覆盖成员应该做的不仅仅是在基类中调用同一个成员.,"Overriding a method just to call the same method from the base class without performing any other actions is useless and misleading. The only time this is justified is in sealed overriding methods, where the effect is to lock in the parent class behavior. This rule ignores overrides of Equals and GetHashCode.NOTE: In some cases it might be dangerous to add or remove empty overrides, as they might be breaking changes.",Y,"
+
+public override void Method() // Noncompliant
+{
+  base.Method(); 
+}
+
+",rule_RSPEC-1185,S1185,覆盖一个方法只是从基类调用相同的方法而不执行任何其他操作是无用的和误导的.唯一有理由的是在封闭的重写方法中，其效果是锁定父类行为.此规则忽略等于和GetHashCode的覆盖.注意：在某些情况下，添加或删除空覆盖可能是危险的，因为它们可能会损坏更改.,CodeSmell,Y,"
+
+public override void Method()
+{
+  //do something else
+}
+
+",MINOR,Overriding members should do more than simply call the same member in the base class
+整数除法的结果不应该分配给浮点变量.,"When division is performed on int}}s, the result will always be an {{int. You can assign that result to a double, float or decimal with automatic type conversion, but having started as an int, the result will likely not be what you expect. If the result of int division is assigned to a floating-point variable, precision will have been lost before the assignment. Instead, at least one operand should be cast or promoted to the final type before the operation takes place.",Y,"
+
+static void Main()
+{
+  decimal dec = 3/2; // Noncompliant
+  Method(3/2); // Noncompliant
+}
+
+static void Method(float f) { }
+
+",rule_RSPEC-2184,S2184,当在int}}上执行除法时，结果将始终为{{int.您可以将该结果分配给具有自动类型转换的double，float或decimal，但是以int开头，结果可能不会是您期望的结果.如果将int除法的结果分配给浮点变量，则在赋值之前精度将会丢失.相反，在操作发生之前，至少应该将一个操作数转换或提升为最终类型.,Bug,Y,"
+
+static void Main()
+{
+  decimal dec = (decimal)3/2;
+  Method(3.0F/2);
+}
+
+static void Method(float f) { }
+
+",MINOR,Results of integer division should not be assigned to floating point variables
+应该简化运行时类型检查.,"To check the type of an object there are several options:If runtime calculated {{Type}}s need to be compared:Depending on whether the type is returned by a GetType() or typeof() call, the IsAssignableFrom() and IsInstanceOfType() might be simplified. Similarly, if the type is sealed, the type comparison with == can be converted to an is call. Simplifying the calls also make null checking unnecessary because both is and IsInstanceOfType performs it already.Finally, utilizing the most concise language constructs for type checking makes the code more readable, so",Y,"
+
+class Fruit { }
+sealed class Apple : Fruit { }
+
+class Program
+{
+  static void Main()
+  {
+    var apple = new Apple();
+    var b = apple != null &amp;&amp; apple.GetType() == typeof (Apple); // Noncompliant
+    b = typeof(Apple).IsInstanceOfType(apple); // Noncompliant
+    if (apple != null)
+    {
+      b = typeof(Apple).IsAssignableFrom(apple.GetType()); // Noncompliant
+    }
+    var appleType = typeof (Apple);
+    if (apple != null)
+    {
+      b = appleType.IsAssignableFrom(apple.GetType()); // Noncompliant
+    }
+
+    Fruit f = apple;
+    if (f as Apple != null) // Noncompliant
+    {
+    }
+    if (apple is Apple) // Noncompliant
+    {
+    }
+  }
+}
+
+",rule_RSPEC-2219,S2219,要检查对象的类型有几个选项：.如果运行时计算{{Type}}需要比较：.根据GetType（）或typeof（）调用返回的类型，IsAssignableFrom（）和IsInstanceOfType（）可能被简化.类似地，如果类型是密封的，与==的类型比较可以转换为一个调用.简化呼叫也使得空检查不必要，因为IsInstanceOfType都已经执行了.最后，利用最简洁的语言结构进行类型检查，使代码更易读.,CodeSmell,Y,"
+
+class Fruit { }
+sealed class Apple : Fruit { }
+
+class Program
+{
+  static void Main()
+  {
+    var apple = new Apple();
+    var b = apple is Apple;
+    b = apple is Apple;
+    b = apple is Apple;
+    var appleType = typeof(Apple);
+    b = appleType.IsInstanceOfType(apple);
+
+    Fruit f = apple;
+    if (f is Apple)
+    {
+    }
+    if (apple != null)
+    {
+    }
+  }
+}
+
+",MINOR,Runtime type checking should be simplified
+类型应在骆驼案中命名.,"Shared naming conventions allow teams to collaborate efficiently. This rule checks whether or not type names are camel cased. To reduce noise, two consecutive upper case characters are allowed unless they form the whole type name. So, MyXClass is compliant, but XC on its own is not.",Y,"
+
+class my_class {...}
+class SOMEName42 {...}
+
+",rule_RSPEC-101,S101,共享命名约定允许团队有效协作.此规则检查类型名称是否为骆驼套装.为了减少噪音，除非形成整个类型名称，否则允许连续使用两个大写字母.所以，MyXClass是兼容的，但XC本身就不是.,CodeSmell,Y,"
+
+class MyClass {...}
+class SomeName42 {...}
+
+",MINOR,Types should be named in camel case
+调用者信息参数不应被明确提供.,"Caller information attributes: CallerFilePathAttribute and CallerLineNumberAttribute provide a way to get information about the caller of a method through optional parameters. But the arguments for these optional parameters are only generated if they are not explicitly defined in the call. Thus, specifying the argument values defeats the purpose of the attributes.",Y,"
+
+void TraceMessage(string message,
+  [CallerFilePath] string filePath = null,
+  [CallerLineNumber] int lineNumber = 0)
+{
+  /* ... */
+}
+
+void MyMethod()
+{
+  TraceMessage(""my message"", ""A.B.C.Foo.cs"", 42); // Noncompliant
+}
+
+",rule_RSPEC-3236,S3236,来电者信息属性：CallerFilePathAttribute和CallerLineNumberAttribute提供了一种通过可选参数获取有关方法调用方的信息的方法.但是，这些可选参数的参数仅在调用中未明确定义时生成.因此，指定参数值会击败属性的目的.,CodeSmell,Y,"
+
+void TraceMessage(string message,
+  [CallerFilePath] string filePath = """",
+  [CallerLineNumber] int lineNumber = 0)
+{
+  /* ... */
+}
+
+void MyMethod()
+{
+  TraceMessage(""my message"");
+}
+
+",MINOR,Caller information arguments should not be provided explicitly
+重复的演员不应该做.,"Because the is operator performs a cast if the object is not null, using is to check type and then casting the same argument to that type, necessarily performs two casts. The same result can be achieved more efficiently with a single cast using as, followed by a null-check.",Y,"
+
+if (x is Fruit)  // Noncompliant
+{
+  var f = (Fruit)x; // or x as Fruit
+  // ...
+}
+
+",rule_RSPEC-3247,S3247,因为如果对象不为null，则操作符执行一个转换，使用是检查类型，然后将相同的参数转换为该类型，必须执行两个转换.使用单个演员使用，然后进行空值检查，可以更有效地实现相同的结果.,CodeSmell,Y,"
+
+var f = x as Fruit;
+if (f != null)
+{
+  // code
+}
+
+",MINOR,Duplicate casts should not be made
+应为“部分”方法提供实施.,"partial methods allow an increased degree of flexibility in programming a system. Hooks can be added to generated code by invoking methods that define their signature, but might not have an implementation yet. But if the implementation is still missing when the code makes it to production, the compiler silently removes the call. In the best case scenario, such calls simply represent cruft, but in they worst case they are critical, missing functionality, the loss of which will lead to unexpected results at runtime.This rule raises an issue for partial methods for which no implementation can be found in the assembly.",Y,"
+
+partial class C
+{
+  partial void M(); //Noncompliant
+
+  void OtherM()
+  {
+    M(); //Noncompliant. Will be removed.
+  }
+}
+
+",rule_RSPEC-3251,S3251,部分方法允许在编程系统时提高程度的灵活性.可以通过调用定义其签名的方法将Hooks添加到生成的代码中，但可能还没有实现.但是，如果代码使其生成时仍然缺少实现，则编译器将静默地删除该调用.在最好的情况下，这样的呼叫只是表示cruft，但在最坏的情况下，它们是关键的，缺少功能，其丢失将导致运行时的意外结果.此规则引发了在程序集中无法找到实现的部分方法的问题.,CodeSmell,,,MINOR,"Implementations should be provided for ""partial"" methods"
+接口不应该简单地从具有冲突成员的基础接口继承.,"When an interface inherits from two interfaces that both define a member with the same name, trying to access that member through the derived interface will result in the compiler error CS0229 Ambiguity between 'IBase1.SomeProperty' and 'IBase2.SomeProperty'.So instead, every caller will be forced to cast instances of the derived interface to one or the other of its base interfaces to resolve the ambiguity and be able to access the member. Instead, it is better to resolve the ambiguity in the definition of the derived interface either by:",Y,"
+
+public interface IBase1
+{
+  string SomeProperty { get; set; }
+}
+
+public interface IBase2
+{
+  string SomeProperty { get; set; }
+}
+
+public interface IDerived : IBase1, IBase2 // Noncompliant, accessing IDerived.SomeProperty is ambiguous
+{
+}
+
+public class MyClass : IDerived
+{
+  // Implements both IBase1.SomeProperty and IBase2.SomeProperty
+  public string SomeProperty { get; set; } = ""Hello"";
+
+  public static void Main()
+  {
+    MyClass myClass = new MyClass();
+    Console.WriteLine(myClass.SomeProperty); // Writes ""Hello"" as expected
+    Console.WriteLine(((IBase1)myClass).SomeProperty); // Writes ""Hello"" as expected
+    Console.WriteLine(((IBase2)myClass).SomeProperty); // Writes ""Hello"" as expected
+    Console.WriteLine(((IDerived)myClass).SomeProperty); // Error CS0229 Ambiguity between 'IBase1.SomeProperty' and 'IBase2.SomeProperty'
+  }
+}
+
+",rule_RSPEC-3444,S3444,当接口从两个定义同名成员的接口继承时，尝试通过派生接口访问该成员将导致编译器错误CS0229'IBase1之间的歧义.SomeProperty'和'IBase2.SomeProperty”.所以相反，每个调用者将被迫将衍生接口的实例转移到其基础接口中的一个或另一个，以解决歧义，并且能够访问该成员.相反，最好是通过以下方式解决派生界面的定义中的歧义：.,CodeSmell,Y,"
+
+public interface IDerived : IBase1, IBase2
+{
+  new string SomeProperty { get; set; }
+}
+
+public class MyClass : IDerived
+{
+  // Implements IBase1.SomeProperty, IBase2.SomeProperty and IDerived.SomeProperty
+  public string SomeProperty { get; set; } = ""Hello"";
+
+  public static void Main()
+  {
+    MyClass myClass = new MyClass();
+    Console.WriteLine(myClass.SomeProperty); // Writes ""Hello"" as expected
+    Console.WriteLine(((IBase1)myClass).SomeProperty); // Writes ""Hello"" as expected
+    Console.WriteLine(((IBase2)myClass).SomeProperty); // Writes ""Hello"" as expected
+    Console.WriteLine(((IDerived)myClass).SomeProperty); // Writes ""Hello"" as expected
+  }
+}
+
+",MINOR,Interfaces should not simply inherit from base interfaces with colliding members
+跳转语句不应该是多余的.,"Jump statements, such as return, yield break, goto, and continue let you change the default flow of program execution, but jump statements that direct the control flow to the original direction are just a waste of keystrokes.",Y,"
+
+void Foo()
+{
+  goto A; // Noncompliant
+  A:
+  while (condition1)
+  {
+    if (condition2)
+    {
+      continue; // Noncompliant
+    }
+    else
+    {
+      DoTheThing();
+    }
+  }
+  return; // Noncompliant; this is a void method
+}
+
+",rule_RSPEC-3626,S3626,跳转语句，如return，yield break，goto，并继续让您更改程序执行的默认流程，但将控制流引导到原始方向的跳转语句只是浪费击键.,CodeSmell,Y,"
+
+void Foo()
+{
+  while (condition1)
+  {
+    if (!condition2)
+    {
+      DoTheThing();
+    }
+  }
+}
+
+",MINOR,Jump statements should not be redundant
+成员初始化值不应该是多余的.,"Fields, properties and events can be initialized either inline or in the constructor. Initializing them inline and in the constructor at the same time is redundant; the inline initialization will be overridden.",Y,"
+
+class Person
+{
+  int age = 42; // Noncompliant
+  public Person(int age)
+  {
+    this.age = age;
+  }
+}
+
+",rule_RSPEC-3604,S3604,字段，属性和事件可以内联或构造函数初始化.同时初始化它们在构造函数中是多余的;.,CodeSmell,Y,"
+
+class Person
+{
+  int age;
+  public Person(int age)
+  {
+    this.age = age;
+  }
+}
+
+",MINOR,Member initializer values should not be redundant
+方法调用不应该模糊地解释为重载“params”.,"The rules for method resolution are complex and perhaps not properly understood by all coders. The params keyword can make method declarations overlap in non-obvious ways, so that slight changes in the argument types of an invocation can resolve to different methods.This rule raises an issue when an invocation resolves to a method declaration with params, but could also resolve to another non-params method too.",Y,"
+
+public class MyClass
+{
+  private void Format(string a, params object[] b) { }
+
+  private void Format(object a, object b, object c) { }
+}
+
+// ...
+MyClass myClass = new MyClass();
+
+myClass.Format("""", null, null); //Noncompliant, resolves to the first Format with params, but was that intended?
+
+",rule_RSPEC-3220,S3220,方法解决的规则是复杂的，也可能没有被所有编码人员正确理解.params关键字可以使方法声明以非常明显的方式重叠，因此调用的参数类型的轻微更改可以解析为不同的方法.当调用解析为具有params的方法声明时，此规则引发了一个问题，但也可以将其解析为另一个非params方法.,Bug,,,MINOR,"Method calls should not resolve ambiguously to overloads with ""params"""
+方法不应该返回从未使用过的值.,"Private methods are clearly intended for use only within their own scope. When such methods return values that are never used by any of their callers, then clearly there is no need to actually make the return, and it should be removed in the interests of efficiency and clarity. ",,,rule_RSPEC-3241,S3241,私人方法明确仅在其范围内使用.当这些方法返回从未被任何一个呼叫者使用的值时，显然没有必要实际返回，为了效率和清晰度而应该删除它.,CodeSmell,,,MINOR,Methods should not return values that are never used
+可变的非私人字段不应该是“只读”.,"Using the readonly keyword on a field means that it can't be changed after initialization. However, when applied to collections or arrays, that's only partly true. readonly enforces that another instance can't be assigned to the field, but it cannot keep the contents from being updated. That  means that in practice, the field value really can be changed, and the use of readonly on such a field is misleading, and you're likely to not be getting the behavior you expect.This rule raises an issue when a non-private, readonly field is an array or collection.",Y,"
+
+public class MyClass
+{
+  public readonly string[] strings;  // Noncompliant
+
+  // ...
+
+",rule_RSPEC-3887,S3887,在字段上使用readonly关键字意味着在初始化后不能更改.然而，当应用于集合或数组时，这仅仅是部分的.readonly强制另一个实例不能分配到该字段，但它不能保持内容不被更新.这意味着在实践中，现场价值实际上可以改变，在这样一个领域的readonly的使用是误导的，你可能不会得到你期望的行为.当非私有的只读字段是数组或集合时，此规则引发了一个问题.,Bug,Y,"
+
+public class MyClass
+{
+  public string[] strings;
+
+  // ...
+
+",MINOR,"Mutable, non-private fields should not be ""readonly"""
+命名空间不应该是空的.,Namespaces with no lines of code clutter a project and should be removed. ,Y,"
+
+namespace MyEmptyNamespace // Noncompliant
+{
+
+}
+
+",rule_RSPEC-3261,S3261,没有代码行的命名空间使项目混乱，应该被删除.,CodeSmell,,,MINOR,Namespaces should not be empty
+具有“[DefaultParameterValue]”属性的参数也应标记为“[可选]”.,"There is no point in providing a default value for a parameter if callers are required to provide a value for it anyway. Thus, [DefaultParameterValue] should always be used in conjunction with [Optional].",Y,"
+
+public void MyMethod([DefaultParameterValue(5)] int j) //Noncompliant, useless
+{
+  Console.WriteLine(j);
+}
+
+",rule_RSPEC-3450,S3450,如果呼叫者需要为其提供值，则无需为参数提供默认值.因此，[DefaultParameterValue]应始终与[可选]结合使用.,CodeSmell,Y,"
+
+public void MyMethod(int j = 5)
+{
+  Console.WriteLine(j);
+}
+
+",MINOR,"Parameters with ""[DefaultParameterValue]"" attributes should also be marked ""[Optional]"""
+属性分配不应该仅用于“只读”字段，而不限于引用类型.,"While the properties of a readonly reference type field can still be changed after initialization, those of a readonly value field, such as a struct, cannot. If the member could be either a class or a struct then assignment to its properties could be unreliable, working sometimes but not others.",Y,"
+
+interface IPoint
+{
+  int X { get; set; }
+  int Y { get; set; }
+}
+
+class PointManager&lt;T&gt; where T: IPoint 
+{
+  readonly T point;  // this could be a struct
+  public PointManager(T point)
+  {
+    this.point = point;
+  }
+
+  public void MovePointVertically(int newX)
+  {
+    point.X = newX; //Noncompliant; if point is a struct, then nothing happened
+    Console.WriteLine(point.X);
+  }
+}
+
+",rule_RSPEC-2934,S2934,虽然只读引用类型字段的属性在初始化后仍然可以更改，但只读值字段（如struct）的属性不能.如果该成员可以是一个类或一个结构体，那么其属性的赋值可能是不可靠的，有时而不是其他的.,Bug,Y,"
+
+interface IPoint
+{
+  int X { get; set; }
+  int Y { get; set; }
+}
+
+class PointManager&lt;T&gt; where T : IPoint 
+{
+  readonly T point;  // this could be a struct
+  public PointManager(T point)
+  {
+    this.point = point;
+  }
+
+  public void MovePointVertically(int newX) // assignment has been removed
+  {
+    Console.WriteLine(point.X);
+  }
+}
+
+",MINOR,"Property assignments should not be made for ""readonly"" fields not constrained to reference types"
+琐碎的属性应该是自动实现的.,"Trivial properties, which include no logic but setting and getting a backing field should be converted to auto-implemented properties, yielding cleaner and more readable code.",Y,"
+
+public class Car 
+{
+  private string _make;
+  public string Make // Noncompliant
+  {
+    get { return _make; }
+    set { _make = value; }
+  }
+}
+
+",rule_RSPEC-2292,S2292,包括无逻辑但设置和获取支持字段的简单属性应转换为自动实现的属性，从而产生更清晰和更可读的代码.,CodeSmell,Y,"
+
+public class Car 
+{
+  public string Make { get; set; }
+}
+
+",MINOR,Trivial properties should be auto-implemented
+未分配的成员应该被删除.,"Fields and auto-properties that are never assigned to hold the default values for their types. They are either pointless code or, more likely, mistakes. ",Y,"
+
+class MyClass
+{
+  private int field; // Noncompliant, shouldn't it be initialized? This way the value is always default(int), 0.
+  private int Property { get; set; }  // Noncompliant
+  public void Print()
+  {
+    Console.WriteLine(field); //Will always print 0
+    Console.WriteLine(Property); //Will always print 0
+  }
+}
+
+",rule_RSPEC-3459,S3459,从未分配的字段和自动属性用于保存其类型的默认值.他们是无意义的代码，或者更可能是错误.,CodeSmell,Y,"
+
+class MyClass
+{
+  private int field;
+  private int Property { get; set; } = 42;
+  public void Print()
+  {
+    field++;
+    Console.WriteLine(field);
+    Console.WriteLine(Property);
+  }
+}
+
+",MINOR,Unassigned members should be removed
+变量不应该被检查与它们即将分配的值.,"There's no point in checking a variable against the value you're about to assign it. Save the cycles and lines of code, and simply perform the assignment.",Y,"
+
+if (x != a)  // Noncompliant; why bother?
+{
+  x = a;
+}
+
+",rule_RSPEC-3440,S3440,根据您要分配的值检查变量没有任何意义.保存循环和代码行，并简单地执行分配.,CodeSmell,Y,"
+
+x = a;
+
+",MINOR,Variables should not be checked against the values they're about to be assigned
+跟踪“TODO”标签的使用.,,Y,"
+
+private void DoSomething() 
+{
+  // TODO
+}
+
+",rule_RSPEC-1135,S1135,,CodeSmell,,,ERROR,"Track uses of ""TODO"" tags"
+子类字段不应该隐藏父类字段.,,,,rule_RSPEC-2387,S2387,,CodeSmell,,,BLOCKER,Child class fields should not shadow parent class fields
+跟踪版权和许可证标题缺乏.,"Each source file should start with a header stating file ownership and the license which must be used to distribute the application. 
+This rule must be fed with the header text that is expected at the beginning of every file.The headerFormat must end with an empty line if you want to have an empty line between the file header and the first line for your source file (using, namespace...).For example, if you want the source file to look like thisthen the headerFormat parameter should end with an empty line like this",,,rule_RSPEC-1451,S1451,每个源文件都应以标题说明文件所有权和必须用于分发应用程序的许可证开头.必须使用预期在每个文件开头的标题文本来提供此规则.如果要在文件头和源文件的第一行之间有空行，则headerFormat必须以空行结尾（使用命名空间.）.例如，如果您希望源文件看起来像这样.那么headerFormat参数应该以这样的空行结束.,CodeSmell,,,BLOCKER,Track lack of copyright and license headers
+“IDisposable”成员的类应该实现“IDisposable”.,Classes with IDisposable members are responsible for cleaning up those members by calling their Dispose methods. The best practice here is for the owning class to itself implement IDisposable and call its members' Dispose methods from its own Dispose method.,Y,"
+
+public class ResourceHolder   // Noncompliant; doesn't implement IDisposable
+{
+  private FileStream fs;  // This member is never Dispose'd
+  public void OpenResource(string path)
+  {
+    this.fs = new FileStream(path, FileMode.Open);
+  }
+  public void CloseResource()
+  {
+    this.fs.Close();
+  }
+}
+
+",rule_RSPEC-2931,S2931,具有IDisposable成员的课程负责通过调用Dispose方法来清理那些成员.这里的最佳做法是让拥有类自己实现IDisposable，并从其自己的Dispose方法中调用其成员的Dispose方法.,Bug,Y,"
+
+public class ResourceHolder : IDisposable 
+{ 
+  private FileStream fs; 
+  public void OpenResource(string path) 
+  { 
+    this.fs = new FileStream(path, FileMode.Open); 
+  } 
+  public void CloseResource() 
+  { 
+    this.fs.Close(); 
+  } 
+
+  public void Dispose() 
+  { 
+    this.fs.Dispose(); 
+  } 
+} 
+
+",BLOCKER,"Classes with ""IDisposable"" members should implement ""IDisposable"""
+应该使用“ConfigureAwait（false）”.,"After an await}}ed {{Task has executed, you can continue execution in the original, calling thread or any arbitrary thread. Unless the rest of the code needs the context from which the Task was spawned, Task.ConfigureAwait(false) should be used to keep execution in the Task thread to avoid the need for context switching and the possibility of deadlocks.This rule raises an issue when code in a class library await}}s a {{Task and continues execution in the original calling thread.",Y,"
+
+var response = await httpClient.GetAsync(url);  // Noncompliant
+
+",rule_RSPEC-3216,S3216,在等待之后}} ed {{Task已执行，您可以继续执行原始，调用线程或任意任意的线程.除非代码的其余部分需要任务生成的上下文，否则任务.应该使用ConfigureAwait（false）来执行任务线程，以避免上下文切换的需要和死锁的可能性.这个规则在类库中的代码中引发了一个问题await}} s {{任务并继续在原来的调用线程中执行.,CodeSmell,Y,"
+
+var response = await httpClient.GetAsync(url).ConfigureAwait(false);
+
+",CRITICAL,"""ConfigureAwait(false)"" should be used"
+“接口”实例不应该被转换为具体类型.,"Needing to cast from an interface to a concrete type indicates that something is wrong with the abstractions in use, likely that something is missing from the interface. Instead of casting to a discrete type, the missing functionality should be added to the interface. Otherwise there is a risk of runtime exceptions.",Y,"
+
+public interface IMyInterface
+{
+  void DoStuff();
+}
+
+public class MyClass1 : IMyInterface
+{
+  public int Data { get { return new Random().Next(); } }
+
+  public void DoStuff()
+  {
+    // TODO...
+  }
+}
+
+public static class DowncastExampleProgram
+{
+  static void EntryPoint(IMyInterface interfaceRef)
+  {
+    MyClass1 class1 = (MyClass1)interfaceRef;  // Noncompliant
+    int privateData = class1.Data;
+
+    class1 = interfaceRef as MyClass1;  // Noncompliant
+    if (class1 != null)
+    {
+      // ...
+    }
+  }
+}
+
+",rule_RSPEC-3215,S3215,需要从界面转换为具体类型表示使用中的抽象有问题，可能是界面中缺少某些东西.而不是转换为离散类型，缺少的功能应该添加到接口.否则存在运行时异常的风险.,CodeSmell,,,CRITICAL,"""interface"" instances should not be cast to concrete types"
+“out”和“ref”参数不应该使用.,"Passing a parameter by reference, which is what happens when you use the out or ref parameter modifiers, means that the method will receive a pointer to the argument, rather than the argument itself. If the argument was a value type, the method will be able to change the argument's values. If it was a reference type, then the method receives a pointer to a pointer, which is usually not what was intended. Even when it is what was intended, this is the sort of thing that's difficult to get right, and should be used with caution.This rule raises an issue when out or ref is used on a non-Optional parameter in a public method. Optional parameters are covered by S3447.",Y,"
+
+public void GetReply(
+         ref MyClass input, // Noncompliant
+         out string reply)  // Noncompliant
+{ ... }
+
+",rule_RSPEC-3874,S3874,通过引用传递参数，当使用out或ref参数修饰符时会发生什么，意味着该方法将接收到参数的指针，而不是参数本身.如果参数是值类型，则该方法将能够更改参数的值.如果它是一个引用类型，那么该方法会接收一个指向指针的指针，这通常不是预期的.即使是想要的东西，这是很难得到的东西，应谨慎使用.当在公共方法中的非可选参数使用out或ref时，此规则引发了一个问题.可选参数由S3447涵盖.,CodeSmell,Y,"
+
+public string GetReply(MyClass input)
+{ ... }
+
+public bool TryGetReply(MyClass input, out string reply)
+{ ... }
+
+public ReplyData GetReply(MyClass input)
+{ ... }
+
+internal void GetReply(ref MyClass input, out string reply) 
+{ ... }
+
+",CRITICAL,"""out"" and ""ref"" parameters should not be used"
+不应使用阵列协方差.,"Array covariance is the principle that if an implicit or explicit reference conversion exits from type A to B, then the same conversion exists from the array type A[] to B[].While this array conversion can be useful in readonly situations to pass instances of A[] where B[] is expected, it must be used with care, since assigning an instance of B into an array of A will cause an ArrayTypeMismatchException to be thrown at runtime.",Y,"
+
+abstract class Fruit { }
+class Apple : Fruit { }
+class Orange : Fruit { }
+
+class Program
+{
+  static void Main(string[] args)
+  {
+    Fruit[] fruits = new Apple[1]; // Noncompliant - array covariance is used
+    FillWithOranges(fruits);
+  }
+
+  // Just looking at the code doesn't reveal anything suspicious
+  static void FillWithOranges(Fruit[] fruits)
+  {
+    for (int i = 0; i &lt; fruits.Length; i++)
+    {
+      fruits[i] = new Orange(); // Will throw an ArrayTypeMismatchException
+    }
+  }
+}
+
+",rule_RSPEC-2330,S2330,数组协方差是原则，如果隐式或显式引用转换退出A类到B类，那么从数组类型A []到B []存在相同的转换.虽然这种数组转换在只读状况下可以有效地传递需要B []的A []的实例，但必须谨慎使用，因为将B的实例分配到A的数组将导致ArrayTypeMismatchException抛出.,CodeSmell,Y,"
+
+abstract class Fruit { }
+class Apple : Fruit { }
+class Orange : Fruit { }
+
+class Program
+{
+  static void Main(string[] args)
+  {
+    Orange[] fruits = new Orange[1]; // Compliant
+    FillWithOranges(fruits);
+  }
+
+  static void FillWithOranges(Orange[] fruits)
+  {
+    for (int i = 0; i &lt; fruits.Length; i++)
+    {
+      fruits[i] = new Orange();
+    }
+  }
+}
+
+",CRITICAL,Array covariance should not be used
+分支机构应通过单位测试具有足够的覆盖面.,An issue is created on a file as soon as the branch coverage on this file is less than the required threshold. It gives the number of branches to be covered in order to reach the required threshold.,,,rule_RSPEC-1482,S1482,一旦文件的分支覆盖率小于所需阈值，就会在文件上创建一个问题.它给出要覆盖的分支数量以达到所需的阈值.,CodeSmell,,,MINOR,Branches should have sufficient coverage by unit tests
+不能使用可选参数.,,Y,"
+
+void Notify(string company, string office = ""QJZ"") // Noncompliant
+{
+}
+
+",rule_RSPEC-2360,S2360,,CodeSmell,Y,"
+
+void Notify(string company)
+{
+  Notify(company, ""QJZ"");
+}
+void Notify(string company, string office)
+{
+}
+
+",CRITICAL,Optional parameters should not be used
+公共常数成员不应该被使用.,,Y,"
+
+public class Foo
+{
+    public const double Version = 1.0;           // Noncompliant
+}
+
+",rule_RSPEC-2339,S2339,,CodeSmell,Y,"
+
+public class Foo
+{
+    public static double Version 
+    {
+      get { return 1.0; }
+    }
+}
+
+",CRITICAL,Public constant members should not be used
+不应检查模数结果是否直接相等.,,Y,"
+
+public bool IsOdd(int x) 
+{
+  return x % 2 == 1;  // Noncompliant; if x is an odd negative, x % 2 == -1
+}
+
+",rule_RSPEC-2197,S2197,,CodeSmell,Y,"
+
+public bool IsOdd(int x) 
+{
+  return x %2 != 0;
+}
+
+",CRITICAL,Modulus results should not be checked for direct equality
+不应使用SHA-1和消息摘要散列算法.,"The MD5 algorithm and its successor, SHA-1, are no longer considered secure, because it is too easy to create hash collisions with them. That is, it takes too little computational effort to come up with a different input that produces the same MD5 or SHA-1 hash, and using the new, same-hash value gives an attacker the same access as if he had the originally-hashed value. This applies as well to the other Message-Digest algorithms: MD2, MD4, MD6.This rule tracks usage of the System.Security.Cryptography.CryptoConfig.CreateFromName(), and System.Security.Cryptography.HashAlgorithm.Create() methods to instantiate MD5 or SHA-1 algorithms, and of derived class instances of System.Security.Cryptography.SHA1 and System.Security.Cryptography.MD5.",Y,"
+
+var hashProvider1 = new MD5CryptoServiceProvider(); //Noncompliant
+var hashProvider2 = (HashAlgorithm)CryptoConfig.CreateFromName(""MD5""); //Noncompliant
+var hashProvider3 = new SHA1Managed(); //Noncompliant
+var hashProvider4 = HashAlgorithm.Create(""SHA1""); //Noncompliant
+
+",rule_RSPEC-2070,S2070,MD5算法及其后继SHA-1不再被认为是安全的，因为它们太容易与它们创建哈希冲突.也就是说，需要太少的计算量来产生产生相同MD5或SHA-1散列的不同输入，并且使用新的相同散列值给予攻击者相同的访问，就像他原来是散列的.这也适用于其他消息摘要算法：MD2，MD4，MD6.该规则跟踪系统的使用情况.安全.加密.CryptoConfig.CreateFromName（）和System.安全.加密.的HashAlgorithm.Create（）方法来实例化MD5或SHA-1算法，以及System派生类实例.安全.加密.SHA1和系统.安全.加密.MD5.,Vulnerability,Y,"
+
+var hashProvider1 = new SHA256Managed();
+var hashProvider2 = (HashAlgorithm)CryptoConfig.CreateFromName(""SHA256Managed"");
+var hashProvider3 = HashAlgorithm.Create(""SHA256Managed"");
+
+",CRITICAL,SHA-1 and Message-Digest hash algorithms should not be used
+“for”循环递增子句应该修改循环计数器.,,Y,"
+
+for (i = 0; i &lt; 10; j++) // Noncompliant
+{  
+  // ...
+}
+
+",rule_RSPEC-1994,S1994,,CodeSmell,Y,"
+
+for (i = 0; i &lt; 10; i++)
+{
+  // ...
+}
+
+",CRITICAL,"""for"" loop increment clauses should modify the loops' counters"
+表达式不应太复杂.,,Y,"
+
+if (((condition1 &amp;&amp; condition2) || (condition3 &amp;&amp; condition4)) &amp;&amp; condition5) { ... } 
+
+",rule_RSPEC-1067,S1067,,CodeSmell,Y,"
+
+if ((MyFirstCondition() || MySecondCondition()) &amp;&amp; MyLastCondition()) { ... }     
+
+",CRITICAL,Expressions should not be too complex
+“如果.否则“结构应以”else“子句结尾.,,Y,"
+
+if (x == 0) 
+{
+  doSomething();
+} else if (x == 1) 
+{
+  doSomethingElse();
+} 
+
+",rule_RSPEC-126,S126,,CodeSmell,Y,"
+
+if (x == 0) 
+{
+  doSomething();
+} else if (x == 1) 
+{
+  doSomethingElse();
+} else 
+{
+  throw new IllegalStateException();
+}
+
+",CRITICAL,"""if ... else if"" constructs should end with ""else"" clauses"
+控制结构应使用花括号.,,Y,"
+
+// the two statements seems to be attached to the if statement, but that is only true for the first one:
+if (condition)
+  ExecuteSomething();
+  CheckSomething();
+
+",rule_RSPEC-121,S121,,CodeSmell,Y,"
+
+if (condition)
+{
+  ExecuteSomething();
+  CheckSomething();
+}
+
+",CRITICAL,Control structures should use curly braces
+“switch / Select”语句应以“default / Case Else”子句结尾.,"The requirement for a final default clause is defensive programming. The clause should either take appropriate action, or contain a suitable comment as to why no action is taken. Even when the switch covers all current values of an enum, a default case should still be used because there is no guarantee that the enum won't be extended.",Y,"
+
+int foo = 42;
+switch (foo) // Noncompliant
+{
+  case 0:
+    Console.WriteLine(""foo = 0"");
+    break;
+  case 42:
+    Console.WriteLine(""foo = 42"");
+    break;
+}
+
+",rule_RSPEC-131,S131,最后的默认条款的要求是防御性编程.该条款应采取适当行动，或包含适当的评论，为什么不采取任何行动.即使交换机覆盖了枚举的所有当前值，仍应使用默认情况，因为不能保证枚举不会被扩展.,CodeSmell,Y,"
+
+int foo = 42;
+switch (foo) // Compliant
+{
+  case 0:
+    Console.WriteLine(""foo = 0"");
+    break;
+  case 42:
+    Console.WriteLine(""foo = 42"");
+    break;
+  default:
+    throw new InvalidOperationException(""Unexpected value foo = "" + foo);
+}
+
+",CRITICAL,"""switch/Select"" statements should end with ""default/Case Else"" clauses"
+控制流程语句“if”，“switch”，“for”，“foreach”，“while”，“do”和“try”不能嵌套太深.,"Nested if, switch, for, foreach, while, do, and try statements are key ingredients for making what's known as ""Spaghetti code"".
+Such code is hard to read, refactor and therefore maintain.",Y,"
+
+if (condition1) // Compliant - depth = 1
+{                  
+  /* ... */
+  if (condition2) // Compliant - depth = 2
+  {                
+    /* ... */
+    for(int i = 0; i &lt; 10; i++) // Compliant - depth = 3, not exceeding the limit
+    {  
+      /* ... */
+      if (condition4) // Noncompliant - depth = 4
+      {            
+        if (condition5) // Depth = 5, exceeding the limit, but issues are only reported on depth = 4
+        {          
+          /* ... */
+        }
+        return;
+      }
+    }
+  }
+}
+
+",rule_RSPEC-134,S134,嵌套if，switch，for，foreach，while，do和try语句是制作所谓的“意粉代码”的关键因素.这样的代码很难阅读，重构并因此维护.,CodeSmell,,,CRITICAL,"Control flow statements ""if"", ""switch"", ""for"", ""foreach"", ""while"", ""do""  and ""try"" should not be nested too deeply"
+方法和属性不应太复杂.,The cyclomatic complexity of methods and properties should not exceed a defined threshold. Complex code can perform poorly and will in any case be difficult to understand and therefore to maintain.,,,rule_RSPEC-1541,S1541,方法和性质的循环复杂度不应超过定义的阈值.复杂的代码可以表现不佳，在任何情况下都难以理解，因此需要维护.,CodeSmell,,,CRITICAL,Methods and properties should not be too complex
+类应该从类自己的“Dispose”方法中“处理”成员.,"It is possible in an IDisposable to call Dispose on class members from any method, but the contract of Dispose is that it will clean up all unmanaged resources. Move disposing of members to some other method, and you risk resource leaks.",Y,"
+
+public class ResourceHolder : IDisposable
+{
+  private FileStream fs;  
+  public void OpenResource(string path)
+  {
+    this.fs = new FileStream(path, FileMode.Open);
+  }
+  public void CloseResource()
+  {
+    this.fs.Close();
+  }
+
+  public void CleanUp() 
+  {
+    this.fs.Dispose(); // Noncompliant; Dispose not called in class' Dispose method
+  }
+
+  public void Dispose() 
+  {
+    // method added to satisfy demands of interface
+  }
+}
+
+",rule_RSPEC-2952,S2952,在IDisposable中可以从任何方法调用Dispose到Class成员，但Dispose的合同是它将清理所有非托管资源.将成员处理移到某种其他方法，并且可能会导致资源泄漏.,Bug,Y,"
+
+public class ResourceHolder : IDisposable
+{
+  private FileStream fs;
+  public void OpenResource(string path)
+  {
+    this.fs = new FileStream(path, FileMode.Open);
+  }
+  public void CloseResource()
+  {
+    this.fs.Close();
+  }
+
+  public void Dispose() 
+  {
+    this.fs.Dispose();
+  }
+}
+
+",CRITICAL,"Classes should ""Dispose"" of members from the classes' own ""Dispose"" methods"
+线路应通过单元测试具有足够的覆盖.,An issue is created on a file as soon as the line coverage on this file is less than the required threshold. It gives the number of lines to be covered in order to reach the required threshold.,,,rule_RSPEC-1483,S1483,一旦该文件的线路覆盖率小于所需阈值，就会在文件上创建一个问题.它给出要覆盖的行数以达到所需的阈值.,CodeSmell,,,MINOR,Lines should have sufficient coverage by unit tests
+类型和“this”不应该用于锁定.,"Locking on the current object instance (i.e. this), or on a Type object increases the chance of deadlocks because any other thread could acquire (or attempt to acquire) the same lock for another unrelated purpose. Instead, a new, private object should be created and used for the lock.",Y,"
+
+public void MyLockingMethod()
+{
+  lock (this) // Noncompliant
+  {
+    // ...
+  }
+}
+
+",rule_RSPEC-2551,S2551,锁定当前对象实例（i.这个）或者一个Type对象增加了死锁的机会，因为任何其他线程可以获得（或尝试获取）另一个不相关目的的锁.相反，应该创建一个新的私有对象并将其用于锁定.,Bug,Y,"
+
+object lockObj = new object();
+
+public void MyLockingMethod()
+{
+  lock (lockObj)
+  {
+    // ...
+  }
+}
+
+",CRITICAL,"Types and ""this"" should not be used for locking"
+“部件.GetExecutingAssembly“不应该被调用.,"Using Type.Assembly to get the current assembly is nearly free in terms of performance; it's a simple property access. On the other hand, Assembly.GetExecutingAssembly() can take up to 30 times as long because it walks up the call stack to find the assembly.",Y,"
+
+public class Example
+{
+   public static void Main()
+   {
+      Assembly assem = Assembly.GetExecutingAssembly(); // Noncompliant
+      Console.WriteLine(""Assembly name: {0}"", assem.FullName);
+   }
+}
+
+",rule_RSPEC-3902,S3902,使用类型.获得当前装配的装配在性能方面几乎是免费的;.另一方面，大会.GetExecutingAssembly（）最多可能需要30次，因为它会调用调用堆栈来查找程序集.,CodeSmell,Y,"
+
+public class Example
+{
+   public static void Main()
+   {
+      Assembly assem = typeof(Example).Assembly; // Here we use the type of the current class
+      Console.WriteLine(""Assembly name: {0}"", assem.FullName);
+   }
+}
+
+",MAJOR,"""Assembly.GetExecutingAssembly"" should not be called"
+字段应该是私有的.,,Y,"
+
+public class Foo
+{
+  public int MagicNumber = 42; 
+}
+
+",rule_RSPEC-2357,S2357,,CodeSmell,Y,"
+
+public class Foo
+{
+  public int MagicNumber 
+  { 
+    get { return 42; }
+  }
+}
+
+",MAJOR,Fields should be private
+应使用短路逻辑来防止条件中的空指针取消引用.,,,,rule_RSPEC-1697,S1697,,Bug,Y,"
+
+if (str == null || str.Length == 0)
+{
+  Console.WriteLine(""String is empty"");
+}
+
+if (str != null &amp;&amp; str.Length &gt; 0)
+{
+  Console.WriteLine(""String is not empty"");
+}
+
+",MAJOR,Short-circuit logic should be used to prevent null pointer dereferences in conditionals
+IP地址不应该被硬编码.,,Y,"
+
+var ip = ""127.0.0.1"";
+var address = IPAddress.Parse(ip);
+
+",rule_RSPEC-1313,S1313,,Vulnerability,Y,"
+
+var ip = ConfigurationManager.AppSettings[""myapplication.ip""];
+var address = IPAddress.Parse(ip);
+
+",MAJOR,IP addresses should not be hardcoded
+不应对浮点数进行相等测试.,"Floating point math is imprecise because of the challenges of storing such values in a binary representation. Even worse, floating point math is not associative; push a float or a double through a series of simple mathematical operations and the answer will be different based on the order of those operation because of the rounding that takes place at each step.Even simple floating point assignments are not simple:(Results will vary based on compiler and compiler settings)Therefore, the use of the equality (==) and inequality (!=) operators on float or double values is almost always an error.This rule checks for the use of direct and indirect equality/inequailty tests on floats and doubles.",Y,"
+
+float myNumber = 3.146f;
+if ( myNumber == 3.146f ) //Noncompliant. Because of floating point imprecision, this will be false
+{
+  // ...
+}
+
+if (myNumber &lt;= 3.146f &amp;&amp; mNumber &gt;= 3.146f) // Noncompliant indirect equality test
+{
+  // ...
+}
+
+if (myNumber &lt; 4 || myNumber &gt; 4) // Noncompliant indirect inequality test
+{
+  // ...
+}
+
+",rule_RSPEC-1244,S1244,浮点数学是不精确的，因为在二进制表示中存储这些值的挑战.更糟糕的是，浮点数学不是联想的;.即使简单的浮点分配也不简单：.（结果将根据编译器和编译器设置而有所不同）.因此，对float或double值使用等号（==）和不等式（！=）运算符几乎总是一个错误.该规则检查对浮动和双打的直接和间接平等/不等式测试的使用.,Bug,,,MAJOR,Floating point numbers should not be tested for equality
+无用“if（true）{.}“和”if（false）{.}“块应该被删除.,,Y,"
+
+if (true) 
+{  
+  DoSomething(); 
+}
+...
+if (false) 
+{
+  DoSomethingElse(); 
+}
+
+if (2 &lt; 3 ) { ... }  // Noncompliant; always false
+
+int i = 0;
+int j = 0;
+// ...
+j = Foo();
+
+if (j &gt; 0 &amp;&amp; i &gt; 0) { ... }  // Noncompliant; always false - i never set after initialization
+
+bool b = true;
+//...
+if (b || !b) { ... }  // Noncompliant
+
+",rule_RSPEC-1145,S1145,,Bug,Y,"
+
+DoSomething(); 
+...
+
+",MAJOR,"Useless ""if(true) {...}"" and ""if(false){...}"" blocks should be removed"
+“对于”循环停止条件应该是不变的.,,Y,"
+
+class Foo 
+{
+    static void Main() 
+    {
+        for (int i = 1; i &lt;= 5; i++) 
+        {
+            Console.WriteLine(i);
+            if (condition) 
+            {
+               i = 20;
+           }
+        }
+    }
+}
+
+",rule_RSPEC-127,S127,,CodeSmell,Y,"
+
+class Foo 
+{
+    static void Main() 
+    {
+        for (int i = 1; i &lt;= 5; i++) 
+        {
+            Console.WriteLine(i);
+        }
+    }
+}
+
+",MAJOR,"""for"" loop stop conditions should be invariant"
+声明应该分开.,,Y,"
+
+if(someCondition) DoSomething();
+
+",rule_RSPEC-122,S122,,CodeSmell,Y,"
+
+if(someCondition) 
+{
+  DoSomething();
+}
+
+",MAJOR,Statements should be on separate lines
+线条不应该太长.,Having to scroll horizontally makes it harder to get a quick overview and understanding of any piece of code.,,,rule_RSPEC-103,S103,必须水平滚动才能更快速地了解任何代码.,CodeSmell,,,MAJOR,Lines should not be too long
+文件不应该有太多的代码行.,"A source file that grows too much tends to aggregate too many responsibilities and inevitably becomes harder to understand and therefore to maintain. Above a specific threshold, it is strongly advised to refactor it into smaller pieces of code which focus on well defined tasks. Those smaller files will not only be easier to understand but also probably easier to test.",,,rule_RSPEC-104,S104,增长太多的源文件往往会累积太多的责任，并且不可避免地变得难以理解，因此需要维护.高于特定的阈值，强烈建议将其重构为较小的代码，重点在明确的任务上.那些较小的文件不仅容易理解，而且可能更容易测试.,CodeSmell,,,MAJOR,Files should not have too many lines of code
+终结者不应该是空的.,Finalizers come with a performance cost due to the overhead of tracking the life cycle of objects. An empty one is consequently costly with no benefit or justification.,Y,"
+
+public class Foo 
+{
+    ~Foo() // Noncompliant
+    { 
+    }
+}
+
+",rule_RSPEC-3880,S3880,由于跟踪对象生命周期的开销，终结者具有性能成本.因此，空的一个是昂贵的，没有任何好处或理由.,CodeSmell,,,MAJOR,Finalizers should not be empty
+值类型应实现“IEquatable \u003cT\u003e”.,"If you're using a struct, it is likely because you're interested in performance. But by failing to implement IEquatable&lt;T&gt; you're loosing performance when comparisons are made because without IEquatable&lt;T&gt;, boxing and reflection are used to make comparisons. ",Y,"
+
+struct MyStruct  // Noncompliant
+{
+  private int i;
+  public int I
+  {
+    //...
+  }
+}
+
+",rule_RSPEC-3898,S3898,如果您使用的是结构体，那么可能是因为您对性能感兴趣.但是由于未能实现IEquatable＆lt; T＆gt;.,CodeSmell,,,MAJOR,"Value types should implement ""IEquatable<T>"""
+“GC.对于没有析构函数的类型，不应该调用“SuppressFinalize”.,"GC.SuppressFinalize asks the Common Language Runtime not to call the finalizer of an object. This is useful when implementing the dispose pattern where object finalization is already handled in IDisposable.Dispose. However, it has no effect if there is no finalizer defined in the object's type, so using it in such cases is just confusing.This rule raises an issue when GC.SuppressFinalize is called for objects of sealed types without a finalizer.*Note:* S3971 is a stricter version of this rule. Typically it makes sense to activate only one of these 2 rules.",Y,"
+
+sealed class MyClass
+{
+  public void Method()
+  {
+    ...
+    GC.SuppressFinalize(this); //Noncompliant
+  }
+}
+
+",rule_RSPEC-3234,S3234,GC.SuppressFinalize要求公共语言运行时不调用对象的终结器.这在实现在IDisposable中已处理对象终结的处理模式时非常有用.部署.但是，如果没有在对象的类型中定义finalizer，那么它就没有任何效果，所以在这种情况下使用它只是混乱.这个规则引发了GC问题.SuppressFinalize被称为没有终结器的密封类型的对象.*注意：* S3971是这个规则的更严格的版本.通常，仅激活这两个规则之一是有意义的.,CodeSmell,Y,"
+
+sealed class MyClass
+{
+  public void Method()
+  {
+    ...
+  }
+}
+
+",MINOR,"""GC.SuppressFinalize"" should not be invoked for types without destructors"
+“static readonly”常量应该是“const”.,"The value of a static readonly field is computed at runtime while the value of a const field is calculated at compile time, which improves performance.This rule raises an issue when a static readonly field is initialiazed with a value that is computable at compile time.As specified by Microsoft, the list of types that can have a constant value are:",Y,"
+
+namespace myLib
+{
+  public class Foo
+  {
+    static readonly int x = 1;  // Noncompliant
+    static readonly int y = x + 4; // Noncompliant
+    static readonly string s = ""Bar"";  // Noncompliant
+  }
+}
+
+",rule_RSPEC-3962,S3962,在运行时计算静态可读字段的值，而在编译时计算const字段的值，从而提高性能.当静态只读字段使用可编译时可计算的值初始化时，此规则引发了一个问题.如Microsoft所指定的，可以具有常量值的类型列表有：.,CodeSmell,Y,"
+
+namespace myLib
+{
+  public class Foo
+  {
+    const int x = 1;
+    const int y = x + 4;
+    const string s = ""Bar"";
+  }
+}
+
+",MINOR,"""static readonly"" constants should be ""const"" instead"
+“静态”字段应该被内联初始化.,"When a static constructor serves no other purpose that initializing static fields, it comes with an unnecessary performance cost because the compiler generates a check before each static method or instance constructor invocation.Instead, inline initialization is highly recommended.",Y,"
+
+namespace myLib
+{
+  public class Foo
+  {
+    static int i;
+    static string s;
+
+    static Foo() // Noncompliant
+    {
+      i = 3;
+      ResourceManager sm =  new ResourceManager(""strings"", Assembly.GetExecutingAssembly());
+      s = sm.GetString(""mystring"");
+    }
+  }
+}
+
+",rule_RSPEC-3963,S3963,当静态构造函数没有其他用于初始化静态字段的目的时，它会带来不必要的性能成本，因为编译器会在每个静态方法或实例构造函数调用之前生成检查.相反，强烈建议使用内联初始化.,CodeSmell,Y,"
+
+namespace myLib
+{
+  public class Foo
+  {
+    static int i =3;
+    static string s = InitString();
+
+    static string InitString()
+    {
+      ResourceManager sm = new ResourceManager(""strings"", Assembly.GetExecutingAssembly());
+      return sm.GetString(""mystring"");
+    }
+  }
+}
+
+",MINOR,"""static"" fields should be initialized inline"
+顺序测试不应该检查相同的条件.,,Y,"
+
+if (a == b)
+{
+  doTheThing(b);
+}
+if (a == b) // Noncompliant; is this really what was intended?
+{
+  doTheThing(c);
+}
+
+",rule_RSPEC-2760,S2760,,CodeSmell,Y,"
+
+if (a == b)
+{
+  doTheThing(b);
+  doTheThing(c);
+}
+
+",MINOR,Sequential tests should not check the same condition
+不应使用冗余修饰符.,Unnecessary keywords simply clutter the code and should be removed. Specifically:,Y,"
+
+public partial class MyClass // Noncompliant
+{
+  public virtual void Method()
+  {
+  }
+}
+
+public sealed class MyOtherClass : MyClass
+{
+  public sealed override void Method() // Noncompliant
+  {
+  }
+}
+
+",rule_RSPEC-2333,S2333,不必要的关键字简单地混淆了代码，应该被删除.特别：.,CodeSmell,Y,"
+
+public class MyClass
+{
+  public virtual void Method()
+  {
+  }
+}
+
+public sealed class MyOtherClass : MyClass
+{
+  public override void Method()
+  {
+  }
+}
+
+",MINOR,Redundant modifiers should not be used
+不应使用控制台日志记录.,,Y,"
+
+private void DoSomething ()
+{
+  // ...
+  Console.WriteLine (""so far, so good...""); // Noncompliant
+  // ...
+}
+
+",rule_RSPEC-2228,S2228,,Vulnerability,,,MINOR,Console logging should not be used
+抽象类应该有抽象和具体的方法.,,Y,"
+
+public abstract class Animal //Noncompliant; should be an interface
+{
+  abstract void Move();
+  abstract void Feed();
+}
+
+public abstract class Color //Noncompliant; should be concrete with a private constructor
+{
+  private int red = 0;
+  private int green = 0;
+  private int blue = 0;
+
+  public int GetRed()
+  {
+    return red;
+  }
+}
+
+",rule_RSPEC-1694,S1694,,CodeSmell,Y,"
+
+public interface Animal
+{
+  void Move();
+  void Feed();
+}
+
+public class Color
+{
+  private int red = 0;
+  private int green = 0;
+  private int blue = 0;
+
+  private Color()
+  {}
+
+  public int GetRed()
+  {
+    return red;
+  }
+}
+
+public abstract class Lamp
+{
+  private bool switchLamp = false;
+
+  public abstract void Glow();
+
+  public void FlipSwitch()
+  {
+    switchLamp = !switchLamp;
+    if (switchLamp)
+    {
+      Glow();
+    }
+  }
+}
+
+",MINOR,An abstract class should have both abstract and concrete methods
+多个变量不应在同一行上声明.,Declaring multiple variable on one line is difficult to read.,Y,"
+
+class MyClass 
+{
+  private int a, b; // Noncompliant
+
+  public void Method()
+  {
+    int c, d; // Noncompliant
+  }
+}
+
+",rule_RSPEC-1659,S1659,在一行上声明多个变量很难阅读.,CodeSmell,Y,"
+
+class MyClass 
+{
+  private int a;
+  private int b;
+
+  public void Method()
+  {
+    int c;
+    int d;
+  }
+}
+
+",MINOR,Multiple variables should not be declared on the same line
+“switch”语句应该至少有3个“case”子句.,,Y,"
+
+switch (variable)
+{
+  case 0:
+    doSomething();
+    break;
+  default:
+    doSomethingElse();
+    break;
+}
+
+",rule_RSPEC-1301,S1301,,CodeSmell,Y,"
+
+if (variable == 0)
+{
+  doSomething();
+}
+else
+{
+  doSomethingElse();
+}
+
+",MINOR,"""switch"" statements should have at least 3 ""case"" clauses"
+除了switch开关外，不应该使用break语句.,,Y,"
+
+int i = 0;
+while (true)
+{
+  if (i == 10)
+  {
+    break;      // Non-Compliant
+  }
+
+  Console.WriteLine(i);
+  i++;
+}
+
+",rule_RSPEC-1227,S1227,,CodeSmell,Y,"
+
+int i = 0;
+while (i != 10) // Compliant
+{
+  Console.WriteLine(i);
+  i++;
+}
+
+",MINOR,break statements should not be used except for switch cases
+一条紧密的大括号应位于一行的开头.,,Y,"
+
+if(condition) 
+{
+  doSomething();} 
+
+",rule_RSPEC-1109,S1109,,CodeSmell,Y,"
+
+if(condition) 
+{
+  doSomething();
+} 
+
+",MINOR,A close curly brace should be located at the beginning of a line
+当“等于”被覆盖时，不应使用“==”.,"Using the equality == and inequality != operators to compare two objects generally works. The operators can be overloaded, and therefore the comparison can resolve to the appropriate method. However, when the operators are used on interface instances, then == resolves to reference equality, which may result in unexpected behavior if implementing classes override Equals. Similarly, when a class overrides Equals, but instances are compared with non-overloaded ==, there is a high chance that value comparison was meant instead of the reference one.",Y,"
+
+public interface IMyInterface
+{
+}
+
+public class MyClass : IMyInterface
+{
+    public override bool Equals(object obj)
+    {
+        //...
+    }
+}
+
+public class Program
+{
+    public static void Method(IMyInterface instance1, IMyInterface instance2)
+    {
+        if (instance1 == instance2) // Noncompliant, will do reference equality check, but was that intended? MyClass overrides Equals.
+        {
+            Console.WriteLine(""Equal"");
+        }
+    }
+}
+
+",rule_RSPEC-1698,S1698,使用等于==和不等式！=运算符比较两个对象通常有效.操作员可以过载，因此比较可以解决适当的方法.但是，当接口实例使用运算符时，==解析为引用相等性，如果实现类覆盖等于.类似地，当一个类覆盖Equals，但是实例与非重载的==比较时，有很大的可能性，而不是参考值.,CodeSmell,Y,"
+
+public interface IMyInterface
+{
+}
+
+public class MyClass : IMyInterface
+{
+    public override bool Equals(object obj)
+    {
+        //...
+    }
+}
+
+public class Program
+{
+    public static void Method(IMyInterface instance1, IMyInterface instance2)
+    {
+        if (object.Equals(instance1, instance2)) // object.Equals checks for null and then calls the instance based Equals, so MyClass.Equals
+        {
+            Console.WriteLine(""Equal"");
+        }
+    }
+}
+
+",MINOR,"""=="" should not be used when ""Equals"" is overridden"
+不应将成员初始化为默认值.,"The compiler automatically initializes class fields, auto-properties and events to their default values before setting them with any initialization values, so there is no need to explicitly set a member to its default value. Further, under the logic that cleaner code is better code, it's considered poor style to do so.",Y,"
+
+class X
+{
+  public int field = 0; // Noncompliant
+  public object o = null; // Noncompliant
+  public object MyProperty { get; set; } = null; // Noncompliant
+  public event EventHandler MyEvent = null;  // Noncompliant
+}
+
+",rule_RSPEC-3052,S3052,编译器会自动将类字段，自动属性和事件初始化为默认值，然后再使用任何初始化值进行设置，因此无需将成员显式设置为其默认值.此外，根据清洁代码是更好的代码，这被认为是糟糕的风格.,CodeSmell,Y,"
+
+class X
+{
+  public int field;
+  public object o;
+  public object MyProperty { get; set; }
+  public event EventHandler MyEvent;
+}
+
+",MINOR,Members should not be initialized to default values
+方法参数和捕获的异常不应重新分配.,"While it is technically correct to assign to parameters from within method bodies, it is better to use temporary variables to store intermediate results.
+This rule will typically detect cases where a constructor parameter is assigned to itself instead of a field of the same name, i.e. when this was forgotten.
+Allowing parameters to be assigned to also reduces the code readability as developers will not be able to know whether the original parameter or some temporary variable is being accessed without going through the whole method.
+Moreover, some developers might also expect assignments of method parameters to be visible from callers, which is not the case and can confuse them.
+All parameters should be treated as readonly.",Y,"
+
+class MyClass
+{
+  public string name;
+
+  public MyClass(string name)
+  {
+    name = name;                    // Noncompliant - useless identity assignment
+  }
+
+  public int Add(int a, int b)
+  {
+    a = a + b;                      // Noncompliant
+
+    /* additional logic */
+
+    return a;                       // Seems like the parameter is returned as is, what is the point?
+  }
+
+  public static void Main()
+  {
+    MyClass foo = new MyClass();
+    int a = 40;
+    int b = 2;
+    foo.Add(a, b);                  // Variable ""a"" will still hold 40 after this call
+  }
+}
+
+",rule_RSPEC-1226,S1226,从方法体内分配参数在技术上是正确的，最好使用临时变量来存储中间结果.该规则通常会检测到构造函数参数分配给自身而不是同名的字段的情况，i.当这被遗忘的时候.允许分配参数还可以降低代码可读性，因为开发人员将无法知道是否正在访问原始参数或某个临时变量，而无需通过整个方法.此外，一些开发人员还可能期望方法参数的分配从调用者可见，但情况并非如此，可能会使它们混淆.所有参数应视为只读.,CodeSmell,Y,"
+
+class MyClass
+{
+  public string name;
+
+  public MyClass(string name)
+  {
+    this.name = name;               // Compliant
+  }
+
+  public int Add(int a, int b)
+  {
+    return a + b;                   // Compliant
+  }
+
+  public static void Main()
+  {
+    MyClass foo = new MyClass();
+    int a = 40;
+    int b = 2;
+    foo.Add(a, b);
+  }
+}
+
+",MINOR,Method parameters and caught exceptions should not be reassigned
+应该检查从流读取返回的长度.,"You cannot assume that any given stream reading call will fill the byte[] passed in to the method with the number of bytes requested. Instead, you must check the value returned by the read method to see how many bytes were read. Fail to do so, and you introduce a bug that is both harmful and difficult to reproduce.This rule raises an issue when a Stream.Read or a Stream.ReadAsync method is called, but the return value is not checked.",Y,"
+
+public void DoSomething(string fileName) 
+{
+  using (var stream = File.Open(fileName, FileMode.Open))
+  {
+    var result = new byte[stream.Length];
+    stream.Read(result, 0, (int)stream.Length); // Noncompliant
+    // ... do something with result
+  }
+}
+
+",rule_RSPEC-2674,S2674,您不能假定任何给定的流读取调用将填充传递给方法的字节[]，请求的字节数.相反，您必须检查读取方法返回的值以查看读取的字节数.没有这样做，你会引入一个既有害又难以复制的错误.这个规则引起了一个Stream的问题.读或流.调用ReadAsync方法，但不检查返回值.,Bug,Y,"
+
+public void DoSomething(string fileName) 
+{
+  using (var stream = File.Open(fileName, FileMode.Open))
+  {
+    var buffer = new byte[1024];
+    using (var ms = new MemoryStream())
+    {
+        int read;
+        while ((read = stream.Read(buffer, 0, buffer.Length)) &gt; 0)
+        {
+            ms.Write(buffer, 0, read);
+        }
+        // ... do something with ms
+    }    
+  }
+}
+
+",MINOR,The length returned from a stream read should be checked
+“ToString（）”调用不应该是多余的.,"Invoking a method designed to return a string representation of an object which is already a string is a waste of keystrokes. Similarly, explicitly invoking ToString() when the compiler would do it implicitly is also needless code-bloat.This rule raises an issue when ToString() is invoked:",Y,"
+
+var s = ""foo"";
+var t = ""fee fie foe "" + s.ToString();  // Noncompliant
+var someObject = new object();
+var u = """" + someObject.ToString(); // Noncompliant
+var v = string.Format(""{0}"", someObject.ToString()); // Noncompliant
+
+",rule_RSPEC-1858,S1858,调用一个设计为返回已经是字符串的对象的字符串表示形式的方法是浪费敲击.类似地，当编译器会隐式地调用ToString（）也是不必要的代码膨胀.当调用ToString（）时，此规则引发了一个问题：.,CodeSmell,Y,"
+
+var s = ""foo"";
+var t = ""fee fie foe "" + s;
+var someObject = new object();
+var u = """" + someObject;
+var v = string.Format(""{0}"", someObject);
+
+",MINOR,"""ToString()"" calls should not be redundant"
+“密封”班不应该有“保护”的成员.,"The difference between private and protected visibility is that child classes can see and use protected members, but they cannot see private ones. Since a sealed class cannot have children, marking its members protected is confusingly pointless.",Y,"
+
+public sealed class MySealedClass 
+{
+    protected string name = ""Fred"";  // Noncompliant
+    protected void SetName(string name) // Noncompliant
+    {
+        // ...
+    }
+}
+
+",rule_RSPEC-2156,S2156,私有和受保护的可见性之间的区别是，子类可以看到并使用受保护的成员，但是它们看不到私有的成员.由于密封的班级不能有孩子，所以保护他们的成员是令人难以置信的.,CodeSmell,Y,"
+
+public sealed class MySealedClass 
+{
+    private string name = ""Fred"";
+    public void SetName(string name)
+    {
+        // ...
+    }
+}
+
+",MINOR,"""sealed"" classes should not have ""protected"" members"
+应为“字符串”操作指定文化.,"string.ToLower(), ToUpper, IndexOf, LastIndexOf, and Compare are all culture-dependent, as are some (floating point number and DateTime-related) calls to ToString. Fortunately, all have variants which accept an argument specifying the culture or formatter to use. Leave that argument off and the call will use the system default culture, possibly creating problems with international characters.string.CompareTo() is also culture specific, but has no overload that takes a culture information, so instead it's better to use CompareOrdinal, or Compare with culture.Calls without a culture may work fine in the system's ""home"" environment, but break in ways that are extremely difficult to diagnose for customers who use different encodings. Such bugs can be nearly, if not completely, impossible to reproduce when it's time to fix them.",Y,"
+
+var lowered = someString.ToLower(); //Noncompliant
+
+",rule_RSPEC-1449,S1449,串.ToLower（），ToUpper，IndexOf，LastIndexOf和Compare都是文化依赖的，ToString的一些（浮点数和DateTime相关）调用.幸运的是，所有的变体都接受一个参数，指定要使用的文化或格式化器.离开该参数，调用将使用系统默认文化，可能会产生国际字符的问题.串.CompareTo（）也是文化特定的，但没有重载的文化信息，所以反而更好的是使用CompareOrdinal或与文化比较.没有文化的电话可能会在系统的“家庭”环境中正常工作，但是对于使用不同编码的客户来说，极其难以诊断的方式是破坏的.这样的错误可能几乎，如果不是完全不可能复制，当它是时候解决它们.,Bug,Y,"
+
+var lowered = someString.ToLower(CultureInfo.InvariantCulture);
+
+",MINOR,"Culture should be specified for ""string"" operations"
+方法和属性应在骆驼案中命名.,"Shared naming conventions allow teams to collaborate efficiently. This rule checks whether or not method and property names are camel cased. To reduce noise, two consecutive upper case characters are allowed unless they form the whole name. So, MyXMethod is compliant, but XM on its own is not.",Y,"
+
+public int doSomething(){...}
+
+",rule_RSPEC-100,S100,共享命名约定允许团队有效协作.此规则检查方法和属性名称是否为骆驼套装.为了减少噪音，除非形成整个名称，否则允许连续使用两个大写字母.所以，MyXMethod是兼容的，但XM自己不是.,CodeSmell,Y,"
+
+public int DoSomething(){...}
+
+",MINOR,Methods and properties should be named in camel case
+构造函数和析构函数声明不应该是多余的.,"Since the compiler will automatically invoke the base type's no-argument constructor, there's no need to specify its invocation explicitly. Also, when only a single public parameterless constructor is defined in a class, then that constructor can be removed because the compiler would generate it automatically. Similarly, empty static constructors and empty destructors are also wasted keystrokes.",Y,"
+
+class X
+{
+  public X() { } // Noncompliant
+  static X() { }  // Noncompliant
+  ~X() { } // Noncompliant
+
+  ...
+}
+
+class Y : X
+{
+  public Y(int parameter) : base() // Noncompliant
+  {
+    /* does something with the parameter */
+  }
+}
+
+",rule_RSPEC-3253,S3253,由于编译器将自动调用基类型无参构造函数，所以不需要明确指定它的调用.而且，当一个类中只定义了一个公共无参数的构造函数时，该构造函数可以被删除，因为编译器会自动生成.类似地，空的静态构造函数和空的析构函数也是浪费的击键.,CodeSmell,Y,"
+
+class X
+{
+  ...
+}
+
+class Y : X
+{
+  public Y(int parameter)
+  {
+    /* does something with the parameter */
+  }
+}
+
+",MINOR,Constructor and destructor declarations should not be redundant
+声明和初始化应尽可能简洁.,"Unnecessarily verbose declarations and initializations make it harder to read the code, and should be simplified.Specifically the following should be omitted when they can be inferred:",Y,"
+
+var l = new List&lt;int&gt;() {}; // Noncompliant, {} can be removed
+var o = new object() {}; // Noncompliant, {} can be removed
+
+var ints = new int[] {1, 2, 3}; // Noncompliant, int can be omitted
+ints = new int[3] {1, 2, 3}; // Noncompliant, the size specification can be removed
+
+int? i = new int?(5); // Noncompliant new int? could be omitted, it can be inferred from the declaration, and there's implicit conversion from T to T?
+var j = new int?(5); 
+
+Func&lt;int, int&gt; f1 = (int i) =&gt; 1; //Noncompliant, can be simplified
+
+class Class
+{
+    private event EventHandler MyEvent;
+
+    public Class()
+    {
+        MyEvent += new EventHandler((a,b)=&gt;{ }); // Noncompliant, needlessly verbose
+    }
+}
+
+",rule_RSPEC-3257,S3257,不必要的详细的声明和初始化使得读取代码变得更加困难，应该被简化.具体来说，可以推断出以下内容：.,CodeSmell,Y,"
+
+var l = new List&lt;int&gt;();
+var o = new object();
+
+var ints = new [] {1, 2, 3};
+ints = new [] {1, 2, 3};
+
+int? i = 5;
+var j = new int?(5); 
+
+Func&lt;int, int&gt; f1 = (i) =&gt; 1;
+
+class Class
+{
+    private event EventHandler MyEvent;
+
+    public Class()
+    {
+        MyEvent += (a,b)=&gt;{ };
+    }
+}
+
+",MINOR,Declarations and initializations should be as concise as possible
+默认参数值不应作为参数传递.,Specifying the default parameter values in a method call is redundant. Such values should be omitted in the interests of readability.,Y,"
+
+public void M(int x, int y=5, int z = 7) { /* ... */ }
+
+// ...
+M(1, 5); //Noncompliant, y has the default value
+M(1, z: 7); //Noncompliant, z has the default value
+
+",rule_RSPEC-3254,S3254,在方法调用中指定默认参数值是多余的.为了可读性，应该省略这些值.,CodeSmell,Y,"
+
+public void M(int x, int y=5, int z = 7) { /* ... */ }
+
+// ...
+M(1);
+M(1);
+
+",MINOR,Default parameter values should not be passed as arguments
+应该删除空的“默认”子句.,The default clause should take appropriate action. Having an empty default is a waste of keystrokes.,Y,"
+
+enum Fruit
+{
+  Apple,
+  Orange,
+  Banana
+}
+
+void PrintName(Fruit fruit)
+{
+  switch(fruit)
+  {
+    case Fruit.Apple:
+      Console.WriteLine(""apple"");
+      break;
+    default:  //Noncompliant
+      break;
+  }
+}
+
+",rule_RSPEC-3532,S3532,默认子句应该采取适当的措施.空的默认是浪费击键.,CodeSmell,Y,"
+
+enum Fruit
+{
+  Apple,
+  Orange,
+  Banana
+}
+
+void PrintName(Fruit fruit)
+{
+  switch(fruit)
+  {
+    case Fruit.Apple:
+      Console.WriteLine(""apple"");
+      break;
+    default:
+      throw new NotSupportedException();
+  }
+}
+
+",MINOR,"Empty ""default"" clauses should be removed"
+不限于引用类型的通用参数不应与“null”进行比较.,"When constraints have not been applied to restrict a generic type parameter to be a reference type, then a value type, such as a struct, could also be passed. In such cases, comparing the type parameter to null would always be false, because a struct can be empty, but never null. If a value type is truly what's expected, then the comparison should use default(). If it's not, then constraints should be added so that no value type can be passed.",Y,"
+
+private bool IsDefault&lt;T&gt;(T value) 
+{
+  if (value == null) // Noncompliant
+  {
+    // ...
+  }
+  // ...
+}
+
+",rule_RSPEC-2955,S2955,当约束没有被应用以将泛型类型参数限制为引用类型时，也可以传递值类型（如struct）.在这种情况下，将type参数与null进行比较始终为false，因为struct可以为空，但不能为空.如果值类型是真正的预期，那么比较应该使用default（）.如果不是，则应添加约束，以便不能传递值类型.,Bug,Y,"
+
+private bool IsDefault&lt;T&gt;(T value) 
+{
+  if(object.Equals(value, default(T)))
+  {
+    // ...
+  }
+  // ...
+}
+
+",MINOR,"Generic parameters not constrained to reference types should not be compared to ""null"""
+不访问实例数据的方法和属性应该是静态的.,Class methods and properties that don't access instance data can be static to prevent any misunderstanding about the contract of the method. ,Y,"
+
+public class Utilities
+{
+  public int MagicNum // Noncompliant
+  {
+    get 
+    {
+      return 42;
+    }
+  }
+
+  private static string magicWord = ""please"";
+  public string MagicWord  // Noncompliant
+  {
+    get 
+    {
+      return magicWord;
+    }
+    set 
+    {
+      magicWord = value;
+    }
+  }
+
+  public int Sum(int a, int b)  // Noncompliant
+  {
+    return a + b;
+  }
+}
+
+",rule_RSPEC-2325,S2325,不访问实例数据的类方法和属性可以是静态的，以防止对方法的合同的任何误解.,CodeSmell,Y,"
+
+public class Utilities
+{
+  public static int MagicNum
+  {
+    get 
+    {
+      return 42;
+    }
+  }
+
+  private static string magicWord = ""please"";
+  public static string MagicWord 
+  {
+    get 
+    {
+      return magicWord;
+    }
+    set 
+    {
+      magicWord = value;
+    }
+  }
+
+  public static int Sum(int a, int b)
+  {
+    return a + b;
+  }
+}
+
+",MINOR,Methods and properties that don't access instance data should be static
+不应使用多维数组.,"A jagged array is an array whose elements are arrays. It is recommended over a multidimensional array because the arrays that make up the elements can be of different sizes, which avoids wasting memory space.",Y,"
+
+int [,] myArray =  // Noncompliant
+    {
+        {1,2,3,4},
+        {5,6,7,0},
+        {8,0,0,0},
+        {9,0,0,0}
+    };
+// ...
+myArray[1,1] = 0;
+
+",rule_RSPEC-3967,S3967,锯齿状阵列是一个数组，其元素是数组.建议使用多维数组，因为构成元素的数组可能有不同的大小，从而避免浪费内存空间.,CodeSmell,Y,"
+
+int[][] myArray = 
+    { 
+        new int[] {1,2,3,4},
+        new int[] {5,6,7},
+        new int[] {8},
+        new int[] {9}
+    };
+// ...
+myArray[1][1] = 0;
+
+",MINOR,Multidimensional arrays should not be used
+参数名称不应与其方法的名称重复.,"The name of a method should communicate what it does, and the names of its parameters should indicate how they're used. If a method and its parameter have the same name it is an indication that one of these rules of thumb has been broken, if not both. Even if by some trick of language that's not the case, it is still likely to confuse callers and maintainers.",Y,"
+
+public void Login(string login)  // Noncompliant
+{
+  //...
+}
+
+",rule_RSPEC-3872,S3872,方法的名称应该说明它的作用，其参数的名称应该说明它们的使用方式.如果一个方法和它的参数具有相同的名称，这表明这些经验法则之一已经被破坏，如果不是这两个.即使通过某种语言的伎俩不是这样，它仍然可能会混淆呼叫者和维护者.,CodeSmell,Y,"
+
+public void Login(string userName)
+{
+  //...
+}
+
+",MINOR,Parameter names should not duplicate the names of their methods
+不应使用冗余括号.,"Redundant parentheses are simply wasted keystrokes, and should be removed.",Y,"
+
+[MyAttribute()] //Noncompliant
+class MyClass
+{
+  public int MyProperty { get; set; }
+  public static MyClass CreateNew(int propertyValue)
+  {
+    return new MyClass() //Noncompliant
+    {
+      MyProperty = propertyValue
+    };
+  }
+}
+
+",rule_RSPEC-3235,S3235,冗余括号只是浪费了按键，应该被删除.,CodeSmell,Y,"
+
+[MyAttribute] 
+class MyClass
+{
+  public int MyProperty { get; set; }
+  public static MyClass CreateNew(int propertyValue)
+  {
+    return new MyClass 
+    {
+      MyProperty = propertyValue
+    };
+  }
+}
+
+",MINOR,Redundant parentheses should not be used
+在匿名类中应省略冗余属性名称.,"When an anonymous type's properties are copied from properties or variables with the same names, it yields cleaner code to omit the new type's property name and the assignment operator.",Y,"
+
+var X = 5;
+
+var anon = new 
+{
+  X = X, //Noncompliant, the new object would have the same property without the ""X ="" part.
+  Y = ""my string""
+};
+
+",rule_RSPEC-3441,S3441,当匿名类型的属性从具有相同名称的属性或变量复制时，它会生成更清晰的代码以省略新类型的属性名称和赋值运算符.,CodeSmell,Y,"
+
+var X = 5;
+
+var anon = new 
+{
+  X,
+  Y = ""my string""
+};
+
+",MINOR,Redundant property names should be omitted in anonymous classes
+跳过的单元测试应该被移除或固定.,Skipped unit tests are considered dead code. Either they should be activated again (and updated) or they should be removed.,,,rule_RSPEC-3424,S3424,跳过的单元测试被认为是死码.或者它们应该被重新激活（并更新），或者应该被删除.,CodeSmell,,,MINOR,Skipped unit tests should be either removed or fixed
+字符串或整数类型应用于索引器.,"Strings and integral types are typically used as indexers. When some other type is required, it typically indicates design problems, and potentially a situation where a method should be used instead.",Y,"
+
+public int this[MyCustomClass index]  // Noncompliant
+{  
+    // get and set accessors  
+}
+
+",rule_RSPEC-3876,S3876,字符串和整数类型通常用作索引器.当需要其他类型时，通常会指出设计问题，并且可能会导致使用方法的情况.,CodeSmell,,,MINOR,Strings or integral types should be used for indexers
+不应使用制表字符.,"Developers should not need to configure the tab width of their text editors in order to be able to read source code.
+So the use of the tabulation character must be banned.",,,rule_RSPEC-105,S105,开发人员不需要配置其文本编辑器的制表符宽度，以便能够读取源代码.所以使用制表字符必须被禁止.,CodeSmell,,,MINOR,Tabulation characters should not be used
+应该使用最简单的可能条件语法.,"In the interests of keeping code clean, the simplest possible conditional syntax should be used. That means ",Y,"
+
+object a = null, b = null, x;
+
+if (a != null) // Noncompliant; needlessly verbose
+{
+  x = a;
+}
+else
+{
+  x = b;
+}
+
+x = a != null ? a : b; // Noncompliant; better but could still be simplified
+
+x = (a == null) ? new object() : a; // Noncompliant
+
+if (condition) // Noncompliant
+{
+  x = a;
+}
+else
+{
+  x = b;
+}
+
+var y = null ?? new object(); // Noncompliant
+
+",rule_RSPEC-3240,S3240,为了保持代码清洁，应该使用最简单的条件语法.这意味着.,CodeSmell,Y,"
+
+object x;
+
+x = a ?? b;
+x = a ?? b;
+x = a ?? new object();
+x = condition ? a : b;
+var y = new object();
+
+",MINOR,The simplest possible condition syntax should be used
+跟踪低于阈值注释线密度的实例.,An issue is created on a file as soon as the density of comment lines on this file is less than the required threshold. The number of comment lines to be written in order to reach the required threshold is provided by each issue message.,,,rule_RSPEC-1484,S1484,只要该文件上的注释行的密度小于所需的阈值，就会在文件上创建一个问题.为了达到所需阈值而要写入的注释行的数量由每个发布消息提供.,CodeSmell,,,MINOR,Track instances of below-threshold comment line density
+跟踪源内问题抑制的使用.,This rule allows you to track the usage of the SuppressMessage attributes and #pragma warning disable mechanism.,Y,"
+
+[SuppressMessage("""", ""S100"")]
+...
+
+#pragma warning disable S100
+...
+#pragma warning restore S100
+
+",rule_RSPEC-1309,S1309,该规则允许您跟踪SuppressMessage属性和#pragma警告禁用机制的用法.,CodeSmell,,,MINOR,Track uses of in-source issue suppressions
+跟踪源内问题抑制的使用.,This rule allows you to track the usage of the SuppressMessage attributes and #pragma warning disable mechanism.,Y,"
+
+[SuppressMessage("""", ""S100"")]
+...
+
+#pragma warning disable S100
+...
+#pragma warning restore S100
+
+",rule_RSPEC-1309,S1309,该规则允许您跟踪SuppressMessage属性和#pragma警告禁用机制的用法.,CodeSmell,,,ERROR,Track uses of in-source issue suppressions

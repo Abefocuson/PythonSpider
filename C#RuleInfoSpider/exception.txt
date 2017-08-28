@@ -1,0 +1,13 @@
+JiraError HTTP 400 url: http://10.10.192.9:8089/rest/api/2/issue
+	text: 无法找到有效的 “id” 或 “值” 在父母的选择对象。
+	
+	response headers = {'Content-Length': '140', 'X-AUSERNAME': 'abe_code', 'X-AREQUESTID': '643x23372x1', 'X-Content-Type-Options': 'nosniff', 'Content-Encoding': 'gzip', 'X-Seraph-LoginReason': 'OK', 'Vary': 'User-Agent', 'X-ASESSIONID': 'toly4w', 'Connection': 'close', 'Cache-Control': 'no-cache, no-store, no-transform', 'Date': 'Sat, 19 Aug 2017 02:43:13 GMT', 'Content-Type': 'application/json;charset=UTF-8', 'X-ASEN': 'SEN-L9781884'}
+	response text = {"errorMessages":[],"errors":{"customfield_11309":"无法找到有效的 “id” 或 “值” 在父母的选择对象。"}}JiraError HTTP 400 url: http://10.10.192.9:8089/rest/api/2/issue
+	text: 无法找到有效的 “id” 或 “值” 在父母的选择对象。
+	
+	response headers = {'Content-Length': '140', 'X-AUSERNAME': 'abe_code', 'X-AREQUESTID': '658x23511x1', 'X-Content-Type-Options': 'nosniff', 'Content-Encoding': 'gzip', 'X-Seraph-LoginReason': 'OK', 'Vary': 'User-Agent', 'X-ASESSIONID': '10uvh1c', 'Connection': 'close', 'Cache-Control': 'no-cache, no-store, no-transform', 'Date': 'Sat, 19 Aug 2017 02:58:32 GMT', 'Content-Type': 'application/json;charset=UTF-8', 'X-ASEN': 'SEN-L9781884'}
+	response text = {"errorMessages":[],"errors":{"customfield_11309":"无法找到有效的 “id” 或 “值” 在父母的选择对象。"}}JiraError HTTP 400 url: http://10.10.192.9:8089/rest/api/2/issue
+	text: 无法找到有效的 “id” 或 “值” 在父母的选择对象。
+	
+	response headers = {'Content-Length': '140', 'X-AUSERNAME': 'abe_code', 'X-AREQUESTID': '658x23512x1', 'X-Content-Type-Options': 'nosniff', 'Content-Encoding': 'gzip', 'X-Seraph-LoginReason': 'OK', 'Vary': 'User-Agent', 'X-ASESSIONID': '10uvh1c', 'Connection': 'close', 'Cache-Control': 'no-cache, no-store, no-transform', 'Date': 'Sat, 19 Aug 2017 02:58:36 GMT', 'Content-Type': 'application/json;charset=UTF-8', 'X-ASEN': 'SEN-L9781884'}
+	response text = {"errorMessages":[],"errors":{"customfield_11309":"无法找到有效的 “id” 或 “值” 在父母的选择对象。"}}
